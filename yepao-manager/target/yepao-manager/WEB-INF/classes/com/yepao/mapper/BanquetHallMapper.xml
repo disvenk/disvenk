@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yepao.mapper.BanquetHallMapper" >
+  <resultMap id="BaseResultMap" type="com.yepao.pojo.BanquetHall" >
+    <id column="banquet_hall_id" property="banquetHallId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="floor_num" property="floorNum" jdbcType="VARCHAR" />
+    <result column="table_num" property="tableNum" jdbcType="VARCHAR" />
+    <result column="floor_height" property="floorHeight" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="standby" property="standby" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    banquet_hall_id, name, floor_num, table_num, floor_height, area, img, created, updated, 
+    standby
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.BanquetHallExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from banquet_hall
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from banquet_hall
+    where banquet_hall_id = #{banquetHallId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from banquet_hall
+    where banquet_hall_id = #{banquetHallId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yepao.pojo.BanquetHallExample" >
+    delete from banquet_hall
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yepao.pojo.BanquetHall" >
+    insert into banquet_hall (banquet_hall_id, name, floor_num, 
+      table_num, floor_height, area, 
+      img, created, updated, 
+      standby)
+    values (#{banquetHallId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{floorNum,jdbcType=VARCHAR}, 
+      #{tableNum,jdbcType=VARCHAR}, #{floorHeight,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+      #{standby,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yepao.pojo.BanquetHall" >
+    insert into banquet_hall
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="banquetHallId != null" >
+        banquet_hall_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="floorNum != null" >
+        floor_num,
+      </if>
+      <if test="tableNum != null" >
+        table_num,
+      </if>
+      <if test="floorHeight != null" >
+        floor_height,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+      <if test="standby != null" >
+        standby,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="banquetHallId != null" >
+        #{banquetHallId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="floorNum != null" >
+        #{floorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tableNum != null" >
+        #{tableNum,jdbcType=VARCHAR},
+      </if>
+      <if test="floorHeight != null" >
+        #{floorHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standby != null" >
+        #{standby,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yepao.pojo.BanquetHallExample" resultType="java.lang.Integer" >
+    select count(*) from banquet_hall
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update banquet_hall
+    <set >
+      <if test="record.banquetHallId != null" >
+        banquet_hall_id = #{record.banquetHallId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.floorNum != null" >
+        floor_num = #{record.floorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tableNum != null" >
+        table_num = #{record.tableNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.floorHeight != null" >
+        floor_height = #{record.floorHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img != null" >
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.standby != null" >
+        standby = #{record.standby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update banquet_hall
+    set banquet_hall_id = #{record.banquetHallId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      floor_num = #{record.floorNum,jdbcType=VARCHAR},
+      table_num = #{record.tableNum,jdbcType=VARCHAR},
+      floor_height = #{record.floorHeight,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      img = #{record.img,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      standby = #{record.standby,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.BanquetHall" >
+    update banquet_hall
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="floorNum != null" >
+        floor_num = #{floorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tableNum != null" >
+        table_num = #{tableNum,jdbcType=VARCHAR},
+      </if>
+      <if test="floorHeight != null" >
+        floor_height = #{floorHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standby != null" >
+        standby = #{standby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where banquet_hall_id = #{banquetHallId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.BanquetHall" >
+    update banquet_hall
+    set name = #{name,jdbcType=VARCHAR},
+      floor_num = #{floorNum,jdbcType=VARCHAR},
+      table_num = #{tableNum,jdbcType=VARCHAR},
+      floor_height = #{floorHeight,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      standby = #{standby,jdbcType=VARCHAR}
+    where banquet_hall_id = #{banquetHallId,jdbcType=BIGINT}
+  </update>
+</mapper>
