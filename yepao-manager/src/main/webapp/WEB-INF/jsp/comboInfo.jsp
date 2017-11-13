@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>菜肴套餐信息设置</title>
+		<title>菜肴套餐信息设置dddd</title>
 		<!-- 导入jquery核心类库 -->
 		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 		<!-- 导入ocupload -->
