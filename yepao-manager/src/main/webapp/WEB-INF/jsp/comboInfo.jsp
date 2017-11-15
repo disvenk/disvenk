@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>菜肴套餐信息设置ddddd</title>
+		<title>菜肴套餐信息设置</title>
 		<!-- 导入jquery核心类库 -->
 		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 		<!-- 导入ocupload -->
@@ -233,12 +233,36 @@
 				/*向左向右功能-start*/
 				// 向右移动按钮 
 					$("#toRight").click(function(){
-						$("#associationSelect").append($("#noassociationSelect option:selected"));
+						var op=$("#associationSelect").find("option");
+						var nop=$("#noassociationSelect option:selected");
+						var flag = true;
+						$(op).each(function(e,i){
+							if($(i).attr("value")==nop.attr("value")){
+								flag=false;
+							}
+						})
+						if(flag){
+							$("#associationSelect").append($("#noassociationSelect option:selected"));
+						}
+						
 					});
 					
 					// 向左移动按钮
 					$("#toLeft").click(function(){
-						$("#associationSelect option:selected").remove();
+						var op=$("#noassociationSelect").find("option");
+						var nop=$("#associationSelect option:selected");
+						var flag = true;
+						$(op).each(function(e,i){
+							if($(i).attr("value")==nop.attr("value")){
+								flag=false;
+							}
+						})
+						if(flag){
+							$("#noassociationSelect").append($("#associationSelect option:selected"));
+						}else{
+							$("#associationSelect option:selected").remove();
+						}
+						
 					});
 				/*向左向右功能-end*/
 				
@@ -419,7 +443,7 @@
 						<tr>
 							<td>
 								<input type="hidden" name="id" id="comboId" />
-								已有的菜品列表 <br />
+								<span style="color: green;">酒店已有的菜品列表</span> <br />
 								<!--这个操作与对指定的元素执行appendChild方法，将它们添加到文档中的情况类似。
 									也就是说如果append("param")中的参数param是文档中已存在的对象，那么执行xx.append("param"),是移动了param
 								-->
@@ -431,12 +455,12 @@
 								<input type="button" value="《《" id="toLeft">
 							</td>
 							<td>
-								已关联菜品列表 <br />
-								<select id="associationSelect" name="dishStyleIds" size="10" style="width:200px;"></select>
+								<span style="color: green;">该套餐已关联菜品列表</span> <br />
+								<select id="associationSelect" name="dishStyleIds" multiple="true" size="10" style="width:200px;"></select>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="3"><a id="associationBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">关联菜品</a> </td>
+							<td colspan="3"><a id="associationBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">关联菜品</a></td>
 						</tr>
 					</table>
 				</form>

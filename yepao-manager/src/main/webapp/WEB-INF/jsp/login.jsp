@@ -75,19 +75,19 @@
 						<div class="form-group" id="idInputLine">
 							<label for="inputPassword3" class="col-sm-3 control-label">账号</label>
 							<div class="col-sm-8">
-								<input id="idInput" type="text" name="name" value="${cookie.username.value}" class="form-control" placeholder="请输入手机号/邮箱/用户名">
+								<input id="idInput" type="text" name="name" value="${cookie.username.value}" class="form-control" onkeydown="javascript:if(event.keyCode==13) login();" placeholder="请输入手机号/邮箱/用户名">
 							</div>
 						</div>
 						<div class="form-group" id="pwdInputLine">
 							<label id="loginform:pwdInput" class="col-sm-3 control-label">密码</label>
 							<div class="col-sm-8">
-								<input id="password" for="pwdInput" type="password" name="password" class="form-control" id="inputaccount" placeholder="请输入您的密码">
+								<input id="password" for="pwdInput" type="password" name="password" class="form-control" id="inputaccount" onkeydown="javascript:if(event.keyCode==13) login();" placeholder="请输入您的密码">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputvalidate" class="col-sm-3 control-label">验证码</label>
 							<div class="col-sm-4">
-								<input type="text" name="validateCode" class="form-control" id="inputaccount" placeholder="请输入验证码">
+								<input type="text" name="validateCode" class="form-control" id="inputaccount" onkeydown="javascript:if(event.keyCode==13) login();" placeholder="请输入验证码">
 							</div>
 							<div class="col-sm-4">
 								<img id="loginformvCode" src="/pages/base/validatecode"  onclick="javascript:document.getElementById('loginformvCode'). src='validatecode?'+Math.random();" />
@@ -104,7 +104,7 @@
 						</div>
 						<div class="col-md-offset-3 col-md-8">
 							<a  href="javascript:login();" id="loginform:j_id19" name="loginform:j_id19"
-								 class="btn btn-danger" >立即登录</a>
+								 class="btn btn-danger">立即登录</a>
 			
 						</div>
 					</form>
