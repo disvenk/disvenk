@@ -32,6 +32,18 @@ public class HallServiceImpl implements HallService{
 		List<BanquetHall> list = bHallMapper.selectByExample(example);
 		return list;
 	}
+
+	//查询单个宴会大厅
+	public BanquetHall getBanquetHall(Long id) {
+		return	bHallMapper.selectByPrimaryKey(id);
+		
+	}
+
+	//删除宴会大厅
+	public void deleteHall(Long id) {
+		bHallMapper.deleteByPrimaryKey(id);
+		
+	}
 	
 	
 }

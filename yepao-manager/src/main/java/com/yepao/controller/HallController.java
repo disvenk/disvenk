@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yepao.pojo.BanquetHall;
 import com.yepao.service.HallService;
+import com.yepao.utils.FastDFSClient;
 import com.yepao.utils.YePaoResult;
 
 @Controller
@@ -34,8 +35,22 @@ public class HallController {
 	
 	//删除宴会大厅
 	@RequestMapping("/hall/delete")
-	public String deleteHall(){
-		
+	public String deleteHall(String ids){
+		String[] hallIds = ids.split(",");
+		try {
+			FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
+			for (String string : hallIds) {
+				Long id = Long.parseLong(string);
+				BanquetHall banquetHall = hallService.getBanquetHall(id);
+				String[] images = banquetHall.getImg().split(",");
+				for (String string2 : images) {
+					fastDFSClient.delete_file(string2.substring(20));
+				}
+				hallService.deleteHall(id);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:/pages/base/hall";
 	}
 }
