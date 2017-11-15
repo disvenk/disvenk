@@ -6,8 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yepao.mapper.CelebrationMapper;
+import com.yepao.mapper.CelebrationpictureMapper;
 import com.yepao.mapper.MediaMapper;
 import com.yepao.mapper.PictureMapper;
+import com.yepao.pojo.Celebrationpicture;
+import com.yepao.pojo.CelebrationpictureExample;
 import com.yepao.pojo.Media;
 import com.yepao.pojo.MediaExample;
 import com.yepao.pojo.Picture;
@@ -22,6 +26,8 @@ public class MediaFileseviceImpl implements MediaFileService{
 	private PictureMapper pictureMapper;
 	@Autowired
 	private MediaMapper mediaMapper;
+	@Autowired
+	private	CelebrationpictureMapper celebrationpictureMapper;
 	
 	public void addPic(Picture picture) {
 		pictureMapper.insert(picture);
@@ -84,6 +90,32 @@ public class MediaFileseviceImpl implements MediaFileService{
 		com.yepao.pojo.MediaExample.Criteria criteria = example.createCriteria();
 		criteria.andTalentIdEqualTo(id);
 		List<Media> list = mediaMapper.selectByExample(example);
+		return list;
+	}
+
+	
+	
+	/*---------------------------------------------*/
+	public void addCelebrationPic(Celebrationpicture celebrationpicture) {
+		celebrationpictureMapper.insert(celebrationpicture);
+		
+	}
+
+	public Celebrationpicture getCelebrationPic(Integer id) {
+		return celebrationpictureMapper.selectByPrimaryKey(id);
+		
+	}
+
+	public void deleteCelebrationPic(Integer id) {
+		celebrationpictureMapper.deleteByPrimaryKey(id);
+		
+	}
+
+	public List<Celebrationpicture> getPicByCid(Long id) {
+		CelebrationpictureExample example = new CelebrationpictureExample();
+		com.yepao.pojo.CelebrationpictureExample.Criteria criteria = example.createCriteria();
+		criteria.andCelebrationIdEqualTo(id);
+		List<Celebrationpicture> list = celebrationpictureMapper.selectByExample(example);
 		return list;
 	}
 

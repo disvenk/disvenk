@@ -36,6 +36,6 @@ public class HallController {
 	@RequestMapping("/hall/delete")
 	public String deleteHall(){
 		
-		return null;
+		return "redirect:/pages/base/hall";
 	}
 }

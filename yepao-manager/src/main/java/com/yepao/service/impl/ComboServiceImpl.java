@@ -61,7 +61,7 @@ public class ComboServiceImpl implements ComboService{
 		Combo combo = comboMapper.selectByPrimaryKey(id);
 		
 		String ids = combo.getDishstyle();
-		if(ids==null){
+		if(ids==null || ids.equals("")){
 			return null;
 		}
 		String[] strings = ids.split(",");
