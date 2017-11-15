@@ -75,7 +75,7 @@
 						<div class="form-group" id="idInputLine">
 							<label for="inputPassword3" class="col-sm-3 control-label">账号</label>
 							<div class="col-sm-8">
-								<input id="idInput" type="text" name="name" value="${cookie.username.value}" class="form-control" onkeydown="javascript:if(event.keyCode==13) login();" placeholder="请输入手机号/邮箱/用户名">
+								<input id="idInput" type="text" name="username" value="${cookie.username.value}" class="form-control" onkeydown="javascript:if(event.keyCode==13) login();" placeholder="请输入手机号/邮箱/用户名">
 							</div>
 						</div>
 						<div class="form-group" id="pwdInputLine">

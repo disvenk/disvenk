@@ -44,11 +44,6 @@
 				},"json");
 				
 				
-				// 系统管理折叠板下面的菜单加载
-				$.post("/data/admin",function(data){
-					$.fn.zTree.init($("#adminMenu"), setting, data);
-				},"json");
-				
 				// 页面加载后 右下角 弹出窗口
 				window.setTimeout(function(){
 					$.messager.show({
@@ -236,9 +231,6 @@
 			<div class="easyui-accordion" fit="true" border="true">
 				<div title="基本功能" data-options="iconCls:'icon-mini-add'" style="overflow:auto">
 					<ul id="treeMenu" class="ztree"></ul>
-				</div>
-				<div title="系统管理" data-options="iconCls:'icon-mini-add'" style="overflow:auto">
-					<ul id="adminMenu" class="ztree"></ul>
 				</div>
 			</div>
 		</div>

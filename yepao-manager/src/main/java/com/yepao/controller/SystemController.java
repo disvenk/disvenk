@@ -61,7 +61,7 @@ public class SystemController {
 					// 将用户信息 保存到 Session
 					//将用户名保存到cookie
 					if(remeber!=null){
-						Cookie cookie2 = new Cookie("username", user.getName());
+						Cookie cookie2 = new Cookie("username", user.getUsername());
 						cookie2.setMaxAge(1800);
 						response.addCookie(cookie2);
 					}
@@ -128,6 +128,15 @@ public class SystemController {
 					return list;
 				}
 		List<Menu> list = adminService.getMenu(user.getName());
+		return list;
+	}
+	
+	//增加角色查询所有的菜单
+	@RequestMapping("/menu_list")
+	@ResponseBody
+	public Object getmenuAll(){
+		// 调用业务层，查询所有有菜单 列表
+		List<Menu> list = adminService.getMenuAll();
 		return list;
 	}
 }
