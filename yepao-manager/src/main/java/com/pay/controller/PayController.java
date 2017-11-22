@@ -62,15 +62,15 @@ public class PayController {
             String randomNonceStr = RandomUtils.generateMixString(32);
             
             //调用统一下单的接口生成预付款订单号
-            String prepayId = unifiedOrder(openId, clientIP, randomNonceStr);
+            Map<String, Object> map2 = unifiedOrder(openId, clientIP, randomNonceStr);
 
-            log.error("prepayId: " + prepayId);
+            log.error("prepayId: " + map2.get("prepay_id"));
 
-            if(StringUtils.isBlank(prepayId)) {
+            if(StringUtils.isBlank(String.valueOf(map2.get("prepay_id")))) {
                 result = false;
                 info = "出错了，未获取到prepayId";
             } else {
-                map.put("prepayId", prepayId);
+                map.put("prepayId", map2.get("prepay_id"));
                 map.put("nonceStr", randomNonceStr);
             }
         }
@@ -82,6 +82,9 @@ public class PayController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        //如果成功的得到了预支付订单就生成订单
+        
 
         return content;
     }
@@ -124,7 +127,7 @@ public class PayController {
      * 调用统一下单接口
      * @param openId
      */
-    private String unifiedOrder(String openId, String clientIP, String randomNonceStr) {
+    private Map unifiedOrder(String openId, String clientIP, String randomNonceStr) {
 
         try {
         	//统一下单的路径
@@ -162,22 +165,25 @@ public class PayController {
                 
                 if(StringUtils.isNotBlank(return_msg) && !return_msg.equals("OK")) {
                     //log.error("统一下单错误！");
-                    return "";
+                    return null;
                 }
 
                 //成功返回预支付交易单
                 String prepay_Id = result.get("prepay_id");
-                return prepay_Id;
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("prepay_id", prepay_Id);
+                map.put("out_trade_no", payInfo.getOut_trade_no());
+                return map;
 
             } else {
-                return "";
+                return null;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "";
+        return null;
     }
 
     //得到一个付款详细信息对象

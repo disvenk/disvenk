@@ -19,7 +19,8 @@ public class TimeUtils {
     public static Date addDay(Date date, int day) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.DATE, 2);
+       // cal.add(Calendar.DATE, 2);
+        cal.add(Calendar.MINUTE,30);
         return cal.getTime();
     }
 
