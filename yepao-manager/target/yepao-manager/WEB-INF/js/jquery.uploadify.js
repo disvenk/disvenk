@@ -910,7 +910,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 				} else if (settings.progressData == 'speed' && lapsedTime > 500) {
 					$('#' + file.id).find('.data').html(' - ' + this.queueData.averageSpeed + suffix);
 				}
-				$('#' + file.id).find('.uploadify-progress-bar').css('width', percentage + '%')	
+				//$('#' + file.id).find('.uploadify-progress-bar').css('width', percentage + '%')	
 			}
 
 			// Call the user-defined event handler
@@ -969,6 +969,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			if ($.inArray('onUploadSuccess', settings.overrideEvents) < 0) {
 				//$('#' + file.id).find('.data').html(' - Complete');
 				$('#' + file.id).find('.data').html(' - 上传成功');
+				$('#' + file.id).find('.uploadify-progress-bar').css('width', percentage + '%')
 			}
 
 			// Call the user-defined event handler

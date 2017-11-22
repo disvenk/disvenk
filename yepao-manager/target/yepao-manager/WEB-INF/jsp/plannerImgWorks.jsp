@@ -55,11 +55,11 @@
 				}else{
 					var arr = new Array();
 					for(var i=0;i<rows.length;i++){
-						arr.push(rows[i].weddingTalentId);
+						arr.push(rows[i].id);
 					}
 					//生成字符串
 					var ids = arr.join(",");
-					window.location.href = "/talentWorks/delete?talent=plannerImg&ids="+ids;
+					window.location.href = "/talentImgWorks/delete?talent=plannerImg&ids="+ids;
 				}
 			}
 			
@@ -80,13 +80,13 @@
 				field : 'id',
 				checkbox : true,
 			},{
-				field : 'talentId',
+				field : 'talentName',
 				title : '姓名',
 				width : 120,
 				align : 'center'
 			},{
 				field : 'src',
-				title : '作品',
+				title : '图片作品',
 				width : 120,
 				align : 'center',
 				formatter:function(value,row,index){
@@ -94,7 +94,7 @@
 				}
 			},{
 				field : 'uptime',
-				title : '创建时间',
+				title : '上传时间',
 				width : 200,
 				align : 'center',
 				 formatter: function (value,row,index) {

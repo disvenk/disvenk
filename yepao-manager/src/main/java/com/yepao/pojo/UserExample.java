@@ -654,6 +654,76 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andMenuIsNull() {
+            addCriterion("menu is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIsNotNull() {
+            addCriterion("menu is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuEqualTo(String value) {
+            addCriterion("menu =", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuNotEqualTo(String value) {
+            addCriterion("menu <>", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuGreaterThan(String value) {
+            addCriterion("menu >", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuGreaterThanOrEqualTo(String value) {
+            addCriterion("menu >=", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuLessThan(String value) {
+            addCriterion("menu <", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuLessThanOrEqualTo(String value) {
+            addCriterion("menu <=", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuLike(String value) {
+            addCriterion("menu like", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuNotLike(String value) {
+            addCriterion("menu not like", value, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIn(List<String> values) {
+            addCriterion("menu in", values, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuNotIn(List<String> values) {
+            addCriterion("menu not in", values, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuBetween(String value1, String value2) {
+            addCriterion("menu between", value1, value2, "menu");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuNotBetween(String value1, String value2) {
+            addCriterion("menu not between", value1, value2, "menu");
+            return (Criteria) this;
+        }
+
         public Criteria andStandbyIsNull() {
             addCriterion("standby is null");
             return (Criteria) this;

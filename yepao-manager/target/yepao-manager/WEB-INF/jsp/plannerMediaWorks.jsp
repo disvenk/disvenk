@@ -55,11 +55,11 @@
 				}else{
 					var arr = new Array();
 					for(var i=0;i<rows.length;i++){
-						arr.push(rows[i].weddingTalentId);
+						arr.push(rows[i].id);
 					}
 					//生成字符串
 					var ids = arr.join(",");
-					window.location.href = "/talentWorks/delete?talent=plannerMedia&ids="+ids;
+					window.location.href = "/talentMediaWorks/delete?talent=plannerMedia&ids="+ids;
 				}
 			}
 			
@@ -80,17 +80,17 @@
 				field : 'id',
 				checkbox : true,
 			},{
-				field : 'talentId',
+				field : 'talentName',
 				title : '姓名',
 				width : 120,
 				align : 'center'
 			},{
-				field : 'src',
-				title : '作品',
+				field : 'vediosrc',
+				title : '视频作品',
 				width : 120,
 				align : 'center',
 				formatter:function(value,row,index){
-					return "<img src='"+value+"' width='100' height='100'/>";//在这个区域直接显示出图片
+					return "<video src='"+value+"' width='100' height='100' controls='controls'/>";//在这个区域直接显示出图片
 				}
 			},{
 				field : 'uptime',
@@ -118,7 +118,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "/media_pageQuery?name=策划师",
+					url : "/media_pageQuery?name=策划师&id="+$.cookie("checkPlannerId"),
 					idField : 'id',//这里的字段一定与表格里的id字段对应
 					columns : columns
 				});

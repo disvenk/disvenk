@@ -4,7 +4,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>酒店信息设置</title>
+	<title>主持人视频作品上传</title>
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.4.1/themes/default/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.4.1/themes/icon.css" />
 	<link rel="stylesheet" type="text/css" href="/css/taotao.css" />
@@ -21,9 +21,9 @@
 	<script type="text/javascript" src="/js/common.js"></script>
 	<script>
 	function returnList(){
-		$.cookie("plannerId", null);
-		$.cookie("plannerImg",null);
-		location.href="/pages/base/plannerInfo";
+		$.cookie("hostId", null);
+		$.cookie("hostImg",null);
+		location.href="/pages/base/hostInfo";
 	}
 		$(function(){
 			
@@ -33,7 +33,7 @@
 				    'auto'	   : true,
 				 	'multi'    : true,
 	                'swf'      : '/js/uploadify.swf',  
-	                'uploader' : '/media/upload?token=plannerId',  
+	                'uploader' : '/media/upload?token=hostId',  
 	                //'formData': {'projectid': '${project.id}'},  
 	                'fileObjName' : 'uploadFile',  
 	                'fileSizeLimit' : '0',
@@ -44,8 +44,11 @@
                  }
 	       });
 			 
-			 var img = $.cookie("plannerImg");
-			 $("#plannerImg").attr('src',unescape(img));
+			 var img = $.cookie("hostImg");
+			 $("#hostImg").attr('src',unescape(img));
+			 
+			 var name = unescape($.cookie("hostName"));
+			 $("#hostName").html("主持人:"+name);
 		});
 	</script>
 	</head>
@@ -60,7 +63,8 @@
 	    <table cellpadding="5">
 	        <tr>
 	            <td style="line-height: 52px">
-	            <img id="plannerImg" src=""/>
+	            <img id="hostImg" style="height: 120px;width: 120px" src=""/>
+	             <h5 id="hostName" style="height:30px;margin: 0;padding: 0;"></h5>
 	            <h5 style="color: red;margin: 0;padding: 0;">提示:只支持MP4格式,上传成功时进度显示为'上传成功'*</h5>
 	                 <input id="projectfile" type="file" name="goods_video">
 	            </td>
@@ -68,39 +72,5 @@
 	    </table>
 	</form>
 </div>
-<script type="text/javascript">
-	var itemAddEditor ;
-	//页面初始化完毕后执行此方法
-	$(function(){
-		//创建富文本编辑器,在商品描述那个文本域中添加一个富文本编辑器
-		//itemAddEditor = TAOTAO.createEditor("#itemAddForm [name=desc]");
-		//初始化类目选择和图片上传器，这里就会加载init属性只想属性里面的方法，在间接的执行了其他的属性里的方法，比如商品类目和图片上传
-		YEPAO.init({fun:function(node){
-			//根据商品的分类id取商品 的规格模板，生成规格信息。第四天内容。
-			//TAOTAO.changeItemParam(node, "itemAddForm");
-		}});
-	});
-	//提交表单
-	function submitForm(){
-		//有效性验证
-		if(!$('#hallAddForm').form('validate')){
-			$.messager.alert('提示','表单还未填写完成!');
-			return ;
-		}
-		
-		$.post("/add/hall",$("#hallAddForm").serialize(), function(data){
-			if(data.status == 200){
-				$.messager.alert('提示','新增宴会厅成功!');
-				location.href="/pages/base/hall";
-			}else{
-				$.messager.alert('提示','新增宴会厅失败!');
-			}
-		});
-	}
-	
-	function clearForm(){
-		$('#hallAddForm').form('reset');
-	}
-</script>
 </body>
 </html>

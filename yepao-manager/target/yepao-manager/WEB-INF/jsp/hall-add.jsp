@@ -4,7 +4,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>酒店信息设置</title>
+	<title>添加宴会厅</title>
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.4.1/themes/default/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.4.1/themes/icon.css" />
 	<link rel="stylesheet" type="text/css" href="/css/taotao.css" />
@@ -81,7 +81,7 @@
 		//创建富文本编辑器,在商品描述那个文本域中添加一个富文本编辑器
 		//itemAddEditor = TAOTAO.createEditor("#itemAddForm [name=desc]");
 		//初始化类目选择和图片上传器，这里就会加载init属性只想属性里面的方法，在间接的执行了其他的属性里的方法，比如商品类目和图片上传
-		TAOTAO.init({fun:function(node){
+		YEPAO.init({fun:function(node){
 			//根据商品的分类id取商品 的规格模板，生成规格信息。第四天内容。
 			//TAOTAO.changeItemParam(node, "itemAddForm");
 		}});

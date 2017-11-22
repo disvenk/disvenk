@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yepao.pojo.Media" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="talent_id" property="talentId" jdbcType="INTEGER" />
+    <result column="talent_name" property="talentName" jdbcType="VARCHAR" />
     <result column="vedioSrc" property="vediosrc" jdbcType="VARCHAR" />
     <result column="imgSrc" property="imgsrc" jdbcType="VARCHAR" />
     <result column="uptime" property="uptime" jdbcType="TIMESTAMP" />
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, talent_id, vedioSrc, imgSrc, uptime
+    id, talent_id, talent_name, vedioSrc, imgSrc, uptime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.MediaExample" >
     select
@@ -100,10 +101,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.Media" >
-    insert into media (id, talent_id, vedioSrc, 
-      imgSrc, uptime)
-    values (#{id,jdbcType=INTEGER}, #{talentId,jdbcType=INTEGER}, #{vediosrc,jdbcType=VARCHAR}, 
-      #{imgsrc,jdbcType=VARCHAR}, #{uptime,jdbcType=TIMESTAMP})
+    insert into media (id, talent_id, talent_name, 
+      vedioSrc, imgSrc, uptime
+      )
+    values (#{id,jdbcType=INTEGER}, #{talentId,jdbcType=INTEGER}, #{talentName,jdbcType=VARCHAR}, 
+      #{vediosrc,jdbcType=VARCHAR}, #{imgsrc,jdbcType=VARCHAR}, #{uptime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.Media" >
     insert into media
@@ -113,6 +116,9 @@
       </if>
       <if test="talentId != null" >
         talent_id,
+      </if>
+      <if test="talentName != null" >
+        talent_name,
       </if>
       <if test="vediosrc != null" >
         vedioSrc,
@@ -130,6 +136,9 @@
       </if>
       <if test="talentId != null" >
         #{talentId,jdbcType=INTEGER},
+      </if>
+      <if test="talentName != null" >
+        #{talentName,jdbcType=VARCHAR},
       </if>
       <if test="vediosrc != null" >
         #{vediosrc,jdbcType=VARCHAR},
@@ -157,6 +166,9 @@
       <if test="record.talentId != null" >
         talent_id = #{record.talentId,jdbcType=INTEGER},
       </if>
+      <if test="record.talentName != null" >
+        talent_name = #{record.talentName,jdbcType=VARCHAR},
+      </if>
       <if test="record.vediosrc != null" >
         vedioSrc = #{record.vediosrc,jdbcType=VARCHAR},
       </if>
@@ -175,6 +187,7 @@
     update media
     set id = #{record.id,jdbcType=INTEGER},
       talent_id = #{record.talentId,jdbcType=INTEGER},
+      talent_name = #{record.talentName,jdbcType=VARCHAR},
       vedioSrc = #{record.vediosrc,jdbcType=VARCHAR},
       imgSrc = #{record.imgsrc,jdbcType=VARCHAR},
       uptime = #{record.uptime,jdbcType=TIMESTAMP}
@@ -187,6 +200,9 @@
     <set >
       <if test="talentId != null" >
         talent_id = #{talentId,jdbcType=INTEGER},
+      </if>
+      <if test="talentName != null" >
+        talent_name = #{talentName,jdbcType=VARCHAR},
       </if>
       <if test="vediosrc != null" >
         vedioSrc = #{vediosrc,jdbcType=VARCHAR},
@@ -203,6 +219,7 @@
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.Media" >
     update media
     set talent_id = #{talentId,jdbcType=INTEGER},
+      talent_name = #{talentName,jdbcType=VARCHAR},
       vedioSrc = #{vediosrc,jdbcType=VARCHAR},
       imgSrc = #{imgsrc,jdbcType=VARCHAR},
       uptime = #{uptime,jdbcType=TIMESTAMP}

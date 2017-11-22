@@ -79,7 +79,7 @@ public class YePaoRealm extends AuthorizingRealm {
 		// 根据用户名 查询 用户信息
 		UserExample example = new UserExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andNameEqualTo(usernamePasswordToken.getUsername());
+		criteria.andUsernameEqualTo(usernamePasswordToken.getUsername());
 		 List<User> users = userMapper.selectByExample(example);
 		if (users.get(0) == null) {
 			// 用户名不存在

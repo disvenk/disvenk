@@ -16,12 +16,12 @@ public class CutImgUtils {
  		String serialName = String.valueOf(System.currentTimeMillis());
  		 String path = request.getSession().getServletContext().getRealPath("/WEB-INF/ffmpeg/ffmpeg.exe");
  		String cutPath = request.getSession().getServletContext().getRealPath("/WEB-INF/cutImg/"+serialName+".jpg");
- 		System.out.println(cutPath);
- 		String upPath = request.getSession().getServletContext().getRealPath("/WEB-INF/hallImg/爱剪辑-我的视频 - 副本 (3).mp4");
+ 		//System.out.println(cutPath);
+ 		//String upPath = request.getSession().getServletContext().getRealPath("/WEB-INF/hallImg/爱剪辑-我的视频 - 副本 (3).mp4");
  		
  		cutpic.add(path);
  		cutpic.add("-i");
- 		String file = upPath+"/"+"爱剪辑-我的视频 - 副本 (3).mp4";
+ 		//String file = upPath+"/"+"爱剪辑-我的视频 - 副本 (3).mp4";
  		cutpic.add(upFilePath); // 同上（指定的文件即可以是转换为flv格式之前的文件，也可以是转换的flv文件）
  		cutpic.add("-y");
  		cutpic.add("-f");

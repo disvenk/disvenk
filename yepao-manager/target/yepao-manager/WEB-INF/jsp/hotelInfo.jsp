@@ -90,7 +90,7 @@
 				var rows = $("#grid").datagrid('getSelections');
 				if(rows.length == 0){
 					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要修改的行","warning");
+					$.messager.alert("提示信息","请选择您要删除的行","warning");
 				}else{
 					var arr = new Array();
 					for(var i=0;i<rows.length;i++){

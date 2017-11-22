@@ -20,6 +20,8 @@
 		<script type="text/javascript" src="/js/easyui/ext/jquery.cookie.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				var userName=unescape($.cookie("userName"));
+				$("#userToken").html(userName);
 			
 				/** 
 				   Ztree菜单通用配置 
@@ -44,16 +46,11 @@
 				},"json");
 				
 				
-				// 系统管理折叠板下面的菜单加载
-				$.post("/data/admin",function(data){
-					$.fn.zTree.init($("#adminMenu"), setting, data);
-				},"json");
-				
 				// 页面加载后 右下角 弹出窗口
 				window.setTimeout(function(){
 					$.messager.show({
 						title:"消息提示",
-						msg:'欢迎登录，超级管理员！ <a href="javascript:void" onclick="top.showAbout();">联系管理员</a>',
+						msg:'欢迎登录，'+userName+'！ <a href="javascript:void" onclick="top.showAbout();">联系管理员</a>',
 						timeout:5000
 					});
 				},3000);
@@ -209,10 +206,10 @@
 	<body class="easyui-layout">
 		<div data-options="region:'north',border:false" style="height:70px;padding:10px;">
 			<div>
-				<img src="/images/logo.png" border="0">
+				<img src="/images/index.png" border="0">
 			</div>
 			<div id="sessionInfoDiv" style="position: absolute;right: 5px;top:10px;">
-				[<strong>超级管理员</strong>]，欢迎你！您使用[<strong><%=request.getRemoteAddr()%></strong>]IP登录！
+				[<strong id="userToken"></strong>]，欢迎你！您使用[<strong><%=request.getRemoteAddr()%></strong>]IP登录！
 			</div>
 			<div style="position: absolute; right: 5px; bottom: 10px; ">
 				<a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#layout_north_pfMenu',iconCls:'icon-ok'">更换皮肤</a>
@@ -236,9 +233,6 @@
 			<div class="easyui-accordion" fit="true" border="true">
 				<div title="基本功能" data-options="iconCls:'icon-mini-add'" style="overflow:auto">
 					<ul id="treeMenu" class="ztree"></ul>
-				</div>
-				<div title="系统管理" data-options="iconCls:'icon-mini-add'" style="overflow:auto">
-					<ul id="adminMenu" class="ztree"></ul>
 				</div>
 			</div>
 		</div>

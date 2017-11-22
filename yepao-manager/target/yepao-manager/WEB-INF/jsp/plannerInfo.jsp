@@ -42,26 +42,6 @@
 		};
 
 		
-		//将查询表单中的数据转换成json数据-start
-		$.fn.serializeJson=function(){  
-            var serializeObj={};  
-            var array=this.serializeArray();  
-            var str=this.serialize();  
-            $(array).each(function(){  
-                if(serializeObj[this.name]){  
-                    if($.isArray(serializeObj[this.name])){  
-                        serializeObj[this.name].push(this.value);  
-                    }else{  
-                        serializeObj[this.name]=[serializeObj[this.name],this.value];
-                    }  
-                }else{  
-                    serializeObj[this.name]=this.value;   
-                }  
-            });  
-            return serializeObj;  
-        }; 
-        //将查询表单中的数据转换成json数据-end
-		
 			function doAdd(){
         		
 				$('#addWindow').window("open");
@@ -115,8 +95,9 @@
 					// 只选中一行 
 					var row = rows[0]; 
 					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
-					$.cookie("plannerId", row.weddingTalentId, {path: '/',expires: 1});
+					$.cookie("plannerId", row.weddingTalentId+","+row.name, {path: '/',expires: 1});
 					$.cookie("plannerImg",row.headImg,{path: '/',expires: 1});
+					$.cookie("plannerName",row.name,{path: '/',expires: 1});
 					location.href="/pages/base/plannerUploadImg";
 					
 				}
@@ -135,8 +116,9 @@
 					// 只选中一行 
 					var row = rows[0]; 
 					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
-					$.cookie("plannerId", row.weddingTalentId, {path: '/',expires: 1});
+					$.cookie("plannerId", row.weddingTalentId+","+row.name, {path: '/',expires: 1});
 					$.cookie("plannerImg",row.headImg,{path: '/',expires: 1});
+					$.cookie("plannerName",row.name,{path: '/',expires: 1});
 					location.href="/pages/base/plannerUploadMedia";
 					
 				}
@@ -321,8 +303,8 @@
 					toolbar : toolbar,
 					url : "/talent_pageQuery?name=策划师",
 					idField : 'weddingTalentId',//这里的字段一定与表格里的id字段对应
-					columns : columns,
-					onDblClickRow : doDblClickRow
+					columns : columns
+					
 				});
 				
 				// 添加酒店窗口
@@ -384,11 +366,7 @@
 	         
 	                });
 			});
-			
 		
-			function doDblClickRow(){
-				alert("双击表格数据...");
-			}
 		</script>
 	</head>
 
@@ -396,7 +374,7 @@
 		<div region="center" border="false">
 			<table id="grid"></table>
 		</div>
-		<div class="easyui-window" title="酒店添加修改" id="addWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
+		<div class="easyui-window" title="策划师添加" id="addWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
 			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
 				<!--<div class="datagrid-toolbar">-->
 					<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
@@ -419,14 +397,10 @@
 							<td>人才姓名</td>
 							<td>
 								<input type="text" name="name" class="easyui-validatebox" required="true" />
+								<input type="hidden" value="策划师"  name="occupation"/>
 							</td>
 						</tr>
-						<tr>
-							<td>人才职业</td>
-							<td>
-								 <input type="text" name="occupation" style="width:80%" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
+								 
 						<tr>
 							<td>工作经验</td>
 							<td>
@@ -472,7 +446,7 @@
 			</div>
 		</div>
 		
-		<div class="easyui-window" title="酒店添加修改" id="eidtorWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
+		<div class="easyui-window" title="策划师修改" id="eidtorWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
 			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
 				<!--<div class="datagrid-toolbar">-->
 					<a id="update" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">更改</a>
@@ -503,12 +477,7 @@
 							<td>人才姓名</td>
 							<td>
 								<input type="text" name="name" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>人才职业</td>
-							<td>
-								 <input type="text" name="occupation" style="width:80%" class="easyui-validatebox" required="true" />
+								<input type="hidden" value="策划师"  name="occupation"/>
 							</td>
 						</tr>
 						<tr>

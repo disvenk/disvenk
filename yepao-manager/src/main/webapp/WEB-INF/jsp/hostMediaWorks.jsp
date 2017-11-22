@@ -55,11 +55,11 @@
 				}else{
 					var arr = new Array();
 					for(var i=0;i<rows.length;i++){
-						arr.push(rows[i].weddingTalentId);
+						arr.push(rows[i].id);
 					}
 					//生成字符串
 					var ids = arr.join(",");
-					window.location.href = "/talentWorks/delete?talent=hostMedia&ids="+ids;
+					window.location.href = "/talentMediaWorks/delete?talent=hostMedia&ids="+ids;
 				}
 			}
 			
@@ -85,7 +85,7 @@
 				width : 120,
 				align : 'center'
 			},{
-				field : 'vedioSrc',
+				field : 'vediosrc',
 				title : '作品',
 				width : 120,
 				align : 'center',
@@ -118,7 +118,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "/media_pageQuery?name=主持人",
+					url : "/media_pageQuery?name=主持人&id="+$.cookie("checkHostId"),
 					idField : 'id',//这里的字段一定与表格里的id字段对应
 					columns : columns
 				});

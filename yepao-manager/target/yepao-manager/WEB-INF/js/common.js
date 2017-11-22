@@ -87,53 +87,7 @@ var YP = YEPAO = {
         		});
         	});
     	});
-    	
-    	//上传视频
-     	$(".mediaFileUpload").each(function(i,ee){
-    		var _ele = $(ee);
-      
-        	//给“上传视频按钮”绑定click事件
-        	$(ee).click(function(){
-        	/*	var form = $(this).parentsUntil("form").parent("form");
-        		//打开视频上传窗口
-        		KindEditor.editor(YP.kingEditorParams1).loadPlugin('media', function() {
-        			var editor = this;
-                    editor.plugin.media.edit();
-                    
-        		});*/
-        		
-        		/*$("#upload-goods-video").uploadify({
-        			"height"          : 30,
-        			"width"           : 120,  //定义上传插件的宽和高
-        			"swf"             : "/js/uploadify.swf",  //引入上传插件的flash
-        			"fileObjName"     : "goods_video",   //以什么名字上传到服务器上.. 保存到$_FILES. 默认的名字为 'Filedata'
-        			"buttonText"      : "上传视频",
-        			"uploader"        : "/media/upload", //上传给哪个url地址
-        			'removeTimeout'
-        			 : 3,  //上传后的提示在几秒后消失
-        			'multi'           : false,//是否执行多文件上传
-        			'debug'           : false, //是否开启调试模式
-        			'formData'      : {name:'goods_video',pic_url:''}, //上传图片的同时以POST的形式向服务器参数,  指定上传到又拍云的哪个空间
-        			'fileTypeExts'
-        			 : '*.jpg; *.png; *.gif; *.bmp; *.mp4;',  //指定上传的类型,  它可以帮我们验证..
-        			'onUploadSuccess' : function(file, data, response) {  //上传成功之后执行该方法
-        			var obj = $.parseJSON(data);
-        			// console.log(data);
-        			 $("#video_path").val(obj.name);*/
-
-
-        			//显示预览图片的div
-        			// $('.upload-pre-item img').attr('src','__BRAND__/'+obj.path+'!s'); //将上传后的路径设置给img的src中
-        			// $('.upload-img-box').show();
-        			/*},
-        			'onFallback' : function() {
-        			alert('未检测到兼容版本的Flash.');
-        			}
-        			});*/
-        	});
-        	
-    	});
-    },
+    },  	
 
     
     createEditor : function(select){

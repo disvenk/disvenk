@@ -4,7 +4,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>酒店信息设置</title>
+	<title>策划师视频作品上传</title>
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.4.1/themes/default/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.4.1/themes/icon.css" />
 	<link rel="stylesheet" type="text/css" href="/css/taotao.css" />
@@ -38,14 +38,14 @@
 	                'fileObjName' : 'uploadFile',  
 	                'fileSizeLimit' : '0',
 	                'fileTypeExts': '*.mp4',
-	                'removeTimeout' : 0,  //上传后的提示在几秒后消失
-	                'onUploadSuccess':function(file, data, response){ //上传成功后执行的操作函数
-                        alert(data);
-                 }
+	                'removeTimeout' : 2,  //上传后的提示在几秒后消失
 	       });
 			 
 			 var img = $.cookie("plannerImg");
 			 $("#plannerImg").attr('src',unescape(img));
+			 
+			 var name = unescape($.cookie("plannerName"));
+			 $("#plannerName").html("策划师:"+name);
 		});
 	</script>
 	</head>
@@ -60,7 +60,8 @@
 	    <table cellpadding="5">
 	        <tr>
 	            <td style="line-height: 52px">
-	            <img id="plannerImg" src=""/>
+	            <img id="plannerImg" style="height: 120px;width: 120px" src=""/>
+	            <h5 id="plannerName" style="height:30px;margin: 0;padding: 0;"></h5>
 	            <h5 style="color: red;margin: 0;padding: 0;">提示:只支持MP4格式,上传成功时进度显示为'上传成功'*</h5>
 	                 <input id="projectfile" type="file" name="goods_video">
 	            </td>

@@ -1,5 +1,6 @@
 package com.yepao.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,21 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private UserMapper userMapper;
 	
+	public void addUser(User user){
+		userMapper.insert(user);
+	}
+	
+	public YePaoResult getUser(String username){
+		UserExample example = new UserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUsernameEqualTo(username);
+		List<User> list = userMapper.selectByExample(example);
+		if(!list.isEmpty()){
+			return YePaoResult.build(400, "","");
+		}
+		return YePaoResult.ok();
+	}
+	
 	public List<Admin> getAdmin() {
 		AdminExample example = new AdminExample();
 		List<Admin> list = adminMapper.selectByExample(example);
@@ -35,10 +51,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	public List<Menu> getMenu(String userName) {
-		MenuExample example = new MenuExample();
-		com.yepao.pojo.MenuExample.Criteria criteria = example.createCriteria();
-		criteria.andNameEqualTo(userName);
-		List<Menu> list = menuMapper.selectByExample(example);
+		UserExample example = new UserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUsernameEqualTo(userName);
+		List<User> list1 = userMapper.selectByExample(example);
+		String[] memuIds = list1.get(0).getMenu().split(",");
+		List<Menu> list = new ArrayList<Menu>();
+		for (String string : memuIds) {
+			Long id = Long.parseLong(string);
+			list.add(menuMapper.selectByPrimaryKey(id));
+		}
+		
 		return list;
 	}
 
@@ -61,5 +84,26 @@ public class AdminServiceImpl implements AdminService {
 		userMapper.updateByExampleSelective(user, example);
 		return YePaoResult.ok();
 	}
+	
+	
+	//查询所用用户
+	public List<User> getUserList() {
+		UserExample example = new UserExample();
+		List<User> list = userMapper.selectByExample(example);
+		return list;
+	}
+
+	//删除用户
+	public void deleteUser(String ids) {
+		String[] uIds = ids.split(",");
+		for (String string : uIds) {
+			Integer id = Integer.parseInt(string);
+			userMapper.deleteByPrimaryKey(id);
+		}
+		
+	}
+	
+	
+	
 
 }

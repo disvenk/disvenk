@@ -8,9 +8,12 @@
 		<!-- <link href="" rel="icon" type="image/x-icon" /> -->
 		<!-- 导入jquery核心类库 -->
 		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+		<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+		<script type="text/javascript" src='/js/layer.js'></script>
 		<!-- 导入easyui类库 -->
 		<link id="easyuiTheme" rel="stylesheet" type="text/css" href="/js/easyui/themes/gray/easyui.css">
 		<link rel="stylesheet" type="text/css" href="/js/easyui/themes/icon.css">
+		<link href="/images/icon.ico" rel="icon" type="image/x-icon" />
 		<!-- <link rel="stylesheet" type="text/css" href="/css/default.css"> -->
 		<script type="text/javascript" src="/js/easyui/jquery.easyui.min.js"></script>
 		<!-- 导入ztree类库 -->
@@ -19,7 +22,33 @@
 		<script src="/js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
 		<script type="text/javascript" src="/js/easyui/ext/jquery.cookie.js"></script>
 		<script type="text/javascript">
+		var ws = null;
 			$(function() {
+				
+				var basePath = "ws://localhost:9001/";
+			    if ('WebSocket' in window) {
+			         ws = new WebSocket('ws://localhost:9001/webSocketServer'); 
+			         console.log("连接成功");
+			    }
+			    else if ('MozWebSocket' in window) {
+			        ws = new MozWebSocket("ws://localhost:9001/webSocketServer");
+			    }
+			    else {
+			        ws = new SockJS("ws://localhost:9001/webSocketServer");
+			    }
+			    ws.onopen = function () {
+
+			    };
+			    ws.onmessage = function (event) {
+			    	 pop(event.data);
+			    };
+			    ws.onclose = function (event) {
+			    	 ws.close();
+			    };
+				
+				
+				var userName=unescape($.cookie("userName"));
+				$("#userToken").html(userName);
 			
 				/** 
 				   Ztree菜单通用配置 
@@ -48,7 +77,7 @@
 				window.setTimeout(function(){
 					$.messager.show({
 						title:"消息提示",
-						msg:'欢迎登录，超级管理员！ <a href="javascript:void" onclick="top.showAbout();">联系管理员</a>',
+						msg:'欢迎登录，'+userName+'！ <a href="javascript:void" onclick="top.showAbout();">联系管理员</a>',
 						timeout:5000
 					});
 				},3000);
@@ -96,6 +125,24 @@
 						}
 					} 
 				}); 
+				
+				var contents = '<div style="width:100%;height:100%;overflow:hidden;">'
+					+ '<iframe src="'
+					+ "/pages/base/home"
+					+ '" scrolling="auto" style="width:100%;height:100%;border:0;" ></iframe></div>';
+				
+				$('#tabs').tabs('add', {
+					title : "消息中心",
+					content : contents,
+					closable : false,
+					tools:[{ 
+						iconCls:'icon-reload', // 刷新按钮
+						handler : function(){
+							var tab = $('#tabs').tabs('getTab',"消息中心");
+							$("iframe[src='"+"/pages/base/home"+"']").get(0).contentWindow.location.reload(true);
+						}
+					}] 
+				});
 			});
 			
 			
@@ -198,16 +245,35 @@
 					});
 				};
 			
+				
+				function pop(message){
+					speckText();
+				    layer.alert("您有新的订单，请及时处理");
+				    //提示消息后加载订单
+				    $("iframe[src='"+"/pages/base/home"+"']").get(0).contentWindow.location.reload(true);
+				}
+
+				function speckText(){
+
+				var url ="/js/notify.mp3";
+
+				var n = new Audio(url);
+
+				 n.src = url;
+
+				 n.play();
+
+				}
 		</script>
 	</head>
 
 	<body class="easyui-layout">
 		<div data-options="region:'north',border:false" style="height:70px;padding:10px;">
 			<div>
-				<img src="/images/logo.png" border="0">
+				<img src="/images/index.png" border="0">
 			</div>
 			<div id="sessionInfoDiv" style="position: absolute;right: 5px;top:10px;">
-				[<strong>超级管理员</strong>]，欢迎你！您使用[<strong><%=request.getRemoteAddr()%></strong>]IP登录！
+				[<strong id="userToken"></strong>]，欢迎你！您使用[<strong><%=request.getRemoteAddr()%></strong>]IP登录！
 			</div>
 			<div style="position: absolute; right: 5px; bottom: 10px; ">
 				<a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#layout_north_pfMenu',iconCls:'icon-ok'">更换皮肤</a>
@@ -236,9 +302,6 @@
 		</div>
 		<div data-options="region:'center'">
 			<div id="tabs" fit="true" class="easyui-tabs" border="false">
-				<div title="消息中心" id="subWarp" style="width:100%;height:100%;overflow:hidden">
-					<iframe src="/pages/base/home" style="width:100%;height:100%;border:0;"></iframe>
-				</div>
 			</div>
 		</div>
 		<div data-options="region:'south',border:false" style="height:50px;padding:10px;">

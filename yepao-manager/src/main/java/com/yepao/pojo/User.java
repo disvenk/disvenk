@@ -17,6 +17,8 @@ public class User {
 
     private String tel;
 
+    private String menu;
+
     private String standby;
 
     public Integer getId() {
@@ -81,6 +83,14 @@ public class User {
 
     public void setTel(String tel) {
         this.tel = tel == null ? null : tel.trim();
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu == null ? null : menu.trim();
     }
 
     public String getStandby() {

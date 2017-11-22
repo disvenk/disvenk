@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>酒店信息设置</title>
+		<title>宴会厅信息设置</title>
 		<!-- 导入jquery核心类库 -->
 		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 		<!-- 导入ocupload -->
@@ -94,7 +94,7 @@
 				}else{
 					var arr = new Array();
 					for(var i=0;i<rows.length;i++){
-						arr.push(rows[i].hotelId);
+						arr.push(rows[i].banquetHallId);
 					}
 					//生成字符串
 					var ids = arr.join(",");
@@ -102,21 +102,6 @@
 				}
 			}
 			
-			function doDelete(){
-				var rows = $("#grid").datagrid('getSelections');
-				if(rows.length == 0){
-					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要修改的行","warning");
-				}else{
-					var arr = new Array();
-					for(var i=0;i<rows.length;i++){
-						arr.push(rows[i].hotelId);
-					}
-					//生成字符串
-					var ids = arr.join(",");
-					window.location.href = "/hotel/delete?ids="+ids;
-				}
-			}
 			
 			//工具栏
 			var toolbar = [{
@@ -290,17 +275,7 @@
 			</div>
 		</div>
 	<script type="text/javascript">
-	var itemAddEditor ;
-	//页面初始化完毕后执行此方法
-	$(function(){
-		//创建富文本编辑器,在商品描述那个文本域中添加一个富文本编辑器
-		//itemAddEditor = TAOTAO.createEditor("#itemAddForm [name=desc]");
-		//初始化类目选择和图片上传器，这里就会加载init属性只想属性里面的方法，在间接的执行了其他的属性里的方法，比如商品类目和图片上传
-		TAOTAO.init({fun:function(node){
-			//根据商品的分类id取商品 的规格模板，生成规格信息。第四天内容。
-			//TAOTAO.changeItemParam(node, "itemAddForm");
-		}});
-	});
+
 	//提交表单
 	function submitForm(){
 		//有效性验证

@@ -152,7 +152,7 @@
 				formatter:function(value,row,index){
 					return "<img src='"+value[0]+"' width='100' height='100'/>";//在这个区域直接显示出图片
 				}
-			} ,{
+			},{
 				field : 'created',
 				title : '创建时间',
 				width : 150,
@@ -181,7 +181,7 @@
 				// 先将body隐藏，再显示，不会出现页面刷新效果
 				$("body").css({visibility:"visible"});
 				
-				// 酒店管理数据表格
+				// 宴会厅管理数据表格
 				$('#grid').datagrid( {
 					iconCls : 'icon-forward',
 					fit : true,
@@ -197,16 +197,6 @@
 					columns : columns
 				});
 				
-				//修改酒店窗口
-				$('#eidtorWindow').window({
-			        title: '修改酒店信息',
-			        width: 400,
-			        modal: true,
-			        shadow: true,
-			        closed: true,
-			        height: 400,
-			        resizable:false
-			    });
 			 
 			});
 			
@@ -218,62 +208,7 @@
 			<table id="grid"></table>
 		</div>
 		
-		<div class="easyui-window" title="酒店添加修改" id="eidtorWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
-			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
-				<!--<div class="datagrid-toolbar">-->
-					<a id="save" icon="icon-save" href="javascript:submitForm()" class="easyui-linkbutton" plain="true">保存</a>
-				<!--</div>-->
-			</div>
-
-			<div region="center" style="overflow:auto;padding:5px;" border="false">
-				<form id="updateForm" action="/hall/update" method="post" enctype="multipart/form-data">
-					<table class="table-edit" width="80%" height="80%" align="center">
-						<tr class="title">
-							<td colspan="2">宴会厅信息</td>
-							<input type="hidden" name="banquetHallId"/>
-						</tr>
-					 	<tr>
-	           			 	<td>名称:</td>
-	            			<td><input class="easyui-validatebox" type="text" name="name" required="true"></input></td>
-	        			</tr>
-						<tr>
-							<td>楼层</td>
-							<td>
-								<input type="text" name="floorNum" class="easyui-validatebox easyui-numberbox" required="true" />
-							</td>
-						</tr>
-						<tr>
-	            			<td>桌数:</td>
-	            			<td><input class="easyui-numberbox easyui-validatebox" type="text" name="tableNum" required="true"/></td>
-	        			</tr>
-						<tr>
-	            			<td>层高:</td>
-	            			<td><input class="easyui-numberbox easyui-validatebox" type="text" name="floorHeight" required="true"/> </td>
-	        			</tr>
-					 	<tr>
-	            			<td>面积:</td>
-	           				<td><input class="easyui-numberbox easyui-validatebox" type="text" name="area" required="true" /></td>
-	        			</tr>
-	        			<tr>
-	            			<td>图片:</td>
-	            			<td style="line-height: 52px">
-	            	 		<a href="javascript:void(0)" class="easyui-linkbutton picFileUpload">上传图片</a>
-	                 		<input type="hidden" id="image" name="img"/>
-	           				 </td>
-	       				</tr>
-						<tr>
-	            			<td>备注:</td>
-	            			<td><textarea name="standby" style="resize: none;height: 80px" rows="20"></textarea></td>
-	        			</tr>
-	        			<tr>
-							<td>
-								<input type="hidden" name="created" />
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
+	
 	<script type="text/javascript">
 
 	//提交表单

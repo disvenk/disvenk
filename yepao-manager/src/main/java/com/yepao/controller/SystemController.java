@@ -1,5 +1,6 @@
 package com.yepao.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yepao.pojo.Admin;
+import com.yepao.pojo.Hotel;
 import com.yepao.pojo.Menu;
 import com.yepao.pojo.User;
 import com.yepao.service.AdminService;
@@ -47,7 +49,7 @@ public class SystemController {
 				// 用户名和密码信息MD5Util.md5(user.getPwd()
 				//authenticationToken是一个认证对象，它用来存储用户登录进来的用户名和密码
 				AuthenticationToken token = new UsernamePasswordToken(
-						user.getName(), user.getPassword());
+						user.getUsername(), user.getPassword());
 				try {
 					//当subject调用login方法的时候，subject就会起调用安全管理器，然后安全管理器回去调用realm中的认证专用的方法
 					//realm中的认证的方法里面有一个参数就是token,底层就把这个token传了过去
@@ -55,8 +57,11 @@ public class SystemController {
 					//得到当前的用户
 					User user2 = (User) subject.getPrincipal();
 					Cookie cookie1 = new Cookie("userId", user2.getId().toString());
+					Cookie nameCookie = new Cookie("userName", user2.getUsername());
+					nameCookie.setMaxAge(1800);
 					cookie1.setMaxAge(1800);
 					response.addCookie(cookie1);
+					response.addCookie(nameCookie);
 					// 登录成功
 					// 将用户信息 保存到 Session
 					//将用户名保存到cookie
@@ -91,29 +96,12 @@ public class SystemController {
 	@ResponseBody
 	public YePaoResult editorPass(String newPass,String userId){
 		Integer id = Integer.parseInt(userId);
-		System.out.println("当前用户的ID是："+id);
 		adminService.updatePass(newPass, id);
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
 		return YePaoResult.ok();
 	}
 	
-	
-	//超级管理员具有权限管理菜单
-	@RequestMapping("/data/admin")
-	@ResponseBody
-	public Object getAdmin(){
-		// 调用业务层，查询当前用户具有菜单 列表
-			Subject subject = SecurityUtils.getSubject();
-				//得到当前的用户
-			User user = (User) subject.getPrincipal();
-			if(user.getName().equals("admin")){
-				List<Admin> list = adminService.getAdmin();
-				return list;
-			}
-		
-		return null;
-	}
 	
 	//查询当前用户具有的菜单
 	@RequestMapping("/data/menu")
@@ -123,11 +111,11 @@ public class SystemController {
 				Subject subject = SecurityUtils.getSubject();
 						//得到当前的用户
 				User user = (User) subject.getPrincipal();
-				if(user.getName().equals("admin")){
+				if(user.getUsername().equals("admin")){
 					List<Menu> list = adminService.getMenuAll();
 					return list;
 				}
-		List<Menu> list = adminService.getMenu(user.getName());
+		List<Menu> list = adminService.getMenu(user.getUsername());
 		return list;
 	}
 	
@@ -139,4 +127,42 @@ public class SystemController {
 		List<Menu> list = adminService.getMenuAll();
 		return list;
 	}
+	
+	//增加用户
+	@RequestMapping("/add/user")
+	public String addUser(User user){
+		adminService.addUser(user);
+		return "redirect:/pages/base/userInfo";
+	}
+	
+	//用户名校验
+	@RequestMapping("/checkUsername")
+	@ResponseBody
+	public YePaoResult checkUsername(String username){
+		YePaoResult user = adminService.getUser(username);
+		return user;
+	}
+	
+	//查询所有用户
+	@RequestMapping("/user_list")
+	@ResponseBody
+	public List<User> getUserList(){
+		List<User> userList = adminService.getUserList();
+		return userList;
+	}
+	
+	//更改用户
+	@RequestMapping("/updateUser")
+	public String updateUser(User user){
+		List<User> userList = adminService.getUserList();
+		return "userInfo";
+	}
+	
+	//删除用户信息
+	@RequestMapping("/user/delete")
+	public String deleteUser(String ids,HttpServletRequest request){
+		adminService.deleteUser(ids);
+		return "redirect:/pages/base/userInfo";
+		}
+	
 }

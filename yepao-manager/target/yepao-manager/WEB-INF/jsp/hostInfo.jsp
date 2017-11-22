@@ -42,26 +42,6 @@
 		};
 
 		
-		//将查询表单中的数据转换成json数据-start
-		$.fn.serializeJson=function(){  
-            var serializeObj={};  
-            var array=this.serializeArray();  
-            var str=this.serialize();  
-            $(array).each(function(){  
-                if(serializeObj[this.name]){  
-                    if($.isArray(serializeObj[this.name])){  
-                        serializeObj[this.name].push(this.value);  
-                    }else{  
-                        serializeObj[this.name]=[serializeObj[this.name],this.value];
-                    }  
-                }else{  
-                    serializeObj[this.name]=this.value;   
-                }  
-            });  
-            return serializeObj;  
-        }; 
-        //将查询表单中的数据转换成json数据-end
-		
 			function doAdd(){
         		
 				$('#addWindow').window("open");
@@ -107,7 +87,7 @@
 				var rows = $("#grid").datagrid('getSelections');
 				if(rows.length == 0){
 					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要上传的主持人","warning");
+					$.messager.alert("提示信息","请选择您要上传的策划师","warning");
 				}else if(rows.length != 1){
 					// 没选 或 多选 
 					$.messager.alert("提示信息","上传数据时，只能选中一行","warning")
@@ -115,7 +95,9 @@
 					// 只选中一行 
 					var row = rows[0]; 
 					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
-					$.cookie("hostId", row.weddingTalentId, {path: '/',expires: 1});
+					$.cookie("hostId", row.weddingTalentId+","+row.name, {path: '/',expires: 1});
+					$.cookie("hostImg",row.headImg,{path: '/',expires: 1});
+					$.cookie("hostName",row.name,{path: '/',expires: 1});
 					location.href="/pages/base/hostUploadImg";
 					
 				}
@@ -126,7 +108,7 @@
 				var rows = $("#grid").datagrid('getSelections');
 				if(rows.length == 0){
 					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要上传的主持人","warning");
+					$.messager.alert("提示信息","请选择您要上传的策划师","warning");
 				}else if(rows.length != 1){
 					// 没选 或 多选 
 					$.messager.alert("提示信息","上传数据时，只能选中一行","warning")
@@ -134,9 +116,48 @@
 					// 只选中一行 
 					var row = rows[0]; 
 					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
-					$.cookie("hostId", row.weddingTalentId, {path: '/',expires: 1});
+					$.cookie("hostId", row.weddingTalentId+","+row.name, {path: '/',expires: 1});
 					$.cookie("hostImg",row.headImg,{path: '/',expires: 1});
+					$.cookie("hostName",row.name,{path: '/',expires: 1});
 					location.href="/pages/base/hostUploadMedia";
+					
+				}
+			}
+			
+			function checkImgWorks(){
+				// 获取当前datagrid选中数据 ，就是前面那个框框打对勾就算是选中了
+				var rows = $("#grid").datagrid('getSelections');
+				if(rows.length == 0){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","请选择您要查看的策划师","warning");
+				}else if(rows.length != 1){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","查看作品时，只能选中一行","warning")
+				}else{
+					// 只选中一行 
+					var row = rows[0]; 
+					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
+					$.cookie("checkHostId", row.weddingTalentId, {path: '/',expires: 1});
+					location.href="/pages/base/hostImgWorks";
+					
+				}
+			}
+			
+			function checkMediaWorks(){
+				// 获取当前datagrid选中数据 ，就是前面那个框框打对勾就算是选中了
+				var rows = $("#grid").datagrid('getSelections');
+				if(rows.length == 0){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","请选择您要查看的策划师","warning");
+				}else if(rows.length != 1){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","查看作品时，只能选中一行","warning")
+				}else{
+					// 只选中一行 
+					var row = rows[0]; 
+					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
+					$.cookie("checkHostId", row.weddingTalentId, {path: '/',expires: 1});
+					location.href="/pages/base/hostMediaWorks";
 					
 				}
 			}
@@ -167,6 +188,16 @@
 				text : '上传视频',
 				iconCls : 'icon-redo',
 				handler : doUploadMedia
+			}, {
+				id : 'button-upload',
+				text : '查看图片作品',
+				iconCls : 'icon-search',
+				handler : checkImgWorks
+			}, {
+				id : 'button-upload',
+				text : '查看视频作品',
+				iconCls : 'icon-search',
+				handler : checkMediaWorks
 			}];
 			// 定义列
 			var columns = [ [ {
@@ -259,7 +290,7 @@
 				// 先将body隐藏，再显示，不会出现页面刷新效果
 				$("body").css({visibility:"visible"});
 				
-				// 酒店管理数据表格
+				// 主持人管理数据表格
 				$('#grid').datagrid( {
 					iconCls : 'icon-forward',
 					fit : true,
@@ -286,7 +317,7 @@
 			        resizable:false
 			    });
 				
-				//修改酒店窗口
+				//修改主持人窗口
 				$('#eidtorWindow').window({
 			        title: '修改主持人信息',
 			        width: 400,
@@ -334,7 +365,7 @@
 	         
 	                });
 			});
-
+			
 		</script>
 	</head>
 
@@ -342,7 +373,7 @@
 		<div region="center" border="false">
 			<table id="grid"></table>
 		</div>
-		<div class="easyui-window" title="酒店添加修改" id="addWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
+		<div class="easyui-window" title="主持人添加" id="addWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
 			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
 				<!--<div class="datagrid-toolbar">-->
 					<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
@@ -350,7 +381,7 @@
 			</div>
 
 			<div region="center" style="overflow:auto;padding:5px;" border="false">
-				<form id="addForm" action="/talent/add?talent=planner" method="post" enctype="multipart/form-data">
+				<form id="addForm" action="/talent/add?talent=host" method="post" enctype="multipart/form-data">
 					<table class="table-edit" width="80%" height="80%" align="center">
 						<tr class="title">
 							<td colspan="2">人才信息</td>
@@ -365,12 +396,7 @@
 							<td>人才姓名</td>
 							<td>
 								<input type="text" name="name" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>人才职业</td>
-							<td>
-								 <input type="text" name="occupation" style="width:80%" class="easyui-validatebox" required="true" />
+								<input type="hidden" value="主持人"  name="occupation"/>
 							</td>
 						</tr>
 						<tr>
@@ -418,7 +444,7 @@
 			</div>
 		</div>
 		
-		<div class="easyui-window" title="酒店添加修改" id="eidtorWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
+		<div class="easyui-window" title="主持人修改" id="eidtorWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
 			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
 				<!--<div class="datagrid-toolbar">-->
 					<a id="update" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">更改</a>
@@ -449,12 +475,7 @@
 							<td>人才姓名</td>
 							<td>
 								<input type="text" name="name" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>人才职业</td>
-							<td>
-								 <input type="text" name="occupation" style="width:80%" class="easyui-validatebox" required="true" />
+								<input type="hidden" value="主持人"  name="occupation"/>
 							</td>
 						</tr>
 						<tr>

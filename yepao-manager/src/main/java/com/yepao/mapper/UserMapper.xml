@@ -10,6 +10,7 @@
     <result column="other" property="other" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="menu" property="menu" jdbcType="VARCHAR" />
     <result column="standby" property="standby" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, name, gender, department, other, password, tel, standby
+    id, username, name, gender, department, other, password, tel, menu, standby
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.UserExample" >
     select
@@ -106,12 +107,12 @@
   <insert id="insert" parameterType="com.yepao.pojo.User" >
     insert into user (id, username, name, 
       gender, department, other, 
-      password, tel, standby
-      )
+      password, tel, menu, 
+      standby)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{gender,jdbcType=CHAR}, #{department,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{standby,jdbcType=VARCHAR}
-      )
+      #{password,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{menu,jdbcType=VARCHAR}, 
+      #{standby,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.User" >
     insert into user
@@ -139,6 +140,9 @@
       </if>
       <if test="tel != null" >
         tel,
+      </if>
+      <if test="menu != null" >
+        menu,
       </if>
       <if test="standby != null" >
         standby,
@@ -168,6 +172,9 @@
       </if>
       <if test="tel != null" >
         #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="menu != null" >
+        #{menu,jdbcType=VARCHAR},
       </if>
       <if test="standby != null" >
         #{standby,jdbcType=VARCHAR},
@@ -207,6 +214,9 @@
       <if test="record.tel != null" >
         tel = #{record.tel,jdbcType=VARCHAR},
       </if>
+      <if test="record.menu != null" >
+        menu = #{record.menu,jdbcType=VARCHAR},
+      </if>
       <if test="record.standby != null" >
         standby = #{record.standby,jdbcType=VARCHAR},
       </if>
@@ -225,6 +235,7 @@
       other = #{record.other,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       tel = #{record.tel,jdbcType=VARCHAR},
+      menu = #{record.menu,jdbcType=VARCHAR},
       standby = #{record.standby,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -254,6 +265,9 @@
       <if test="tel != null" >
         tel = #{tel,jdbcType=VARCHAR},
       </if>
+      <if test="menu != null" >
+        menu = #{menu,jdbcType=VARCHAR},
+      </if>
       <if test="standby != null" >
         standby = #{standby,jdbcType=VARCHAR},
       </if>
@@ -269,6 +283,7 @@
       other = #{other,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=VARCHAR},
+      menu = #{menu,jdbcType=VARCHAR},
       standby = #{standby,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -4,8 +4,9 @@
   <resultMap id="BaseResultMap" type="com.yepao.pojo.Picture" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="talent_id" property="talentId" jdbcType="INTEGER" />
+    <result column="talent_name" property="talentName" jdbcType="VARCHAR" />
     <result column="src" property="src" jdbcType="VARCHAR" />
-    <result column="uptime" property="uptime" jdbcType="TIMESTAMP" />
+    <result column="uptime" property="uptime" jdbcType="DATE" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, talent_id, src, uptime
+    id, talent_id, talent_name, src, uptime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.PictureExample" >
     select
@@ -99,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.Picture" >
-    insert into picture (id, talent_id, src, 
-      uptime)
-    values (#{id,jdbcType=INTEGER}, #{talentId,jdbcType=INTEGER}, #{src,jdbcType=VARCHAR}, 
-      #{uptime,jdbcType=TIMESTAMP})
+    insert into picture (id, talent_id, talent_name, 
+      src, uptime)
+    values (#{id,jdbcType=INTEGER}, #{talentId,jdbcType=INTEGER}, #{talentName,jdbcType=VARCHAR}, 
+      #{src,jdbcType=VARCHAR}, #{uptime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.Picture" >
     insert into picture
@@ -112,6 +113,9 @@
       </if>
       <if test="talentId != null" >
         talent_id,
+      </if>
+      <if test="talentName != null" >
+        talent_name,
       </if>
       <if test="src != null" >
         src,
@@ -127,11 +131,14 @@
       <if test="talentId != null" >
         #{talentId,jdbcType=INTEGER},
       </if>
+      <if test="talentName != null" >
+        #{talentName,jdbcType=VARCHAR},
+      </if>
       <if test="src != null" >
         #{src,jdbcType=VARCHAR},
       </if>
       <if test="uptime != null" >
-        #{uptime,jdbcType=TIMESTAMP},
+        #{uptime,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -150,11 +157,14 @@
       <if test="record.talentId != null" >
         talent_id = #{record.talentId,jdbcType=INTEGER},
       </if>
+      <if test="record.talentName != null" >
+        talent_name = #{record.talentName,jdbcType=VARCHAR},
+      </if>
       <if test="record.src != null" >
         src = #{record.src,jdbcType=VARCHAR},
       </if>
       <if test="record.uptime != null" >
-        uptime = #{record.uptime,jdbcType=TIMESTAMP},
+        uptime = #{record.uptime,jdbcType=DATE},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -165,8 +175,9 @@
     update picture
     set id = #{record.id,jdbcType=INTEGER},
       talent_id = #{record.talentId,jdbcType=INTEGER},
+      talent_name = #{record.talentName,jdbcType=VARCHAR},
       src = #{record.src,jdbcType=VARCHAR},
-      uptime = #{record.uptime,jdbcType=TIMESTAMP}
+      uptime = #{record.uptime,jdbcType=DATE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -177,11 +188,14 @@
       <if test="talentId != null" >
         talent_id = #{talentId,jdbcType=INTEGER},
       </if>
+      <if test="talentName != null" >
+        talent_name = #{talentName,jdbcType=VARCHAR},
+      </if>
       <if test="src != null" >
         src = #{src,jdbcType=VARCHAR},
       </if>
       <if test="uptime != null" >
-        uptime = #{uptime,jdbcType=TIMESTAMP},
+        uptime = #{uptime,jdbcType=DATE},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -189,8 +203,9 @@
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.Picture" >
     update picture
     set talent_id = #{talentId,jdbcType=INTEGER},
+      talent_name = #{talentName,jdbcType=VARCHAR},
       src = #{src,jdbcType=VARCHAR},
-      uptime = #{uptime,jdbcType=TIMESTAMP}
+      uptime = #{uptime,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

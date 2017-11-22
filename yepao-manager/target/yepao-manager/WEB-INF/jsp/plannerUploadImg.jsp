@@ -45,6 +45,9 @@
 			 
 			 var img = $.cookie("plannerImg");
 			 $("#plannerImg").attr('src',unescape(img));
+			 
+			 var name = unescape($.cookie("plannerName"));
+			 $("#plannerName").html("策划师:"+name);
 		});
 	</script>
 	</head>
@@ -59,7 +62,8 @@
 	    <table cellpadding="5">
 	        <tr>
 	            <td style="line-height: 52px">
-	            <img id="plannerImg" src=""/>
+	            <img id="plannerImg" style="height: 120px;width: 120px" src=""/>
+	             <h5 id="plannerName" style="height:30px;margin: 0;padding: 0;"></h5>
 	            <h5 style="color: red;margin: 0;padding: 0;">提示:只支持.jpg,.png格式,上传成功时进度显示为'上传成功'*</h5>
 	                 <input id="projectfile" type="file" name="goods_video">
 	            </td>
