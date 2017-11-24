@@ -56,6 +56,7 @@ public class SystemController {
 					subject.login(token);
 					//得到当前的用户
 					User user2 = (User) subject.getPrincipal();
+					request.getSession().setAttribute("userName", user2.getUsername());
 					Cookie cookie1 = new Cookie("userId", user2.getId().toString());
 					Cookie nameCookie = new Cookie("userName", user2.getUsername());
 					nameCookie.setMaxAge(1800);

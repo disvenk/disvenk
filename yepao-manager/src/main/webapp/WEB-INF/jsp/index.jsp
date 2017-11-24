@@ -25,9 +25,14 @@
 		var ws = null;
 			$(function() {
 				
+				var userName="${userName eq null?-1:userName}";
+				if(userName==-1){
+					location.href="${pageContext.request.contextPath}";
+				}
+				
 				var basePath = "ws://localhost:9001/";
 			    if ('WebSocket' in window) {
-			         ws = new WebSocket('ws://localhost:9001/webSocketServer'); 
+			         ws = new WebSocket('ws://localhost:9001/webSocketServer?userName='+userName); 
 			         console.log("连接成功");
 			    }
 			    else if ('MozWebSocket' in window) {

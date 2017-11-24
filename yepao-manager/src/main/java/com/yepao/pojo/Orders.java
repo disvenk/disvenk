@@ -8,6 +8,8 @@ public class Orders {
 
     private String weipayid;
 
+    private String prepayId;
+
     private String customerName;
 
     private String tel;
@@ -36,6 +38,8 @@ public class Orders {
 
     private Date created;
 
+    private Date closed;
+
     private Date prepayed;
 
     private Date payed;
@@ -54,6 +58,14 @@ public class Orders {
 
     public void setWeipayid(String weipayid) {
         this.weipayid = weipayid == null ? null : weipayid.trim();
+    }
+
+    public String getPrepayId() {
+        return prepayId;
+    }
+
+    public void setPrepayId(String prepayId) {
+        this.prepayId = prepayId == null ? null : prepayId.trim();
     }
 
     public String getCustomerName() {
@@ -168,6 +180,14 @@ public class Orders {
         this.created = created;
     }
 
+    public Date getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Date closed) {
+        this.closed = closed;
+    }
+
     public Date getPrepayed() {
         return prepayed;
     }
@@ -182,9 +202,5 @@ public class Orders {
 
     public void setPayed(Date payed) {
         this.payed = payed;
-    }
-    
-    public Long getOid() {
-        return id;
     }
 }

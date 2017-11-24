@@ -21,7 +21,7 @@ public class PageController {
 	
 	@RequestMapping("/")
 	public String index(){
-		return "login";
+		return "redirect:/pages/base/login";
 	}
 	
 

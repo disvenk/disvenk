@@ -236,6 +236,76 @@ public class OrdersExample {
             return (Criteria) this;
         }
 
+        public Criteria andPrepayIdIsNull() {
+            addCriterion("prePay_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdIsNotNull() {
+            addCriterion("prePay_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdEqualTo(String value) {
+            addCriterion("prePay_id =", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdNotEqualTo(String value) {
+            addCriterion("prePay_id <>", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdGreaterThan(String value) {
+            addCriterion("prePay_id >", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdGreaterThanOrEqualTo(String value) {
+            addCriterion("prePay_id >=", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdLessThan(String value) {
+            addCriterion("prePay_id <", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdLessThanOrEqualTo(String value) {
+            addCriterion("prePay_id <=", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdLike(String value) {
+            addCriterion("prePay_id like", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdNotLike(String value) {
+            addCriterion("prePay_id not like", value, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdIn(List<String> values) {
+            addCriterion("prePay_id in", values, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdNotIn(List<String> values) {
+            addCriterion("prePay_id not in", values, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdBetween(String value1, String value2) {
+            addCriterion("prePay_id between", value1, value2, "prepayId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrepayIdNotBetween(String value1, String value2) {
+            addCriterion("prePay_id not between", value1, value2, "prepayId");
+            return (Criteria) this;
+        }
+
         public Criteria andCustomerNameIsNull() {
             addCriterion("customer_name is null");
             return (Criteria) this;
@@ -1173,6 +1243,66 @@ public class OrdersExample {
 
         public Criteria andCreatedNotBetween(Date value1, Date value2) {
             addCriterion("created not between", value1, value2, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedIsNull() {
+            addCriterion("closed is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedIsNotNull() {
+            addCriterion("closed is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedEqualTo(Date value) {
+            addCriterion("closed =", value, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedNotEqualTo(Date value) {
+            addCriterion("closed <>", value, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedGreaterThan(Date value) {
+            addCriterion("closed >", value, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedGreaterThanOrEqualTo(Date value) {
+            addCriterion("closed >=", value, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedLessThan(Date value) {
+            addCriterion("closed <", value, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedLessThanOrEqualTo(Date value) {
+            addCriterion("closed <=", value, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedIn(List<Date> values) {
+            addCriterion("closed in", values, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedNotIn(List<Date> values) {
+            addCriterion("closed not in", values, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedBetween(Date value1, Date value2) {
+            addCriterion("closed between", value1, value2, "closed");
+            return (Criteria) this;
+        }
+
+        public Criteria andClosedNotBetween(Date value1, Date value2) {
+            addCriterion("closed not between", value1, value2, "closed");
             return (Criteria) this;
         }
 

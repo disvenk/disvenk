@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,9 +13,13 @@
 var ws = null;
 $(function () {
 	
-	var basePath = "ws://localhost:9001/";
+	var userId=${userId eq null?-1:userId};
+	if(userId==-1){
+		location.href="${pageContext.request.contextPath}";
+	}
+	
     if ('WebSocket' in window) {
-         ws = new WebSocket('ws://localhost:9001/webSocketServer'); 
+         ws = new WebSocket('ws://localhost:9001/webSocketServer?userId='+userId); 
          console.log("连接成功");
     }
     else if ('MozWebSocket' in window) {

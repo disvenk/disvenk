@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yepao.pojo.Orders" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="weiPayId" property="weipayid" jdbcType="VARCHAR" />
+    <result column="prePay_id" property="prepayId" jdbcType="VARCHAR" />
     <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="CHAR" />
@@ -18,6 +19,7 @@
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="checked" property="checked" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="closed" property="closed" jdbcType="TIMESTAMP" />
     <result column="prepayed" property="prepayed" jdbcType="TIMESTAMP" />
     <result column="payed" property="payed" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -80,8 +82,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, weiPayId, customer_name, tel, gender, customer_id, hall, combo, celebration, 
-    talent, prePay, obligation, count, status, checked, created, prepayed, payed
+    id, weiPayId, prePay_id, customer_name, tel, gender, customer_id, hall, combo, celebration, 
+    talent, prePay, obligation, count, status, checked, created, closed, prepayed, payed
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.OrdersExample" >
     select
@@ -114,20 +116,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.Orders" >
-    insert into orders (id, weiPayId, customer_name, 
-      tel, gender, customer_id, 
-      hall, combo, celebration, 
-      talent, prePay, obligation, 
-      count, status, checked, 
-      created, prepayed, payed
-      )
-    values (#{id,jdbcType=BIGINT}, #{weipayid,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{customerId,jdbcType=VARCHAR}, 
-      #{hall,jdbcType=VARCHAR}, #{combo,jdbcType=VARCHAR}, #{celebration,jdbcType=VARCHAR}, 
-      #{talent,jdbcType=VARCHAR}, #{prepay,jdbcType=DECIMAL}, #{obligation,jdbcType=DECIMAL}, 
-      #{count,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, #{checked,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{prepayed,jdbcType=TIMESTAMP}, #{payed,jdbcType=TIMESTAMP}
-      )
+    insert into orders (id, weiPayId, prePay_id, 
+      customer_name, tel, gender, 
+      customer_id, hall, combo, 
+      celebration, talent, prePay, 
+      obligation, count, status, 
+      checked, created, closed, 
+      prepayed, payed)
+    values (#{id,jdbcType=BIGINT}, #{weipayid,jdbcType=VARCHAR}, #{prepayId,jdbcType=VARCHAR}, 
+      #{customerName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{customerId,jdbcType=VARCHAR}, #{hall,jdbcType=VARCHAR}, #{combo,jdbcType=VARCHAR}, 
+      #{celebration,jdbcType=VARCHAR}, #{talent,jdbcType=VARCHAR}, #{prepay,jdbcType=DECIMAL}, 
+      #{obligation,jdbcType=DECIMAL}, #{count,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{checked,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{closed,jdbcType=TIMESTAMP}, 
+      #{prepayed,jdbcType=TIMESTAMP}, #{payed,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.Orders" >
     insert into orders
@@ -137,6 +139,9 @@
       </if>
       <if test="weipayid != null" >
         weiPayId,
+      </if>
+      <if test="prepayId != null" >
+        prePay_id,
       </if>
       <if test="customerName != null" >
         customer_name,
@@ -180,6 +185,9 @@
       <if test="created != null" >
         created,
       </if>
+      <if test="closed != null" >
+        closed,
+      </if>
       <if test="prepayed != null" >
         prepayed,
       </if>
@@ -193,6 +201,9 @@
       </if>
       <if test="weipayid != null" >
         #{weipayid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        #{prepayId,jdbcType=VARCHAR},
       </if>
       <if test="customerName != null" >
         #{customerName,jdbcType=VARCHAR},
@@ -236,6 +247,9 @@
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
       </if>
+      <if test="closed != null" >
+        #{closed,jdbcType=TIMESTAMP},
+      </if>
       <if test="prepayed != null" >
         #{prepayed,jdbcType=TIMESTAMP},
       </if>
@@ -258,6 +272,9 @@
       </if>
       <if test="record.weipayid != null" >
         weiPayId = #{record.weipayid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prepayId != null" >
+        prePay_id = #{record.prepayId,jdbcType=VARCHAR},
       </if>
       <if test="record.customerName != null" >
         customer_name = #{record.customerName,jdbcType=VARCHAR},
@@ -301,6 +318,9 @@
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.closed != null" >
+        closed = #{record.closed,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.prepayed != null" >
         prepayed = #{record.prepayed,jdbcType=TIMESTAMP},
       </if>
@@ -316,6 +336,7 @@
     update orders
     set id = #{record.id,jdbcType=BIGINT},
       weiPayId = #{record.weipayid,jdbcType=VARCHAR},
+      prePay_id = #{record.prepayId,jdbcType=VARCHAR},
       customer_name = #{record.customerName,jdbcType=VARCHAR},
       tel = #{record.tel,jdbcType=VARCHAR},
       gender = #{record.gender,jdbcType=CHAR},
@@ -330,6 +351,7 @@
       status = #{record.status,jdbcType=VARCHAR},
       checked = #{record.checked,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
+      closed = #{record.closed,jdbcType=TIMESTAMP},
       prepayed = #{record.prepayed,jdbcType=TIMESTAMP},
       payed = #{record.payed,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -341,6 +363,9 @@
     <set >
       <if test="weipayid != null" >
         weiPayId = #{weipayid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        prePay_id = #{prepayId,jdbcType=VARCHAR},
       </if>
       <if test="customerName != null" >
         customer_name = #{customerName,jdbcType=VARCHAR},
@@ -384,6 +409,9 @@
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
+      <if test="closed != null" >
+        closed = #{closed,jdbcType=TIMESTAMP},
+      </if>
       <if test="prepayed != null" >
         prepayed = #{prepayed,jdbcType=TIMESTAMP},
       </if>
@@ -396,6 +424,7 @@
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.Orders" >
     update orders
     set weiPayId = #{weipayid,jdbcType=VARCHAR},
+      prePay_id = #{prepayId,jdbcType=VARCHAR},
       customer_name = #{customerName,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=CHAR},
@@ -410,6 +439,7 @@
       status = #{status,jdbcType=VARCHAR},
       checked = #{checked,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
+      closed = #{closed,jdbcType=TIMESTAMP},
       prepayed = #{prepayed,jdbcType=TIMESTAMP},
       payed = #{payed,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

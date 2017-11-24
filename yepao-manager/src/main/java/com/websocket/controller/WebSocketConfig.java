@@ -16,11 +16,18 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer{
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-         registry.addHandler(systemWebSocketHandler(),"/webSocketServer");
-         registry.addHandler(systemWebSocketHandler(),"/sockjs/webSocketServer");
+        /* registry.addHandler(systemWebSocketHandler(),"/webSocketServer");
+         registry.addHandler(systemWebSocketHandler(),"/sockjs/webSocketServer");*/
+         registry.addHandler(pointWebSocketHandler(),"/webSocketServer").setAllowedOrigins("*").addInterceptors(new WebSocketHandshakeInterceptor());
+         registry.addHandler(pointWebSocketHandler(),"/sockjs/webSocketServer").setAllowedOrigins("*");
     }
     @Bean
     public WebSocketHandler systemWebSocketHandler(){
         return new SystemWebSocketHandler();
+    }
+    
+    @Bean
+    public WebSocketHandler pointWebSocketHandler(){
+        return new PointWebSocketHandler();
     }
 }

@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.yepao.service.OrderService;
 import com.yepao.utils.CommonUtil;
 import com.yepao.utils.HttpResult;
 import com.yepao.utils.HttpUtil;
@@ -25,13 +26,16 @@ import com.yepao.utils.TimeUtils;
 
 
 @Controller
-public class PayController {
+public class PrePayToPayedController {
 
-    private static Logger log = Logger.getLogger(PayController.class);
+	@Autowired
+	private OrderService orderService;
+	
+    private static Logger log = Logger.getLogger(PrePayToPayedController.class);
 
     @ResponseBody
-    @RequestMapping(value = "/prepay", produces = "text/html;charset=UTF-8")
-    public String prePay(String code, ModelMap model, HttpServletRequest request) {
+    @RequestMapping(value = "/payed", produces = "text/html;charset=UTF-8")
+    public String prePay(String orderId,String desc,String obligation,String code, ModelMap model, HttpServletRequest request) {
 
         String content = null;
         Map map = new HashMap();
@@ -62,7 +66,7 @@ public class PayController {
             String randomNonceStr = RandomUtils.generateMixString(32);
             
             //调用统一下单的接口生成预付款订单号
-            Map<String, Object> map2 = unifiedOrder(openId, clientIP, randomNonceStr);
+            Map<String, Object> map2 = unifiedOrder(orderId,desc,openId, clientIP, randomNonceStr);
 
             log.error("prepayId: " + map2.get("prepay_id"));
 
@@ -72,6 +76,14 @@ public class PayController {
             } else {
                 map.put("prepayId", map2.get("prepay_id"));
                 map.put("nonceStr", randomNonceStr);
+               orderService.changePrePay_id(Long.parseLong(orderId),  String.valueOf(map2.get("prepay_id")));
+             
+                    
+                    //返回商户订单号和当前支付的订单类型
+                    map.put("out_trade_no", orderId);
+                    map.put("prePayTransPay", "prePayToPay");
+                
+              
             }
         }
 
@@ -83,7 +95,6 @@ public class PayController {
             e.printStackTrace();
         }
         
-        //如果成功的得到了预支付订单就生成订单
         
 
         return content;
@@ -122,19 +133,22 @@ public class PayController {
         }
         return "";
     }
+    
 
     /**
      * 调用统一下单接口
      * @param openId
      */
-    private Map unifiedOrder(String openId, String clientIP, String randomNonceStr) {
+    private Map unifiedOrder(String orderId,String desc,String openId, String clientIP, String randomNonceStr) {
 
         try {
         	//统一下单的路径
             String url = Constant.URL_UNIFIED_ORDER;
 
             //返回一个包含各种请求参数的对象
-            PayInfo payInfo = createPayInfo(openId, clientIP, randomNonceStr);
+         
+            PayInfo payInfo = createPayInfo(orderId,desc,openId, clientIP, randomNonceStr);
+          
             
             //获取到经过MD5加密后的签名
             String md5 = getSign(payInfo);
@@ -187,14 +201,12 @@ public class PayController {
     }
 
     //得到一个付款详细信息对象
-    private PayInfo createPayInfo(String openId, String clientIP, String randomNonceStr) {
+    private PayInfo createPayInfo(String orderId,String desc,String openId, String clientIP, String randomNonceStr) {
 
         Date date = new Date();
         String timeStart = TimeUtils.getFormatTime(date, Constant.TIME_FORMAT);
         String timeExpire = TimeUtils.getFormatTime(TimeUtils.addDay(date, Constant.TIME_EXPIRE), Constant.TIME_FORMAT);
 
-        //生成商户订单号
-        String randomOrderId = CommonUtil.getRandomOrderId();
 
         PayInfo payInfo = new PayInfo();
         payInfo.setAppid(Constant.APP_ID);//小程序IP
@@ -204,7 +216,7 @@ public class PayController {
         payInfo.setSign_type("MD5");  //默认即为MD5加密
         payInfo.setBody("JSAPI支付测试");//商品描述
         payInfo.setAttach("支付测试4luluteam");//附加信息
-        payInfo.setOut_trade_no(randomOrderId);//商户订单号，随机生成
+        payInfo.setOut_trade_no(orderId);//商户订单号，随机生成
         payInfo.setTotal_fee(1);//总金额
         payInfo.setSpbill_create_ip(clientIP);//终端IP
         payInfo.setTime_start(timeStart);//交易起始时间

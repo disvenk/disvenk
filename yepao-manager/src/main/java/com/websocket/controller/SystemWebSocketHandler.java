@@ -58,6 +58,7 @@ public class SystemWebSocketHandler extends  TextWebSocketHandler {
                 if (user.isOpen()) {
                     user.sendMessage(message);
                 }
+               
             } catch (IOException e) {
                 e.printStackTrace();
             }

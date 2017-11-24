@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yepao.pojo.Orders;
 import com.yepao.service.OrderService;
+import com.yepao.utils.YePaoResult;
 
 @Controller
 public class OrderController {
@@ -38,6 +39,23 @@ public class OrderController {
 	public List<Orders> getPayedOrder(){
 		List<Orders> payedOrder = orderService.getPayed();
 		return payedOrder;
+	}
+	
+	//延迟支付时使用
+	//更改未付款订单为已付定金
+	@RequestMapping("/unPayChangePay")
+	@ResponseBody
+	public YePaoResult unPayChangePay(Long unPayId){
+		YePaoResult result = orderService.unPayChangePay(unPayId);
+		return result;
+	}
+	
+	//更改付定金单位付全款单
+	@RequestMapping("/prePayChangePayed")
+	@ResponseBody
+	public YePaoResult prePayChangePayed(Long prePayId){
+		YePaoResult result = orderService.prePayChangePayed(prePayId);
+		return result;
 	}
 	
 }
