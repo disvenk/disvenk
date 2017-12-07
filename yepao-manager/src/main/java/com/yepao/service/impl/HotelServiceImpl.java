@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.yepao.mapper.HotelMapper;
 import com.yepao.pojo.Hotel;
+import com.yepao.pojo.HotelA;
 import com.yepao.pojo.HotelExample;
+import com.yepao.pojo.HotelExample.Criteria;
 import com.yepao.service.HotelService;
 
 @Service
@@ -32,8 +34,12 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	//更新酒店信息
-	public void updateHotel(Hotel hotel) {
-		hotelMapper.updateByPrimaryKey(hotel);
+	public void updateHotel(HotelA hotelA,Hotel hotel) {
+		HotelExample example = new HotelExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andIdEqualTo(hotelA.getId());
+		
+		hotelMapper.updateByExampleSelective(hotel, example);
 		
 	}
 

@@ -18,14 +18,14 @@ public class TalentCommentController {
 	
 	@RequestMapping("/talentComment_pageQuery")
 	@ResponseBody
-	public List<TalentComment> getTalentComment(){
-		List<TalentComment> list = tanlentCommentService.getTalentCommentList();
+	public List<TalentComment> getTalentComment(Long talentId){
+		List<TalentComment> list = tanlentCommentService.getTalentCommentList(talentId);
 		return list;
 	}
 	
 	@RequestMapping("/talent_comment/delete")
-	public String deleteTalentComment(String ids){
+	public String deleteTalentComment(String ids,String talent){
 		tanlentCommentService.deleteTalentComment(ids);
-		return "redirect:/pages/base/talent_comment";
+		return "redirect:/pages/base/"+talent+"_comment";
 	}
 }

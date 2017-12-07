@@ -45,6 +45,12 @@
 			function doAdd(){
         		
 				$('#addWindow').window("open");
+				$('#operatingId').combobox({    
+				    onLoadSuccess : function() {  
+				       // $("#operatingId").combobox("select", "CMCC");  
+				        $("#operatingId").combobox("setValue", "-请选择-");  
+				    }  
+				});
 			}
 			
 			function doView(){
@@ -87,7 +93,7 @@
 				var rows = $("#grid").datagrid('getSelections');
 				if(rows.length == 0){
 					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要上传的策划师","warning");
+					$.messager.alert("提示信息","请选择您要上传的主持人","warning");
 				}else if(rows.length != 1){
 					// 没选 或 多选 
 					$.messager.alert("提示信息","上传数据时，只能选中一行","warning")
@@ -108,7 +114,7 @@
 				var rows = $("#grid").datagrid('getSelections');
 				if(rows.length == 0){
 					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要上传的策划师","warning");
+					$.messager.alert("提示信息","请选择您要上传的主持人","warning");
 				}else if(rows.length != 1){
 					// 没选 或 多选 
 					$.messager.alert("提示信息","上传数据时，只能选中一行","warning")
@@ -129,7 +135,7 @@
 				var rows = $("#grid").datagrid('getSelections');
 				if(rows.length == 0){
 					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要查看的策划师","warning");
+					$.messager.alert("提示信息","请选择您要查看的主持人","warning");
 				}else if(rows.length != 1){
 					// 没选 或 多选 
 					$.messager.alert("提示信息","查看作品时，只能选中一行","warning")
@@ -148,7 +154,7 @@
 				var rows = $("#grid").datagrid('getSelections');
 				if(rows.length == 0){
 					// 没选 或 多选 
-					$.messager.alert("提示信息","请选择您要查看的策划师","warning");
+					$.messager.alert("提示信息","请选择您要查看的主持人","warning");
 				}else if(rows.length != 1){
 					// 没选 或 多选 
 					$.messager.alert("提示信息","查看作品时，只能选中一行","warning")
@@ -158,6 +164,25 @@
 					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
 					$.cookie("checkHostId", row.weddingTalentId, {path: '/',expires: 1});
 					location.href="/pages/base/hostMediaWorks";
+					
+				}
+			}
+			
+			function checkComment(){
+				// 获取当前datagrid选中数据 ，就是前面那个框框打对勾就算是选中了
+				var rows = $("#grid").datagrid('getSelections');
+				if(rows.length == 0){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","请选择您要查看的主持人","warning");
+				}else if(rows.length != 1){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","查看作品时，只能选中一行","warning")
+				}else{
+					// 只选中一行 
+					var row = rows[0]; 
+					// 进行表单回显操作 ，只要使用了它就能将本行的数据加载打表单中去
+					$.cookie("checkHostId", row.weddingTalentId, {path: '/',expires: 1});
+					location.href="/pages/base/host_comment";
 					
 				}
 			}
@@ -193,11 +218,16 @@
 				text : '查看图片作品',
 				iconCls : 'icon-search',
 				handler : checkImgWorks
-			}, {
+			},{
 				id : 'button-upload',
 				text : '查看视频作品',
 				iconCls : 'icon-search',
 				handler : checkMediaWorks
+			},{
+				id : 'button-upload',
+				text : '查看评论',
+				iconCls : 'icon-search',
+				handler : checkComment
 			}];
 			// 定义列
 			var columns = [ [ {
@@ -290,6 +320,13 @@
 				// 先将body隐藏，再显示，不会出现页面刷新效果
 				$("body").css({visibility:"visible"});
 				
+				$('#operatingId').combobox({    
+				    onLoadSuccess : function() {  
+				       // $("#operatingId").combobox("select", "CMCC");  
+				        $("#operatingId").combobox("setValue", "-请选择-");  
+				    }  
+				});
+				
 				// 主持人管理数据表格
 				$('#grid').datagrid( {
 					iconCls : 'icon-forward',
@@ -332,6 +369,12 @@
 				$("#save").click(function(){
 					// 判断是否form中所有表单对象 都是通过校验 
 					if($("#addForm").form('validate')){//这个方法是内置的
+						var hotelName=$("#operatingId").combobox('getValue');
+						if(hotelName=="-请选择-"){
+							
+							$.messager.alert("警告","请选择酒店名称","warning");
+							return;
+						}
 						// 通过校验 
 						$("#addForm").submit();
 					}else{
@@ -385,6 +428,13 @@
 					<table class="table-edit" width="80%" height="80%" align="center">
 						<tr class="title">
 							<td colspan="2">人才信息</td>
+						</tr>
+						<tr>
+						<td>酒店名称</td>
+						<td>
+							 <input type="text" id="operatingId" name="hotelid" class="easyui-combobox" data-options="required:true,valueField:'hotelId',textField:'name',url:'/hotel_pageQuery'"/> 
+							
+						</td>
 						</tr>
 						<tr>
 							<td>人才头像</td>
@@ -458,6 +508,7 @@
 							<td colspan="2">人才信息</td>
 							<input type="hidden" name="weddingTalentId"/>
 							<input type="hidden" name="created"/>
+							<input type="hidden" name="hotelid"/>
 						</tr>
 						<tr style="color:red">
 							<td>提示：</td>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.yepao.mapper.HallCommentMapper;
 import com.yepao.pojo.HallComment;
 import com.yepao.pojo.HallCommentExample;
+import com.yepao.pojo.HallCommentExample.Criteria;
 import com.yepao.service.HallCommentService;
 import com.yepao.utils.FastDFSClient;
 
@@ -16,8 +17,10 @@ public class HallCommentServiceImpl implements HallCommentService{
 	@Autowired
 	private HallCommentMapper hallCommentMapper;
 	
-	public List<HallComment> getHallCommentList() {
+	public List<HallComment> getHallCommentList(Long hallId) {
 		HallCommentExample example = new HallCommentExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andHallIdEqualTo(hallId);
 		List<HallComment> list = hallCommentMapper.selectByExample(example);
 		return list;
 	}
@@ -29,10 +32,16 @@ public class HallCommentServiceImpl implements HallCommentService{
 			for (String string : Tids) {
 				Long id = Long.parseLong(string);
 				HallComment hallComment = hallCommentMapper.selectByPrimaryKey(id);
-				String[] imgs = hallComment.getImg().split(",");
-				for (String string2 : imgs) {
-					fastDFSClient.delete_file(string2.substring(20));
-				}
+				
+				String img = hallComment.getImg();
+				if(img!=null){
+					String[] imgs = img.split(",");
+				
+					for (String string2 : imgs) {
+						if(string2!=null)
+						fastDFSClient.delete_file(string2.substring(20));
+					}
+					}
 				hallCommentMapper.deleteByPrimaryKey(id);
 			}
 		} catch (Exception e) {

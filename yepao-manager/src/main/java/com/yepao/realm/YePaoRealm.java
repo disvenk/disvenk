@@ -15,16 +15,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.yepao.mapper.RoleMapper;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.yepao.mapper.UserMapper;
-import com.yepao.mapper.UserRoleMapper;
-import com.yepao.pojo.Permission;
-import com.yepao.pojo.Role;
 import com.yepao.pojo.User;
 import com.yepao.pojo.UserExample;
 import com.yepao.pojo.UserExample.Criteria;
-import com.yepao.pojo.UserRole;
-import com.yepao.pojo.UserRoleExample;
 import com.yepao.pojo.UserExample.Criteria;
 
 
@@ -36,15 +31,15 @@ public class YePaoRealm extends AuthorizingRealm {
 
 	@Autowired
 	private UserMapper userMapper;
-	@Autowired
+	/*@Autowired
 	private RoleMapper roleMapper;
 	@Autowired
-	private UserRoleMapper userRoleMapper;
+	private UserRoleMapper userRoleMapper;*/
 	
-	@Override
+	//@Override
 	// 授权...
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
-		System.out.println("shiro 授权管理...");
+	/*	System.out.println("shiro 授权管理...");
 		//创建授权对象
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		// 根据当前登录用户 查询对应角色和权限
@@ -60,11 +55,13 @@ public class YePaoRealm extends AuthorizingRealm {
 			Role role = roleMapper.selectByPrimaryKey(userRole.getRoleId());
 			authorizationInfo.addRole(role.getKeywords());
 			
-		}
+		}*/
 
 		//我们将角色和权限添加到权限对象里面以后，安全管理对象就会自动的去判断当前用户是否含有指定的角色和指定的权限
 		//程序只会关心授权对象里面有没有指定的角色或者权限，它不会去管是哪个对象在登录
-		return authorizationInfo;
+		//return authorizationInfo;*/
+	return null;
+	
 	}
 
 	@Override

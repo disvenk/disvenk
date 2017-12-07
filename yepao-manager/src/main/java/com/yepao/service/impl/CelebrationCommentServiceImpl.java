@@ -9,6 +9,7 @@ import com.yepao.mapper.CelebrationCommentMapper;
 import com.yepao.mapper.ComboCommentMapper;
 import com.yepao.pojo.CelebrationComment;
 import com.yepao.pojo.CelebrationCommentExample;
+import com.yepao.pojo.CelebrationCommentExample.Criteria;
 import com.yepao.pojo.ComboComment;
 import com.yepao.pojo.ComboCommentExample;
 import com.yepao.pojo.TalentComment;
@@ -22,8 +23,10 @@ public class CelebrationCommentServiceImpl implements CelebrationCommentService 
 	@Autowired
 	private CelebrationCommentMapper celebrationCommentMapper;
 	
-	public List<CelebrationComment> getCelebrationCommentList() {
+	public List<CelebrationComment> getCelebrationCommentList(Long celebrationId) {
 		CelebrationCommentExample example = new CelebrationCommentExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andCelebrationIdEqualTo(celebrationId);
 		List<CelebrationComment> list = celebrationCommentMapper.selectByExample(example);
 		return list;
 	}

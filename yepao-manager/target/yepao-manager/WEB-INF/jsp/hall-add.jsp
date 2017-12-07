@@ -36,35 +36,50 @@
 		</div>
 	<form id="hallAddForm" class="itemForm" method="post">
 	    <table cellpadding="5">
+	    <tr>
+			<td>酒店名称</td>
+			<td>
+				 <input type="text" id="operatingId" name="hotelid" class="easyui-combobox" data-options="required:true,valueField:'hotelId',textField:'name',url:'/hotel_pageQuery'"/> 
+				
+			</td>
+		</tr>
 	        <tr>
-	            <td>名称:</td>
+	            <td>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:</td>
 	            <td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 280px;"></input></td>
 	        </tr>
 	        <tr>
-	            <td>楼层:</td>
+	            <td>楼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;层:</td>
 	            <td><input class="easyui-textbox" type="text" name="floorNum" data-options="required:true" style="width: 280px;"></input></td>
 	        </tr>
 	        <tr>
-	            <td>桌数:</td>
+	            <td>桌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数:</td>
 	            <td><input class="easyui-textbox" type="text" name="tableNum" data-options="required:true" style="width: 280px;"></input></td>
 	        </tr>
 	        <tr>
-	            <td>层高:</td>
+	            <td>层&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高:</td>
 	            <td><input class="easyui-numberbox" type="text" name="floorHeight" data-options="required:true" style="width: 280px;"/> </td>
 	        </tr>
 	        <tr>
-	            <td>面积:</td>
+	            <td>面&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;积:</td>
 	            <td><input class="easyui-numberbox" type="text" name="area" data-options="min:1,max:99999999,precision:0,required:true" /></td>
 	        </tr>
 	        <tr>
-	            <td>图片:</td>
+	            <td>最大桌数:</td>
+	            <td><input class="easyui-textbox" type="text" name="minTable" data-options="required:true" /></td>
+	        </tr>
+	        <tr>
+	            <td>最大桌数:</td>
+	            <td><input class="easyui-textbox" type="text" name="maxTable" data-options="required:true" /></td>
+	        </tr>
+	        <tr>
+	            <td>图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片:</td>
 	            <td style="line-height: 52px">
 	            	 <a style="margin-top: 15px;" href="javascript:void(0)" class="easyui-linkbutton picFileUpload">上传图片</a>
 	                 <input type="hidden" id="image" name="img"/>
 	            </td>
 	        </tr>
 	         <tr>
-	            <td>备注:</td>
+	            <td>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</td>
 	            <td><textarea name="standby" style="resize: none;height: 80px" rows="20"></textarea></td>
 	        </tr>
 	    </table>
@@ -78,6 +93,12 @@
 	var itemAddEditor ;
 	//页面初始化完毕后执行此方法
 	$(function(){
+		$('#operatingId').combobox({    
+		    onLoadSuccess : function() {  
+		       // $("#operatingId").combobox("select", "CMCC");  
+		        $("#operatingId").combobox("setValue", "-请选择-");  
+		    }  
+		});
 		//创建富文本编辑器,在商品描述那个文本域中添加一个富文本编辑器
 		//itemAddEditor = TAOTAO.createEditor("#itemAddForm [name=desc]");
 		//初始化类目选择和图片上传器，这里就会加载init属性只想属性里面的方法，在间接的执行了其他的属性里的方法，比如商品类目和图片上传
@@ -91,7 +112,14 @@
 		//有效性验证
 		if(!$('#hallAddForm').form('validate')){
 			$.messager.alert('提示','表单还未填写完成!');
-			return ;
+			return;
+		}
+		
+		var hotelName=$("#operatingId").combobox('getValue');
+		if(hotelName=="-请选择-"){
+			
+			$.messager.alert("警告","请选择酒店名称","warning");
+			return;
 		}
 		
 		$.post("/add/hall",$("#hallAddForm").serialize(), function(data){

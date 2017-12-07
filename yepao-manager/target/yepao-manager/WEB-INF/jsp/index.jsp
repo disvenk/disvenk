@@ -11,6 +11,7 @@
 		<!-- 导入easyui类库 -->
 		<link id="easyuiTheme" rel="stylesheet" type="text/css" href="/js/easyui/themes/gray/easyui.css">
 		<link rel="stylesheet" type="text/css" href="/js/easyui/themes/icon.css">
+		<link href="/images/icon.ico" rel="icon" type="image/x-icon" />
 		<!-- <link rel="stylesheet" type="text/css" href="/css/default.css"> -->
 		<script type="text/javascript" src="/js/easyui/jquery.easyui.min.js"></script>
 		<!-- 导入ztree类库 -->
@@ -19,7 +20,9 @@
 		<script src="/js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
 		<script type="text/javascript" src="/js/easyui/ext/jquery.cookie.js"></script>
 		<script type="text/javascript">
+		var ws = null;
 			$(function() {
+				
 				var userName=unescape($.cookie("userName"));
 				$("#userToken").html(userName);
 			
@@ -98,6 +101,24 @@
 						}
 					} 
 				}); 
+				
+				var contents = '<div style="width:100%;height:100%;overflow:hidden;">'
+					+ '<iframe src="'
+					+ "/pages/base/home"
+					+ '" scrolling="auto" style="width:100%;height:100%;border:0;" ></iframe></div>';
+				
+				$('#tabs').tabs('add', {
+					title : "消息中心",
+					content : contents,
+					closable : false,
+					tools:[{ 
+						iconCls:'icon-reload', // 刷新按钮
+						handler : function(){
+							var tab = $('#tabs').tabs('getTab',"消息中心");
+							$("iframe[src='"+"/pages/base/home"+"']").get(0).contentWindow.location.reload(true);
+						}
+					}] 
+				});
 			});
 			
 			
@@ -200,6 +221,7 @@
 					});
 				};
 			
+				
 		</script>
 	</head>
 
@@ -238,9 +260,6 @@
 		</div>
 		<div data-options="region:'center'">
 			<div id="tabs" fit="true" class="easyui-tabs" border="false">
-				<div title="消息中心" id="subWarp" style="width:100%;height:100%;overflow:hidden">
-					<iframe src="/pages/base/home" style="width:100%;height:100%;border:0;"></iframe>
-				</div>
 			</div>
 		</div>
 		<div data-options="region:'south',border:false" style="height:50px;padding:10px;">

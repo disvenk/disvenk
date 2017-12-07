@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class WeddingTalentA {
 	 private Long weddingTalentId;
+	 
+	 private Long hotelid;
 
 	    private String headImg;
 
@@ -12,7 +14,7 @@ public class WeddingTalentA {
 
 	    private String occupation;
 
-	    private Integer experience;
+	    private String experience;
 
 	    private String tel;
 
@@ -22,9 +24,9 @@ public class WeddingTalentA {
 
 	    private String style;
 
-	    private String goodReputation;
+	    private Integer goodReputation;
 
-	    private Integer comprehensive;
+	    private BigDecimal comprehensive;
 
 	    private Integer chosenCount;
 
@@ -42,6 +44,14 @@ public class WeddingTalentA {
 	        this.weddingTalentId = weddingTalentId;
 	    }
 
+	    public Long getHotelid() {
+	        return hotelid;
+	    }
+
+	    public void setHotelid(Long hotelid) {
+	        this.hotelid = hotelid;
+	    }
+	    
 	    public String getHeadImg() {
 	        return headImg;
 	    }
@@ -66,11 +76,11 @@ public class WeddingTalentA {
 	        this.occupation = occupation == null ? null : occupation.trim();
 	    }
 
-	    public Integer getExperience() {
+	    public String getExperience() {
 	        return experience;
 	    }
 
-	    public void setExperience(Integer experience) {
+	    public void setExperience(String experience) {
 	        this.experience = experience;
 	    }
 
@@ -106,19 +116,19 @@ public class WeddingTalentA {
 	        this.style = style == null ? null : style.trim();
 	    }
 
-	    public String getGoodReputation() {
+	    public Integer getGoodReputation() {
 	        return goodReputation;
 	    }
 
-	    public void setGoodReputation(String goodReputation) {
-	        this.goodReputation = goodReputation == null ? null : goodReputation.trim();
+	    public void setGoodReputation(Integer goodReputation) {
+	        this.goodReputation = goodReputation == null ? null : goodReputation;
 	    }
 
-	    public Integer getComprehensive() {
+	    public BigDecimal getComprehensive() {
 	        return comprehensive;
 	    }
 
-	    public void setComprehensive(Integer comprehensive) {
+	    public void setComprehensive(BigDecimal comprehensive) {
 	        this.comprehensive = comprehensive;
 	    }
 

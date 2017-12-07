@@ -5,37 +5,40 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>公告栏、预警信息和代办事宜</title>
+		<title>订单通知、客户评价酒店和客户意见</title>
 		<!-- 导入jquery核心类库 -->
 		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 		<!-- 导入easyui类库 -->
 		<link rel="stylesheet" type="text/css" href="/js/easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="/js/easyui/themes/icon.css">
-		<link rel="stylesheet" type="text/css" href="/js/easyui/ext/portal.css">
 		<link rel="stylesheet" type="text/css" href="/css/default.css">
 		<script type="text/javascript" src="/js/easyui/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="/js/easyui/ext/jquery.portal.js"></script>
 		<script type="text/javascript" src="/js/easyui/ext/jquery.cookie.js"></script>
+		<script src="/js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
 		<script type="text/javascript">
+		
+		
+
 			$(function() {
 				panels = [ {
 					id : 'p1',
-					title : '公共栏',
+					title : '付全款订单消息提醒',
 					height : 255,
 					collapsible : true,
-					href:'/pages/base/gonggao'
+					href:'/pages/base/orderAlert'
 				}, {
 					id : 'p2',
-					title : '代办事宜',
+					title : '付定金订单消息提醒',
 					height : 255,
 					collapsible : true,
-					href:'/pages/base/daiban'
+					href:'/pages/base/preOrderAlert'
 				}, {
 					id : 'p3',
-					title : '预警信息',
+					title : '客户意见提醒',
 					height : 255,
 					collapsible : true,
-					href:'/pages/base/yujing'
+					href:'/pages/base/optionAlert'
 				}, {
 					id : 'p4',
 					title : '系统BUG反馈',

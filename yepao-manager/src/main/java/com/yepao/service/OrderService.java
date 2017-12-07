@@ -7,14 +7,14 @@ import com.yepao.utils.YePaoResult;
 
 public interface OrderService {
 	//未付款订单
-	public List<Orders> getUnPayOrder();
+	public List<Orders> getUnPayOrder(Long hotelId);
 	//已付定金单
-	public List<Orders> getPrePayOrder();
+	public List<Orders> getPrePayOrder(Long hotelId);
 	//已付全款
-	public List<Orders> getPayed();
+	public List<Orders> getPayed(Long hotelId);
 	//添加未付款订单
 	public void addUnPayOrder(Orders orders);
-	//更改未付款单位已付定金单
+	//更改未付款单为已付定金单
 	public YePaoResult unPayChangePay(Long orderId);
 	//更改未付款单的预支付id为定金单的预支付id
 	public void changePrePay_id(Long orderId,String prePay_id);

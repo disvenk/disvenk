@@ -92,13 +92,19 @@
 					// 没选 或 多选 
 					$.messager.alert("提示信息","请选择您要删除的行","warning");
 				}else{
-					var arr = new Array();
-					for(var i=0;i<rows.length;i++){
-						arr.push(rows[i].hotelId);
-					}
-					//生成字符串
-					var ids = arr.join(",");
-					window.location.href = "/hotel/delete?ids="+ids;
+					$.messager.confirm("提示", "删除之后不可恢复,确定要删除吗？",function(data){
+						if(data){
+							var arr = new Array();
+							for(var i=0;i<rows.length;i++){
+								arr.push(rows[i].id);
+							}
+							//生成字符串
+							var ids = arr.join(",");
+							window.location.href = "/hotel/delete?ids="+ids;
+						}
+						
+					})
+					
 				}
 			}
 			
@@ -121,8 +127,18 @@
 			}];
 			// 定义列
 			var columns = [ [ {
-				field : 'hotelId',
+				field : 'id',
 				checkbox : true,
+			},{
+				field : 'hotelId',
+				title : '商家账号',
+				width : 130,
+				align : 'center'
+			},{
+				field : 'password',
+				title : '商家密码',
+				width : 120,
+				align : 'center'
 			},{
 				field : 'name',
 				title : '酒店名称',
@@ -146,7 +162,7 @@
 			}, {
 				field : 'img',
 				title : '酒店图片',
-				width : 200,
+				width : 100,
 				align : 'center',
 				formatter:function(value,row,index){
 					return "<img src='"+value+"' width='100' height='100'/>";//在这个区域直接显示出图片
@@ -194,7 +210,7 @@
 				$('#grid').datagrid( {
 					iconCls : 'icon-forward',
 					fit : true,
-					fitColumns:true,
+					//fitColumns:true,
 					border : false,
 					rownumbers : true,
 					striped : true,
@@ -287,35 +303,53 @@
 						<tr class="title">
 							<td colspan="2">酒店信息</td>
 						</tr>
+						<tr style="color:red">
+							<td>提示：</td>
+							<td>
+								商家账号为11位数的手机号码*
+							</td>
+						</tr>
+							<tr>
+							<td>商家账号</td>
+							<td>
+								<input type="text" name="hotelId"  data-options="validType:'length[0,11]'" class="easyui-validatebox easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>商家密码</td>
+							<td>
+								<input type="text" name="password" class="easyui-validatebox" required="true" />
+							</td>
+						</tr>
 						<tr>
 							<td>酒店名称</td>
 							<td>
-								<input type="text" name="name" class="easyui-validatebox" required="true" />
+								<input type="text" name="name" class="easyui-validatebox" />
 							</td>
 						</tr>
 						<tr>
 							<td>酒店地址</td>
 							<td>
-								<input type="text" name="address" class="easyui-validatebox" required="true" />
+								<input type="text" name="address" class="easyui-validatebox"/>
 							</td>
 						</tr>
 						<tr>
 							<td>酒店描述</td>
 							<td>
 								<!-- <input type=" name="city" style="width:80%" class="easyui-validatebox" required="true" /> -->
-								<textarea class="easyui-validatebox" required="true" name="descreption" style="resize: none;width:80%;height:80px" rows="20"></textarea> 
+								<textarea class="easyui-validatebox" name="descreption" style="resize: none;width:80%;height:80px" rows="20"></textarea> 
 							</td>
 						</tr>
 						<tr>
 							<td>酒店电话</td>
 							<td>
-								<input type="text" name="tel"  data-options="validType:'length[0,11]'" class="easyui-validatebox easyui-numberbox" required="true" />
+								<input type="text" name="tel" class="easyui-validatebox" />
 							</td>
 						</tr>
 						<tr>
 							<td>酒店图片</td>
 							<td>
-								<input type="file" style="width:200px" name="uploadFile" class="easyui-validatebox" required="true"/>
+								<input type="file" style="width:200px" name="uploadFile" class="easyui-validatebox" />
 							</td>
 						</tr>
 						<tr>
@@ -341,7 +375,7 @@
 					<table class="table-edit" width="80%" height="80%" align="center">
 						<tr class="title">
 							<td colspan="2">酒店信息</td>
-							<input type="hidden" name="hotelId"/>
+							<input type="hidden" name="id"/>
 						</tr>
 						<tr style="color:red">
 							<td>提示：</td>
@@ -350,34 +384,46 @@
 							</td>
 						</tr>
 						<tr>
+							<td>商家账号</td>
+							<td>
+								<input type="text" name="hotelId"  data-options="validType:'length[0,15]'" class="easyui-validatebox easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>商家密码</td>
+							<td>
+								<input type="text" name="password" class="easyui-validatebox" required="true" />
+							</td>
+						</tr>
+						<tr>
 							<td>酒店名称</td>
 							<td>
-								<input type="text" name="name" class="easyui-validatebox" required="true" />
+								<input type="text" name="name" class="easyui-validatebox" required="true"/>
 							</td>
 						</tr>
 						<tr>
 							<td>酒店地址</td>
 							<td>
-								<input type="text" name="address" class="easyui-validatebox" required="true" />
+								<input type="text" name="address" class="easyui-validatebox" required="true"/>
 							</td>
 						</tr>
 						<tr>
 							<td>酒店描述</td>
 							<td>
 								<!-- <input type=" name="city" style="width:80%" class="easyui-validatebox" required="true" /> -->
-								<textarea class="easyui-validatebox" required="true" name="descreption" style="resize: none;width:80%;height:80px" rows="20"></textarea> 
+								<textarea class="easyui-validatebox" name="descreption" style="resize: none;width:80%;height:80px" rows="20"></textarea> 
 							</td>
 						</tr>
 						<tr>
 							<td>酒店电话</td>
 							<td>
-								<input type="text" name="tel"  data-options="validType:'length[0,11]'" class="easyui-validatebox easyui-numberbox" required="true" />
+								<input type="text" name="tel" class="easyui-validatebox" required="true"/>
 							</td>
 						</tr>
 						<tr>
 							<td>酒店图片</td>
 							<td>
-								<input type="file" style="width:200px" name="uploadFile" class="easyui-validatebox"/>
+								<input type="file" style="width:200px" name="uploadFile" class="easyui-validatebox" required="true"/>
 							</td>
 						</tr>
 						<tr>

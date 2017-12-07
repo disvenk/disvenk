@@ -15,6 +15,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.pay.controller.ConstantStatus;
 import com.sun.net.httpserver.HttpServer;
 import com.yepao.pojo.User;
 import com.yepao.utils.JsonUtils;
@@ -35,13 +36,13 @@ public class PointWebSocketHandler extends  TextWebSocketHandler {
 	    
 	    @Override
 	    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-	    	Long uid = (Long) session.getAttributes().get("userid");
 	        System.out.println("成功建立连接");
 	        String userId = getClientId(session);
 	        System.out.println("userId:"+userId);
+	       
 	        if (userId != null) {
 	            users.put(userId, session);
-	            session.sendMessage(new TextMessage("成功建立socket连接"));
+	            //session.sendMessage(new TextMessage("成功建立socket连接"));
 	            System.out.println(userId);
 	            System.out.println(session);
 	        }
@@ -52,12 +53,13 @@ public class PointWebSocketHandler extends  TextWebSocketHandler {
 	        // ...
 	        System.out.println(message.getPayload());
 
-	        WebSocketMessage message1 = new TextMessage("server:"+message);
-	        try {
+	       // WebSocketMessage message1 = new TextMessage("server:"+message);
+	        sendMessageToUser("admin",message);
+	       /* try {
 	            session.sendMessage(message1);
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }
+	        }*/
 	    }
 
 	    /**
@@ -66,7 +68,7 @@ public class PointWebSocketHandler extends  TextWebSocketHandler {
 	     * @param message
 	     * @return
 	     */
-	    public boolean sendMessageToUser(Integer clientId, TextMessage message) {
+	    public boolean sendMessageToUser(String clientId, TextMessage message) {
 	        if (users.get(clientId) == null) return false;
 	        WebSocketSession session = users.get(clientId);
 	        System.out.println("sendMessage:" + session);

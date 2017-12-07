@@ -52,6 +52,7 @@ public class DishStyleController {
 				String url = IMAGE_SERVER_URL + path;
 				
 				dishstyle.setImg(url);
+				
 				dishstyle.setCreated(new Date());
 				dishstyle.setUpdated(new Date());
 				dishStyleService.addDishStyle(dishstyle);
@@ -72,6 +73,7 @@ public class DishStyleController {
 			if(StringUtils.isBlank(checkFileName)){
 				Dishstyle dishstyleB = dishStyleService.getDishStyle(dishstyleA.getId());
 				 Dishstyle dishstyle = new Dishstyle();
+				 dishstyle.setHotelid(dishstyleA.getHotelid());
 		            dishstyle.setId(dishstyleA.getId());
 		            dishstyle.setName(dishstyleA.getName());;
 		            dishstyle.setImg(dishstyleB.getImg());
@@ -103,6 +105,7 @@ public class DishStyleController {
 	            dishstyle.setId(dishstyleA.getId());
 	            dishstyle.setName(dishstyleA.getName());;
 	            dishstyle.setImg(url);
+	            dishstyle.setHotelid(dishstyleA.getHotelid());
 	            dishstyle.setPrice(dishstyleA.getPrice());
 	            dishstyle.setCreated(new Date(Long.parseLong(dishstyleA.getCreated())));
 	            dishstyle.setUpdated(new Date());

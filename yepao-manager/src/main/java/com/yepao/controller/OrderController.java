@@ -17,27 +17,27 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	//未付款订单
+	//查询未付款订单
 	@RequestMapping("/unPayOrder")
 	@ResponseBody
-	public List<Orders> getUnPayOrder(){
-		List<Orders> unPayOrder = orderService.getUnPayOrder();
+	public List<Orders> getUnPayOrder(Long hotelId){
+		List<Orders> unPayOrder = orderService.getUnPayOrder(hotelId);
 		return unPayOrder;
 	}
 	
-	//已付付定金单
+	//查询已付付定金单
 	@RequestMapping("/prePayOrder")
 	@ResponseBody
-	public List<Orders> getPrePayOrder(){
-		List<Orders> prePayOrder = orderService.getPrePayOrder();
+	public List<Orders> getPrePayOrder(Long hotelId){
+		List<Orders> prePayOrder = orderService.getPrePayOrder(hotelId);
 		return prePayOrder;
 	}
 	
-	//已付全款
+	//查询已付全款
 	@RequestMapping("/payed")
 	@ResponseBody
-	public List<Orders> getPayedOrder(){
-		List<Orders> payedOrder = orderService.getPayed();
+	public List<Orders> getPayedOrder(Long hotelId){
+		List<Orders> payedOrder = orderService.getPayed(hotelId);
 		return payedOrder;
 	}
 	
@@ -45,8 +45,8 @@ public class OrderController {
 	//更改未付款订单为已付定金
 	@RequestMapping("/unPayChangePay")
 	@ResponseBody
-	public YePaoResult unPayChangePay(Long unPayId){
-		YePaoResult result = orderService.unPayChangePay(unPayId);
+	public YePaoResult unPayChangePay(Long out_trade_no){
+		YePaoResult result = orderService.unPayChangePay(out_trade_no);
 		return result;
 	}
 	

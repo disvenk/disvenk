@@ -50,6 +50,12 @@
 		<!-- <property name="cacheManager" ref="shiroCacheManager" /> -->
 	</bean>
 	
+	<!-- 会话管理器 -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+	    <!-- 设置超时时间 -->
+	    <property name="globalSessionTimeout" value="180000000"/>
+	</bean>
+	
 	 <!-- 配置Realm -->
 	<bean id="yePaoRealm" class="com.yepao.realm.YePaoRealm">
 		<!-- 缓存区的名字 就是 ehcache.xml 自定义 cache的name -->

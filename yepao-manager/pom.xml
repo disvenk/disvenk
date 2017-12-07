@@ -294,6 +294,9 @@
 				<configuration>
 					<port>9001</port>
 					<path>/</path>
+					<url>http://47.104.19.44:9001/manager/text</url>
+					<username>tomcat</username>
+					<password>tomcat</password>
 				</configuration>
 			</plugin>
 			

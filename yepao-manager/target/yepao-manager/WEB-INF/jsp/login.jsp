@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/login.css">
 		<script type="text/javascript">
 		 function login() {
-			$.post("/login", $("#loginform").serialize(),function(data){
+			 
 				if ($("#idInput").val() == "") {
 					//alert("用户名不能为空");
 					$("#alert").html("用户名不能为空");
@@ -31,6 +31,8 @@
 					$("#inputaccount").focus();
 					return false;
 				}
+			$.post("/login", $("#loginform").serialize(),function(data){
+			
 				
 				if (data.status == 200) {
 						location.href = "/pages/base/index";
@@ -76,7 +78,7 @@
 						<div class="form-group" id="idInputLine">
 							<label for="inputPassword3" class="col-sm-3 control-label">账&nbsp&nbsp&nbsp号</label>
 							<div class="col-sm-8">
-								<input id="idInput" type="text" name="username" value="${cookie.username.value}" class="form-control" onkeydown="javascript:if(event.keyCode==13) login();" placeholder="请输入手机号/邮箱/用户名">
+								<input id="idInput" type="text" name="username" value="${cookie.username.value}" class="form-control" onkeydown="javascript:if(event.keyCode==13) login();" placeholder="请输入用户名">
 							</div>
 						</div>
 						<div class="form-group" id="pwdInputLine">

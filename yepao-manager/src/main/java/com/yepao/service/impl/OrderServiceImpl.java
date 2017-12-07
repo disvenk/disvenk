@@ -20,28 +20,31 @@ public class OrderServiceImpl implements OrderService {
 	private OrdersMapper ordersMapper;
 	
 	//未付款订单
-	public List<Orders> getUnPayOrder() {
+	public List<Orders> getUnPayOrder(Long hotelId) {
 		OrdersExample example = new OrdersExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andStatusEqualTo("未付款");
+		criteria.andHotelIdEqualTo(hotelId);
 		List<Orders> list = ordersMapper.selectByExample(example);
 		return list;
 	}
 
 	//已付定金单
-	public List<Orders> getPrePayOrder() {
+	public List<Orders> getPrePayOrder(Long hotelId) {
 		OrdersExample example = new OrdersExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andStatusEqualTo("已付定金");
+		criteria.andHotelIdEqualTo(hotelId);
 		List<Orders> list = ordersMapper.selectByExample(example);
 		return list;
 	}
 
 	//已付全款单
-	public List<Orders> getPayed() {
+	public List<Orders> getPayed(Long hotelId) {
 		OrdersExample example = new OrdersExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andStatusEqualTo("已付全款");
+		criteria.andHotelIdEqualTo(hotelId);
 		List<Orders> list = ordersMapper.selectByExample(example);
 		return list;
 	}

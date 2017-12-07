@@ -3,9 +3,11 @@
 <mapper namespace="com.yepao.mapper.BanquetHallMapper" >
   <resultMap id="BaseResultMap" type="com.yepao.pojo.BanquetHall" >
     <id column="banquet_hall_id" property="banquetHallId" jdbcType="BIGINT" />
+    <result column="hotelId" property="hotelid" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="floor_num" property="floorNum" jdbcType="VARCHAR" />
-    <result column="table_num" property="tableNum" jdbcType="VARCHAR" />
+    <result column="min_table" property="minTable" jdbcType="VARCHAR" />
+    <result column="max_table" property="maxTable" jdbcType="VARCHAR" />
     <result column="floor_height" property="floorHeight" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="VARCHAR" />
     <result column="img" property="img" jdbcType="VARCHAR" />
@@ -72,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    banquet_hall_id, name, floor_num, table_num, floor_height, area, img, created, updated, 
-    standby
+    banquet_hall_id, hotelId, name, floor_num, min_table, max_table, floor_height, area, 
+    img, created, updated, standby
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.BanquetHallExample" >
     select
@@ -106,14 +108,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.BanquetHall" >
-    insert into banquet_hall (banquet_hall_id, name, floor_num, 
-      table_num, floor_height, area, 
-      img, created, updated, 
-      standby)
-    values (#{banquetHallId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{floorNum,jdbcType=VARCHAR}, 
-      #{tableNum,jdbcType=VARCHAR}, #{floorHeight,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
-      #{img,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{standby,jdbcType=VARCHAR})
+    insert into banquet_hall (banquet_hall_id, hotelId, name, 
+      floor_num, min_table, max_table, 
+      floor_height, area, img, 
+      created, updated, standby
+      )
+    values (#{banquetHallId,jdbcType=BIGINT}, #{hotelid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{floorNum,jdbcType=VARCHAR}, #{minTable,jdbcType=VARCHAR}, #{maxTable,jdbcType=VARCHAR}, 
+      #{floorHeight,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{standby,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.BanquetHall" >
     insert into banquet_hall
@@ -121,14 +125,20 @@
       <if test="banquetHallId != null" >
         banquet_hall_id,
       </if>
+      <if test="hotelid != null" >
+        hotelId,
+      </if>
       <if test="name != null" >
         name,
       </if>
       <if test="floorNum != null" >
         floor_num,
       </if>
-      <if test="tableNum != null" >
-        table_num,
+      <if test="minTable != null" >
+        min_table,
+      </if>
+      <if test="maxTable != null" >
+        max_table,
       </if>
       <if test="floorHeight != null" >
         floor_height,
@@ -153,14 +163,20 @@
       <if test="banquetHallId != null" >
         #{banquetHallId,jdbcType=BIGINT},
       </if>
+      <if test="hotelid != null" >
+        #{hotelid,jdbcType=BIGINT},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="floorNum != null" >
         #{floorNum,jdbcType=VARCHAR},
       </if>
-      <if test="tableNum != null" >
-        #{tableNum,jdbcType=VARCHAR},
+      <if test="minTable != null" >
+        #{minTable,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTable != null" >
+        #{maxTable,jdbcType=VARCHAR},
       </if>
       <if test="floorHeight != null" >
         #{floorHeight,jdbcType=VARCHAR},
@@ -194,14 +210,20 @@
       <if test="record.banquetHallId != null" >
         banquet_hall_id = #{record.banquetHallId,jdbcType=BIGINT},
       </if>
+      <if test="record.hotelid != null" >
+        hotelId = #{record.hotelid,jdbcType=BIGINT},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.floorNum != null" >
         floor_num = #{record.floorNum,jdbcType=VARCHAR},
       </if>
-      <if test="record.tableNum != null" >
-        table_num = #{record.tableNum,jdbcType=VARCHAR},
+      <if test="record.minTable != null" >
+        min_table = #{record.minTable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxTable != null" >
+        max_table = #{record.maxTable,jdbcType=VARCHAR},
       </if>
       <if test="record.floorHeight != null" >
         floor_height = #{record.floorHeight,jdbcType=VARCHAR},
@@ -229,9 +251,11 @@
   <update id="updateByExample" parameterType="map" >
     update banquet_hall
     set banquet_hall_id = #{record.banquetHallId,jdbcType=BIGINT},
+      hotelId = #{record.hotelid,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       floor_num = #{record.floorNum,jdbcType=VARCHAR},
-      table_num = #{record.tableNum,jdbcType=VARCHAR},
+      min_table = #{record.minTable,jdbcType=VARCHAR},
+      max_table = #{record.maxTable,jdbcType=VARCHAR},
       floor_height = #{record.floorHeight,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=VARCHAR},
       img = #{record.img,jdbcType=VARCHAR},
@@ -245,14 +269,20 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.BanquetHall" >
     update banquet_hall
     <set >
+      <if test="hotelid != null" >
+        hotelId = #{hotelid,jdbcType=BIGINT},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="floorNum != null" >
         floor_num = #{floorNum,jdbcType=VARCHAR},
       </if>
-      <if test="tableNum != null" >
-        table_num = #{tableNum,jdbcType=VARCHAR},
+      <if test="minTable != null" >
+        min_table = #{minTable,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTable != null" >
+        max_table = #{maxTable,jdbcType=VARCHAR},
       </if>
       <if test="floorHeight != null" >
         floor_height = #{floorHeight,jdbcType=VARCHAR},
@@ -277,9 +307,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.BanquetHall" >
     update banquet_hall
-    set name = #{name,jdbcType=VARCHAR},
+    set hotelId = #{hotelid,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
       floor_num = #{floorNum,jdbcType=VARCHAR},
-      table_num = #{tableNum,jdbcType=VARCHAR},
+      min_table = #{minTable,jdbcType=VARCHAR},
+      max_table = #{maxTable,jdbcType=VARCHAR},
       floor_height = #{floorHeight,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR},

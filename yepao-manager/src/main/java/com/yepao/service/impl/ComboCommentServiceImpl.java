@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.yepao.mapper.ComboCommentMapper;
 import com.yepao.pojo.ComboComment;
 import com.yepao.pojo.ComboCommentExample;
+import com.yepao.pojo.ComboCommentExample.Criteria;
 import com.yepao.pojo.TalentComment;
 import com.yepao.service.ComboCommentService;
 import com.yepao.utils.FastDFSClient;
@@ -18,8 +19,10 @@ public class ComboCommentServiceImpl implements ComboCommentService {
 	@Autowired
 	private ComboCommentMapper comboCommentMapper;
 	
-	public List<ComboComment> getComboCommentList() {
+	public List<ComboComment> getComboCommentList(Long comboId) {
 		ComboCommentExample example = new ComboCommentExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andComboIdEqualTo(comboId);
 		List<ComboComment> list = comboCommentMapper.selectByExample(example);
 		return list;
 	}

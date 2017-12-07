@@ -1,16 +1,16 @@
 package com.pay.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,12 +19,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.other.pojo.OrderAsistant;
+import com.yepao.pojo.BanquetHall;
+import com.yepao.pojo.Celebration;
+import com.yepao.pojo.Combo;
 import com.yepao.pojo.Orders;
+import com.yepao.pojo.WeddingTalent;
+import com.yepao.service.CelebrationService;
+import com.yepao.service.ComboService;
+import com.yepao.service.HallService;
 import com.yepao.service.OrderService;
+import com.yepao.service.TalentService;
 import com.yepao.utils.CommonUtil;
 import com.yepao.utils.HttpResult;
 import com.yepao.utils.HttpUtil;
-import com.yepao.utils.RandomUtils;
+import com.yepao.utils.JsonUtils;
 import com.yepao.utils.TimeUtils;
 
 
@@ -33,14 +42,22 @@ public class UnPayToPrePayController {
 
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private HallService hallService;
+	@Autowired
+	private ComboService comboService;
+	@Autowired
+	private TalentService talentService;
+	@Autowired
+	private CelebrationService celebrationService;
 	
     private static Logger log = Logger.getLogger(UnPayToPrePayController.class);
 
     @ResponseBody
     @RequestMapping(value = "/prepay", produces = "text/html;charset=UTF-8")
-    public String prePay(String desc,String count,String prePay,String talent,String hall,String combo,String celebration,String code, ModelMap model, HttpServletRequest request) {
+    public String prePay(Orders orders,String count,String prePay,String talent,Long hallId,Integer hallTable,Long combo,Long celebration,String code, ModelMap model, HttpServletRequest request) {
 
-        String content = null;
+    /*    String content = null;
         Map map = new HashMap();
         ObjectMapper mapper = new ObjectMapper();
 
@@ -67,35 +84,62 @@ public class UnPayToPrePayController {
             
             //返回一个定长的随机纯字母字符串
             String randomNonceStr = RandomUtils.generateMixString(32);
-            
+            */
             //调用统一下单的接口生成预付款订单号
-            Map<String, Object> map2 = unifiedOrder(desc,openId, clientIP, randomNonceStr);
+           // Map<String, Object> map2 = unifiedOrder(desc,openId, clientIP, randomNonceStr);
 
-            log.error("prepayId: " + map2.get("prepay_id"));
+            /*log.error("prepayId: " + map2.get("prepay_id"));
 
             if(StringUtils.isBlank(String.valueOf(map2.get("prepay_id")))) {
                 result = false;
                 info = "出错了，未获取到prepayId";
             } else {
                 map.put("prepayId", map2.get("prepay_id"));
-                map.put("nonceStr", randomNonceStr);
+                map.put("nonceStr", randomNonceStr);*/
                
              
                 	//如果成功的得到了预支付订单号就生成订单
-                    Orders orders = new Orders();
-                    orders.setId(Long.parseLong((String) map2.get("out_trade_no")));//商户订单号
-                    orders.setWeipayid("");//微信交易号
-                    orders.setPrepayId((String) map2.get("prepay_id"));
-                    orders.setCustomerName("");//客户姓名
-                    orders.setTel("");//客户联系方式
-                    orders.setGender("");//性别
-                    orders.setCustomerId("");//客户标识
-                    orders.setHall("");//宴会厅
-                    orders.setCombo("");//婚宴菜单
-                    orders.setCelebration("");//宴会庆典
-                    orders.setTalent("");//婚礼人才
-                    BigDecimal b1 = new BigDecimal(prePay);
-                    BigDecimal b2 = new BigDecimal(count);
+                   // orders.setId(Long.parseLong((String) map2.get("out_trade_no")));//商户订单号
+                    orders.setId(CommonUtil.getRandomOrderId());//商户订单号
+                    orders.setPrepayId("112233");
+                    
+                    List hallList1 = new ArrayList();
+                    List hallList2 = new ArrayList();
+                    BanquetHall banquetHall = hallService.getBanquetHall(1002L);
+                    OrderAsistant orderAsistant1 = new OrderAsistant();
+                    orderAsistant1.setNum(12);
+                    hallList1.add(banquetHall);
+                    orderAsistant1.setItemName(hallList2);
+                    hallList1.add(orderAsistant1);
+                    String hallJson = JsonUtils.objectToJson(hallList1);
+                    orders.setHall(hallJson);
+                    
+                    List comboList = new ArrayList();
+                    Combo combo2 = comboService.getCombo(combo);
+                    OrderAsistant orderAsistant2 = new OrderAsistant();
+                    comboList.add(orderAsistant2);
+                    String comboJson = JsonUtils.objectToJson(comboList);
+                    orders.setCombo(comboJson);
+                    
+                    List talentList = new ArrayList();
+                    String[] talentIds = "3,4,5".split(",");
+                    for (String string : talentIds) {
+						Long talentId = Long.parseLong(string);
+						WeddingTalent weddingTalent = talentService.getWeddingTalent(talentId);
+						talentList.add(weddingTalent);
+					}
+                    String talentJson = JsonUtils.objectToJson(talentList);
+                    orders.setTalent(talentJson);
+                    
+                    
+                    Celebration celebration2 = celebrationService.getCelebration(celebration);
+                    String celebrationJson = JsonUtils.objectToJson(celebration2);
+                    orders.setCelebration(celebrationJson);//宴会庆典
+           
+                  /*  BigDecimal b1 = new BigDecimal(prePay);
+                    BigDecimal b2 = new BigDecimal(count);*/
+                    BigDecimal b1 = new BigDecimal(10);
+                    BigDecimal b2 = new BigDecimal(20);
                     BigDecimal b3 = b2.subtract(b1);
                     orders.setPrepay(b1);//定金
                     orders.setCount(b2);//总金额
@@ -114,11 +158,11 @@ public class UnPayToPrePayController {
                     orderService.addUnPayOrder(orders);
                     
                     //返回商户订单号和当前支付的订单类型
-                    map.put("out_trade_no", map2.get("out_trade_no"));
-                    map.put("unPayTransPay", "unPayToPrePay");
+                    /*map.put("out_trade_no", map2.get("out_trade_no"));
+                    map.put("unPayTransPay", "unPayToPrePay");*/
                 
               
-            }
+           /* }
         }
 
         try {
@@ -127,11 +171,12 @@ public class UnPayToPrePayController {
             content = mapper.writeValueAsString(map);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         
         
 
-        return content;
+        //return content;
+        return null;
     }
 
 
@@ -240,7 +285,7 @@ public class UnPayToPrePayController {
         String timeExpire = TimeUtils.getFormatTime(TimeUtils.addDay(date, Constant.TIME_EXPIRE), Constant.TIME_FORMAT);
 
         //生成商户订单号
-        String randomOrderId = CommonUtil.getRandomOrderId();
+        Long randomOrderId = CommonUtil.getRandomOrderId();
 
         PayInfo payInfo = new PayInfo();
         payInfo.setAppid(Constant.APP_ID);//小程序IP
@@ -250,7 +295,7 @@ public class UnPayToPrePayController {
         payInfo.setSign_type("MD5");  //默认即为MD5加密
         payInfo.setBody("JSAPI支付测试");//商品描述
         payInfo.setAttach("支付测试4luluteam");//附加信息
-        payInfo.setOut_trade_no(randomOrderId);//商户订单号，随机生成
+        payInfo.setOut_trade_no(randomOrderId.toString());//商户订单号，随机生成
         payInfo.setTotal_fee(1);//总金额
         payInfo.setSpbill_create_ip(clientIP);//终端IP
         payInfo.setTime_start(timeStart);//交易起始时间

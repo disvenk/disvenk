@@ -2,7 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yepao.mapper.HotelMapper" >
   <resultMap id="BaseResultMap" type="com.yepao.pojo.Hotel" >
-    <id column="hotel_id" property="hotelId" jdbcType="BIGINT" />
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hotel_id" property="hotelId" jdbcType="BIGINT" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="descreption" property="descreption" jdbcType="VARCHAR" />
@@ -10,6 +12,7 @@
     <result column="img" property="img" jdbcType="VARCHAR" />
     <result column="reputation_level" property="reputationLevel" jdbcType="DECIMAL" />
     <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="good_reputation" property="goodReputation" jdbcType="INTEGER" />
     <result column="insert_date" property="insertDate" jdbcType="TIMESTAMP" />
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="standby" property="standby" jdbcType="VARCHAR" />
@@ -73,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    hotel_id, name, address, descreption, tel, img, reputation_level, comment_count, 
-    insert_date, update_date, standby
+    id, hotel_id, password, name, address, descreption, tel, img, reputation_level, comment_count, 
+    good_reputation, insert_date, update_date, standby
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.HotelExample" >
     select
@@ -94,11 +97,11 @@
     select 
     <include refid="Base_Column_List" />
     from hotel
-    where hotel_id = #{hotelId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from hotel
-    where hotel_id = #{hotelId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.yepao.pojo.HotelExample" >
     delete from hotel
@@ -107,20 +110,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.Hotel" >
-    insert into hotel (hotel_id, name, address, 
-      descreption, tel, img, 
-      reputation_level, comment_count, insert_date, 
+    insert into hotel (id, hotel_id, password, 
+      name, address, descreption, 
+      tel, img, reputation_level, 
+      comment_count, good_reputation, insert_date, 
       update_date, standby)
-    values (#{hotelId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{descreption,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
-      #{reputationLevel,jdbcType=DECIMAL}, #{commentCount,jdbcType=INTEGER}, #{insertDate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{hotelId,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{descreption,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, #{reputationLevel,jdbcType=DECIMAL}, 
+      #{commentCount,jdbcType=INTEGER}, #{goodReputation,jdbcType=INTEGER}, #{insertDate,jdbcType=TIMESTAMP}, 
       #{updateDate,jdbcType=TIMESTAMP}, #{standby,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.Hotel" >
     insert into hotel
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="hotelId != null" >
         hotel_id,
+      </if>
+      <if test="password != null" >
+        password,
       </if>
       <if test="name != null" >
         name,
@@ -143,6 +154,9 @@
       <if test="commentCount != null" >
         comment_count,
       </if>
+      <if test="goodReputation != null" >
+        good_reputation,
+      </if>
       <if test="insertDate != null" >
         insert_date,
       </if>
@@ -154,8 +168,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
       <if test="hotelId != null" >
         #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -178,6 +198,9 @@
       <if test="commentCount != null" >
         #{commentCount,jdbcType=INTEGER},
       </if>
+      <if test="goodReputation != null" >
+        #{goodReputation,jdbcType=INTEGER},
+      </if>
       <if test="insertDate != null" >
         #{insertDate,jdbcType=TIMESTAMP},
       </if>
@@ -198,8 +221,14 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update hotel
     <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
       <if test="record.hotelId != null" >
         hotel_id = #{record.hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
@@ -222,6 +251,9 @@
       <if test="record.commentCount != null" >
         comment_count = #{record.commentCount,jdbcType=INTEGER},
       </if>
+      <if test="record.goodReputation != null" >
+        good_reputation = #{record.goodReputation,jdbcType=INTEGER},
+      </if>
       <if test="record.insertDate != null" >
         insert_date = #{record.insertDate,jdbcType=TIMESTAMP},
       </if>
@@ -238,7 +270,9 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update hotel
-    set hotel_id = #{record.hotelId,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=BIGINT},
+      hotel_id = #{record.hotelId,jdbcType=BIGINT},
+      password = #{record.password,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       descreption = #{record.descreption,jdbcType=VARCHAR},
@@ -246,6 +280,7 @@
       img = #{record.img,jdbcType=VARCHAR},
       reputation_level = #{record.reputationLevel,jdbcType=DECIMAL},
       comment_count = #{record.commentCount,jdbcType=INTEGER},
+      good_reputation = #{record.goodReputation,jdbcType=INTEGER},
       insert_date = #{record.insertDate,jdbcType=TIMESTAMP},
       update_date = #{record.updateDate,jdbcType=TIMESTAMP},
       standby = #{record.standby,jdbcType=VARCHAR}
@@ -256,6 +291,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.Hotel" >
     update hotel
     <set >
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -277,6 +318,9 @@
       <if test="commentCount != null" >
         comment_count = #{commentCount,jdbcType=INTEGER},
       </if>
+      <if test="goodReputation != null" >
+        good_reputation = #{goodReputation,jdbcType=INTEGER},
+      </if>
       <if test="insertDate != null" >
         insert_date = #{insertDate,jdbcType=TIMESTAMP},
       </if>
@@ -287,20 +331,23 @@
         standby = #{standby,jdbcType=VARCHAR},
       </if>
     </set>
-    where hotel_id = #{hotelId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.Hotel" >
     update hotel
-    set name = #{name,jdbcType=VARCHAR},
+    set hotel_id = #{hotelId,jdbcType=BIGINT},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       descreption = #{descreption,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR},
       reputation_level = #{reputationLevel,jdbcType=DECIMAL},
       comment_count = #{commentCount,jdbcType=INTEGER},
+      good_reputation = #{goodReputation,jdbcType=INTEGER},
       insert_date = #{insertDate,jdbcType=TIMESTAMP},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       standby = #{standby,jdbcType=VARCHAR}
-    where hotel_id = #{hotelId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

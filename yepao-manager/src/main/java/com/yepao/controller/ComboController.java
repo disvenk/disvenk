@@ -76,9 +76,11 @@ public class ComboController {
 				Combo comboB = comboService.getCombo(comboA.getId());
 				Combo combo = new Combo();
 		            combo.setId(comboA.getId());
+		            combo.setHotelid(comboA.getHotelid());
 		            combo.setName(comboA.getName());;
 		            combo.setImg(comboB.getImg());
 		            combo.setPrice(comboA.getPrice());
+		            combo.setStandby(comboA.getStandby());
 		            combo.setCreated(new Date(Long.parseLong(comboA.getCreated())));
 		            combo.setUpdated(new Date());
 		            comboService.updateCombo(combo);
@@ -104,9 +106,11 @@ public class ComboController {
 	            //保存酒店信息
 			 Combo combo = new Combo();
 			 	combo.setId(comboA.getId());
+			 	combo.setHotelid(comboA.getHotelid());
 			 	combo.setName(comboA.getName());;
 			 	combo.setImg(url);
 			 	combo.setPrice(comboA.getPrice());
+			 	 combo.setStandby(comboA.getStandby());
 			 	combo.setCreated(new Date(Long.parseLong(comboA.getCreated())));
 			 	combo.setUpdated(new Date());
 			 	comboService.updateCombo(combo);

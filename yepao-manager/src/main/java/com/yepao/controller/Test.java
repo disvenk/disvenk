@@ -22,10 +22,11 @@ public class Test {
  
 public class Test{
 	public static void main(String[] args) throws Exception{
-		String string = "http://47.104.19.44/group1/M00/00/00/rB_ZQVoCW1CAczfYAAAT7-0xdqM166_big.png".substring(20);
+		/*String string = "http://47.104.19.44/group1/M00/00/00/rB_ZQVoCW1CAczfYAAAT7-0xdqM166_big.png".substring(20);
 		System.out.println(string);
 		 FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
 	        Integer result = fastDFSClient.delete_file(string);
-	        System.out.println(result);
+	        System.out.println(result);*/
+		System.out.println(System.currentTimeMillis());
 	}
 }

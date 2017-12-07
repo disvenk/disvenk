@@ -99,6 +99,7 @@ public class TalentController {
 					 WeddingTalent wTalentB =  talentService.getWeddingTalent(wTalentA.getWeddingTalentId());
 					 WeddingTalent wTalent = new WeddingTalent(); 
 			            wTalent.setWeddingTalentId(wTalentA.getWeddingTalentId());
+			            wTalent.setHotelid(wTalentA.getHotelid());
 			            wTalent.setHeadImg(wTalentB.getHeadImg());
 			            wTalent.setName(wTalentA.getName());
 			            wTalent.setOccupation(wTalentA.getOccupation());
@@ -145,6 +146,7 @@ public class TalentController {
 		        	
 		            //保存人才信息
 		            WeddingTalent wTalent = new WeddingTalent();
+		            wTalent.setHotelid(wTalentA.getHotelid());
 		            wTalent.setWeddingTalentId(wTalentA.getWeddingTalentId());
 		            wTalent.setName(wTalentA.getName());
 		            wTalent.setHeadImg(url);
@@ -201,7 +203,6 @@ public class TalentController {
 		        
 		        //删除头像
 				String delName =  img.substring(20);
-				System.out.println("要删的"+delName);
 				fastDFSClient.delete_file(delName);
 				 talentService.deleteTalent(id);
 			

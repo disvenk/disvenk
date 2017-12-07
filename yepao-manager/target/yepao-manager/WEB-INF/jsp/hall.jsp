@@ -92,6 +92,8 @@
 					// 没选 或 多选 
 					$.messager.alert("提示信息","请选择您要修改的行","warning");
 				}else{
+					$.messager.confirm("提示", "删除之后不可恢复,确定要删除吗？",function(data){
+						if(data){
 					var arr = new Array();
 					for(var i=0;i<rows.length;i++){
 						arr.push(rows[i].banquetHallId);
@@ -99,9 +101,29 @@
 					//生成字符串
 					var ids = arr.join(",");
 					window.location.href = "/hall/delete?ids="+ids;
+						}
+					});
 				}
 			}
 			
+			function checkComment(){
+				// 获取当前datagrid选中数据 ，就是前面那个框框打对勾就算是选中了
+				var rows = $("#grid").datagrid('getSelections');
+				if(rows.length == 0){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","请选择您要查看的宴会厅","warning");
+				}else if(rows.length != 1){
+					// 没选 或 多选 
+					$.messager.alert("提示信息","查看作品时，只能选中一行","warning")
+				}else{
+					// 只选中一行 
+					var row = rows[0]; 
+					
+					$.cookie("checkHallId", row.banquetHallId, {path: '/',expires: 1});
+					location.href="/pages/base/hall_comment";
+					
+				}
+			}
 			
 			//工具栏
 			var toolbar = [{
@@ -109,11 +131,16 @@
 				text : '增加宴会厅',
 				iconCls : 'icon-add',
 				handler : doAdd
-			}, {
+			},{
 				id : 'button-delete',
 				text : '删除',
 				iconCls : 'icon-cancel',
 				handler : doDelete
+			},{
+				id : 'button-upload',
+				text : '查看评论',
+				iconCls : 'icon-search',
+				handler : checkComment
 			}];
 			// 定义列
 			var columns = [ [ {
@@ -129,22 +156,27 @@
 				title : '楼层',
 				width : 50,
 				align : 'center'
-			}, {
-				field : 'tableNum',
-				title : '桌数',
-				width : 50,
+			},{
+				field : 'minTable',
+				title : '最少桌数',
+				width : 60,
+				align : 'center'
+			},{
+				field : 'maxTable',
+				title : '最大桌数',
+				width : 60,
 				align : 'center'
 			}, {
 				field : 'floorHeight',
 				title : '层高',
 				width : 50,
 				align : 'center'
-			}, {
+			},{
 				field : 'area',
 				title : '面积',
 				width : 50,
 				align : 'center'
-			}, {
+			},{
 				field : 'images',
 				title : '图片',
 				width : 120,
@@ -152,7 +184,7 @@
 				formatter:function(value,row,index){
 					return "<img src='"+value[0]+"' width='100' height='100'/>";//在这个区域直接显示出图片
 				}
-			} ,{
+			},{
 				field : 'created',
 				title : '创建时间',
 				width : 150,
@@ -181,7 +213,7 @@
 				// 先将body隐藏，再显示，不会出现页面刷新效果
 				$("body").css({visibility:"visible"});
 				
-				// 酒店管理数据表格
+				// 宴会厅管理数据表格
 				$('#grid').datagrid( {
 					iconCls : 'icon-forward',
 					fit : true,
@@ -197,16 +229,6 @@
 					columns : columns
 				});
 				
-				//修改酒店窗口
-				$('#eidtorWindow').window({
-			        title: '修改酒店信息',
-			        width: 400,
-			        modal: true,
-			        shadow: true,
-			        closed: true,
-			        height: 400,
-			        resizable:false
-			    });
 			 
 			});
 			
@@ -218,86 +240,6 @@
 			<table id="grid"></table>
 		</div>
 		
-		<div class="easyui-window" title="酒店添加修改" id="eidtorWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
-			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
-				<!--<div class="datagrid-toolbar">-->
-					<a id="save" icon="icon-save" href="javascript:submitForm()" class="easyui-linkbutton" plain="true">保存</a>
-				<!--</div>-->
-			</div>
-
-			<div region="center" style="overflow:auto;padding:5px;" border="false">
-				<form id="updateForm" action="/hall/update" method="post" enctype="multipart/form-data">
-					<table class="table-edit" width="80%" height="80%" align="center">
-						<tr class="title">
-							<td colspan="2">宴会厅信息</td>
-							<input type="hidden" name="banquetHallId"/>
-						</tr>
-					 	<tr>
-	           			 	<td>名称:</td>
-	            			<td><input class="easyui-validatebox" type="text" name="name" required="true"></input></td>
-	        			</tr>
-						<tr>
-							<td>楼层</td>
-							<td>
-								<input type="text" name="floorNum" class="easyui-validatebox easyui-numberbox" required="true" />
-							</td>
-						</tr>
-						<tr>
-	            			<td>桌数:</td>
-	            			<td><input class="easyui-numberbox easyui-validatebox" type="text" name="tableNum" required="true"/></td>
-	        			</tr>
-						<tr>
-	            			<td>层高:</td>
-	            			<td><input class="easyui-numberbox easyui-validatebox" type="text" name="floorHeight" required="true"/> </td>
-	        			</tr>
-					 	<tr>
-	            			<td>面积:</td>
-	           				<td><input class="easyui-numberbox easyui-validatebox" type="text" name="area" required="true" /></td>
-	        			</tr>
-	        			<tr>
-	            			<td>图片:</td>
-	            			<td style="line-height: 52px">
-	            	 		<a href="javascript:void(0)" class="easyui-linkbutton picFileUpload">上传图片</a>
-	                 		<input type="hidden" id="image" name="img"/>
-	           				 </td>
-	       				</tr>
-						<tr>
-	            			<td>备注:</td>
-	            			<td><textarea name="standby" style="resize: none;height: 80px" rows="20"></textarea></td>
-	        			</tr>
-	        			<tr>
-							<td>
-								<input type="hidden" name="created" />
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-	<script type="text/javascript">
-
-	//提交表单
-	function submitForm(){
-		//有效性验证
-		if(!$('#updateForm').form('validate')){
-			$.messager.alert('提示','表单还未填写完成!');
-			return ;
-		}
-		
-		$.post("/add/hall",$("#hallAddForm").serialize(), function(data){
-			if(data.status == 200){
-				$.messager.alert('提示','新增宴会厅成功!');
-				location.href="/pages/base/hall";
-			}else{
-				$.messager.alert('提示','新增宴会厅失败!');
-			}
-		});
-	}
-	
-	function clearForm(){
-		$('#hallAddForm').form('reset');
-	}
-</script>
 	</body>
 
 </html>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa 
+		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+	
+	<!-- 配置Shiro核心Filter，在web.xml中的过滤器在加载的时候就会在这里找这个名为shiroFilter的FactoryBean  --> 
+	<bean id="shiroFilter" 
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 安全管理器 -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 未认证，跳转到哪个页面  -->
+		<property name="loginUrl" value="/pages/base/login" />
+		<!-- 登录后跳转的页面 -->
+		<property name="successUrl" value="/" />
+		<!-- 认证后，没有权限跳转页面，就是说进到主页面了，有些选项不能访问，会跳转到该页面提示权限不足 -->
+		<property name="unauthorizedUrl" value="/unauthorized.html" />
+		<!-- shiro URL控制过滤器规则，那个页面使用什么样的权限控制都可以在这里设置 -->
+		<property name="filterChainDefinitions">
+			<value>
+				/login* = anon<!--*表示可以传一些参数的如sessionid  -->
+				/pages/base/validatecode* = anon
+				/prepay* = anon
+				/css/** = anon
+				/js/** = anon
+				/images/** = anon
+				/services/** = anon 
+				<!-- /pages/base/courier.html* = perms[courier:list] --><!--配置了perms之后，只要访问这个路径就会走授权管理  -->
+				<!-- /pages/base/area.html* = roles[base] -->
+				/** = authc
+			</value>
+		</property>
+	</bean>
+	
+	<!-- 安全管理器  -->
+	<bean id="securityManager" 
+		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- realm必须注入给安全管理器 -->
+		<property name="realm" ref="yePaoRealm" />
+		<!-- 将shiro的缓存管理器注入到安全管理器中 -->
+		<!-- <property name="cacheManager" ref="shiroCacheManager" /> -->
+	</bean>
+	
+	<!-- 会话管理器 -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+	    <!-- 设置超时时间 -->
+	    <property name="globalSessionTimeout" value="18000000"/>
+	</bean>
+	
+	 <!-- 配置Realm -->
+	<bean id="yePaoRealm" class="com.yepao.realm.YePaoRealm">
+		<!-- 缓存区的名字 就是 ehcache.xml 自定义 cache的name -->
+		<!-- <property name="authorizationCacheName" value="bos" /> -->
+	</bean>
+	
+	<!--后处理器，对shiro的环境做后续处理，暂时没有太大的作用  -->
+	<bean id="lifecycleBeanPostProcessor"
+		class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+		
+	<!-- 开启shiro注解模式  -->
+	<!-- 这里是一段spring的aop代理 -->
+	 <bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor" >
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+		
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		 <property name="securityManager" ref="securityManager"/>
+	</bean>
+	
+</beans>
