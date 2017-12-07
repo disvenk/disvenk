@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yepao.mapper.TalentReservedMapper" >
+  <resultMap id="BaseResultMap" type="com.yepao.pojo.TalentReserved" >
+    <id column="talent_reserved_id" property="talentReservedId" jdbcType="BIGINT" />
+    <result column="wedding_talent_id" property="weddingTalentId" jdbcType="BIGINT" />
+    <result column="reserved_date" property="reservedDate" jdbcType="DATE" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="updated_date" property="updatedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    talent_reserved_id, wedding_talent_id, reserved_date, order_id, created_date, updated_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.TalentReservedExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from talent_reserved
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from talent_reserved
+    where talent_reserved_id = #{talentReservedId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from talent_reserved
+    where talent_reserved_id = #{talentReservedId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yepao.pojo.TalentReservedExample" >
+    delete from talent_reserved
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yepao.pojo.TalentReserved" >
+    insert into talent_reserved (talent_reserved_id, wedding_talent_id, 
+      reserved_date, order_id, created_date, 
+      updated_date)
+    values (#{talentReservedId,jdbcType=BIGINT}, #{weddingTalentId,jdbcType=BIGINT}, 
+      #{reservedDate,jdbcType=DATE}, #{orderId,jdbcType=BIGINT}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{updatedDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yepao.pojo.TalentReserved" >
+    insert into talent_reserved
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="talentReservedId != null" >
+        talent_reserved_id,
+      </if>
+      <if test="weddingTalentId != null" >
+        wedding_talent_id,
+      </if>
+      <if test="reservedDate != null" >
+        reserved_date,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="updatedDate != null" >
+        updated_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="talentReservedId != null" >
+        #{talentReservedId,jdbcType=BIGINT},
+      </if>
+      <if test="weddingTalentId != null" >
+        #{weddingTalentId,jdbcType=BIGINT},
+      </if>
+      <if test="reservedDate != null" >
+        #{reservedDate,jdbcType=DATE},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yepao.pojo.TalentReservedExample" resultType="java.lang.Integer" >
+    select count(*) from talent_reserved
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update talent_reserved
+    <set >
+      <if test="record.talentReservedId != null" >
+        talent_reserved_id = #{record.talentReservedId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weddingTalentId != null" >
+        wedding_talent_id = #{record.weddingTalentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.reservedDate != null" >
+        reserved_date = #{record.reservedDate,jdbcType=DATE},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdDate != null" >
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedDate != null" >
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update talent_reserved
+    set talent_reserved_id = #{record.talentReservedId,jdbcType=BIGINT},
+      wedding_talent_id = #{record.weddingTalentId,jdbcType=BIGINT},
+      reserved_date = #{record.reservedDate,jdbcType=DATE},
+      order_id = #{record.orderId,jdbcType=BIGINT},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.TalentReserved" >
+    update talent_reserved
+    <set >
+      <if test="weddingTalentId != null" >
+        wedding_talent_id = #{weddingTalentId,jdbcType=BIGINT},
+      </if>
+      <if test="reservedDate != null" >
+        reserved_date = #{reservedDate,jdbcType=DATE},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where talent_reserved_id = #{talentReservedId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.TalentReserved" >
+    update talent_reserved
+    set wedding_talent_id = #{weddingTalentId,jdbcType=BIGINT},
+      reserved_date = #{reservedDate,jdbcType=DATE},
+      order_id = #{orderId,jdbcType=BIGINT},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+    where talent_reserved_id = #{talentReservedId,jdbcType=BIGINT}
+  </update>
+</mapper>

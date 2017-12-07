@@ -1,48 +1,43 @@
 package com.yepao.controller;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Random;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.HashMap;
 
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.field.DecoratedDateTimeField;
-import org.junit.Before;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.socket.TextMessage;
-
-import com.other.pojo.OrderAsistant;
-import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
-import com.websocket.controller.PointWebSocketHandler;
-import com.yepao.pojo.BanquetHall;
-import com.yepao.pojo.Orders;
-import com.yepao.service.OrderService;
-import com.yepao.service.impl.OrderServiceImpl;
-import com.yepao.utils.FastDFSClient;
-import com.yepao.utils.JsonUtils;
-import com.yepao.utils.YePaoResult;
-
-@Controller
-public class Test {
-	
-	@RequestMapping("/test")
-	public void test(){
-		new PointWebSocketHandler().sendMessageToUser(13100738632L, new TextMessage(""));
-	}
-	
-	@org.junit.Test
-	public void test1(){
-		StringBuilder str=new StringBuilder();//定义变长字符串
-		Random random=new Random();
-		//随机生成数字，并添加到字符串
-		for(int i=0;i<8;i++){
-		    str.append(random.nextInt(10));
-		}
-		//将字符串转换为数字并输出
-		int num=Integer.parseInt(str.toString());
-		System.out.println(num);
-		
-	}
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;  
+  
+public class Test {  
+  
+    public static void main(String[] args) throws Exception {  
+         testEncode();  
+       // testDecode();  
+    }  
+  
+    /** 
+     * 生成二维码 
+     *  
+     * @throws WriterException 
+     * @throws IOException 
+     */  
+    public static void testEncode() throws WriterException, IOException {  
+        String filePath = "D://";  
+        String fileName = "zxing.png";  
+        String content = "测试zxing生成二维码";  
+        int width = 300; // 图像宽度  
+        int height = 300; // 图像高度  
+        String format = "png";// 图像类型  
+        HashMap<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();  
+        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");  
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(content,  
+                BarcodeFormat.QR_CODE, width, height, hints);// 生成矩阵  
+        Path path = FileSystems.getDefault().getPath(filePath, fileName);  
+        MatrixToImageWriter.writeToPath(bitMatrix, format, path);// 输出图像  
+        System.out.println("输出成功.");  
+    } 
 }

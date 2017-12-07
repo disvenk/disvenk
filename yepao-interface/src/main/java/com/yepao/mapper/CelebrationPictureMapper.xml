@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yepao.mapper.CelebrationPictureMapper" >
+  <resultMap id="BaseResultMap" type="com.yepao.pojo.CelebrationPicture" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="celebration_id" property="celebrationId" jdbcType="BIGINT" />
+    <result column="celebration_name" property="celebrationName" jdbcType="VARCHAR" />
+    <result column="src" property="src" jdbcType="VARCHAR" />
+    <result column="uptime" property="uptime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, celebration_id, celebration_name, src, uptime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.CelebrationPictureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from celebration_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from celebration_picture
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from celebration_picture
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yepao.pojo.CelebrationPictureExample" >
+    delete from celebration_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yepao.pojo.CelebrationPicture" >
+    insert into celebration_picture (id, celebration_id, celebration_name, 
+      src, uptime)
+    values (#{id,jdbcType=BIGINT}, #{celebrationId,jdbcType=BIGINT}, #{celebrationName,jdbcType=VARCHAR}, 
+      #{src,jdbcType=VARCHAR}, #{uptime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yepao.pojo.CelebrationPicture" >
+    insert into celebration_picture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="celebrationId != null" >
+        celebration_id,
+      </if>
+      <if test="celebrationName != null" >
+        celebration_name,
+      </if>
+      <if test="src != null" >
+        src,
+      </if>
+      <if test="uptime != null" >
+        uptime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="celebrationId != null" >
+        #{celebrationId,jdbcType=BIGINT},
+      </if>
+      <if test="celebrationName != null" >
+        #{celebrationName,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null" >
+        #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        #{uptime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yepao.pojo.CelebrationPictureExample" resultType="java.lang.Integer" >
+    select count(*) from celebration_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update celebration_picture
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.celebrationId != null" >
+        celebration_id = #{record.celebrationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.celebrationName != null" >
+        celebration_name = #{record.celebrationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.src != null" >
+        src = #{record.src,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uptime != null" >
+        uptime = #{record.uptime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update celebration_picture
+    set id = #{record.id,jdbcType=BIGINT},
+      celebration_id = #{record.celebrationId,jdbcType=BIGINT},
+      celebration_name = #{record.celebrationName,jdbcType=VARCHAR},
+      src = #{record.src,jdbcType=VARCHAR},
+      uptime = #{record.uptime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.CelebrationPicture" >
+    update celebration_picture
+    <set >
+      <if test="celebrationId != null" >
+        celebration_id = #{celebrationId,jdbcType=BIGINT},
+      </if>
+      <if test="celebrationName != null" >
+        celebration_name = #{celebrationName,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null" >
+        src = #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        uptime = #{uptime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.CelebrationPicture" >
+    update celebration_picture
+    set celebration_id = #{celebrationId,jdbcType=BIGINT},
+      celebration_name = #{celebrationName,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      uptime = #{uptime,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <resultMap id="CelePicGroupByDateMap" type="com.yepao.pojo.CelePicGroupByDate" >
+    <id column="date_string" property="dateString" jdbcType="VARCHAR" />
+    <collection property="celePictureList" ofType="com.yepao.pojo.CelebrationPicture">
+    	<id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="celebration_id" property="celebrationId" jdbcType="BIGINT" />
+	    <result column="celebration_name" property="celebrationName" jdbcType="VARCHAR" />
+	    <result column="src" property="src" jdbcType="VARCHAR" />
+	    <result column="uptime" property="uptime" jdbcType="DATE" />
+	 </collection>  
+  </resultMap>
+  <select id="getCelebrationPicsByCelebrationId" parameterType="java.lang.Long" resultMap="CelePicGroupByDateMap">
+   		select DATE_FORMAT(p1.uptime,'%Y-%m-%d') as date_string, p1.id, p1.celebration_id, p1.celebration_name, p1.src, p1.uptime 
+   		from 
+   			(select id, celebration_id, celebration_name, src, uptime,DATE_FORMAT(uptime,'%Y-%m-%d') days FROM celebration_picture where celebration_id = #{celebrationId,jdbcType=BIGINT} order by uptime desc)p1 
+   		JOIN (SELECT DATE_FORMAT(uptime,'%Y-%m-%d') days,COUNT(*) COUNT FROM celebration_picture GROUP BY days)p2 
+   		WHERE p1.days=p2.days;
+   </select>
+</mapper>

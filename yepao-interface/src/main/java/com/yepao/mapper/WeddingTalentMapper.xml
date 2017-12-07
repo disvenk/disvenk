@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yepao.mapper.WeddingTalentMapper" >
+  <resultMap id="BaseResultMap" type="com.yepao.pojo.WeddingTalent" >
+    <id column="wedding_talent_id" property="weddingTalentId" jdbcType="BIGINT" />
+    <result column="hotelId" property="hotelid" jdbcType="BIGINT" />
+    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="occupation" property="occupation" jdbcType="VARCHAR" />
+    <result column="experience" property="experience" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="style" property="style" jdbcType="VARCHAR" />
+    <result column="personal_declaration" property="personalDeclaration" jdbcType="VARCHAR" />
+    <result column="good_reputation" property="goodReputation" jdbcType="INTEGER" />
+    <result column="comprehensive" property="comprehensive" jdbcType="DECIMAL" />
+    <result column="chosen_count" property="chosenCount" jdbcType="INTEGER" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="standby" property="standby" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wedding_talent_id, hotelId, head_img, name, occupation, experience, tel, price, introduction, 
+    style, personal_declaration, good_reputation, comprehensive, chosen_count, comment_count, 
+    created, updated, standby
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.WeddingTalentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wedding_talent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from wedding_talent
+    where wedding_talent_id = #{weddingTalentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from wedding_talent
+    where wedding_talent_id = #{weddingTalentId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yepao.pojo.WeddingTalentExample" >
+    delete from wedding_talent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yepao.pojo.WeddingTalent" >
+    insert into wedding_talent (wedding_talent_id, hotelId, head_img, 
+      name, occupation, experience, 
+      tel, price, introduction, 
+      style, personal_declaration, good_reputation, 
+      comprehensive, chosen_count, comment_count, 
+      created, updated, standby
+      )
+    values (#{weddingTalentId,jdbcType=BIGINT}, #{hotelid,jdbcType=BIGINT}, #{headImg,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, #{experience,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{introduction,jdbcType=VARCHAR}, 
+      #{style,jdbcType=VARCHAR}, #{personalDeclaration,jdbcType=VARCHAR}, #{goodReputation,jdbcType=INTEGER}, 
+      #{comprehensive,jdbcType=DECIMAL}, #{chosenCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{standby,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yepao.pojo.WeddingTalent" >
+    insert into wedding_talent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="weddingTalentId != null" >
+        wedding_talent_id,
+      </if>
+      <if test="hotelid != null" >
+        hotelId,
+      </if>
+      <if test="headImg != null" >
+        head_img,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="occupation != null" >
+        occupation,
+      </if>
+      <if test="experience != null" >
+        experience,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="style != null" >
+        style,
+      </if>
+      <if test="personalDeclaration != null" >
+        personal_declaration,
+      </if>
+      <if test="goodReputation != null" >
+        good_reputation,
+      </if>
+      <if test="comprehensive != null" >
+        comprehensive,
+      </if>
+      <if test="chosenCount != null" >
+        chosen_count,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+      <if test="standby != null" >
+        standby,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="weddingTalentId != null" >
+        #{weddingTalentId,jdbcType=BIGINT},
+      </if>
+      <if test="hotelid != null" >
+        #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="headImg != null" >
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null" >
+        #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="personalDeclaration != null" >
+        #{personalDeclaration,jdbcType=VARCHAR},
+      </if>
+      <if test="goodReputation != null" >
+        #{goodReputation,jdbcType=INTEGER},
+      </if>
+      <if test="comprehensive != null" >
+        #{comprehensive,jdbcType=DECIMAL},
+      </if>
+      <if test="chosenCount != null" >
+        #{chosenCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standby != null" >
+        #{standby,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yepao.pojo.WeddingTalentExample" resultType="java.lang.Integer" >
+    select count(*) from wedding_talent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update wedding_talent
+    <set >
+      <if test="record.weddingTalentId != null" >
+        wedding_talent_id = #{record.weddingTalentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hotelid != null" >
+        hotelId = #{record.hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="record.headImg != null" >
+        head_img = #{record.headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.occupation != null" >
+        occupation = #{record.occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experience != null" >
+        experience = #{record.experience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.introduction != null" >
+        introduction = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.style != null" >
+        style = #{record.style,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalDeclaration != null" >
+        personal_declaration = #{record.personalDeclaration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodReputation != null" >
+        good_reputation = #{record.goodReputation,jdbcType=INTEGER},
+      </if>
+      <if test="record.comprehensive != null" >
+        comprehensive = #{record.comprehensive,jdbcType=DECIMAL},
+      </if>
+      <if test="record.chosenCount != null" >
+        chosen_count = #{record.chosenCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentCount != null" >
+        comment_count = #{record.commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.standby != null" >
+        standby = #{record.standby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update wedding_talent
+    set wedding_talent_id = #{record.weddingTalentId,jdbcType=BIGINT},
+      hotelId = #{record.hotelid,jdbcType=BIGINT},
+      head_img = #{record.headImg,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      occupation = #{record.occupation,jdbcType=VARCHAR},
+      experience = #{record.experience,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      introduction = #{record.introduction,jdbcType=VARCHAR},
+      style = #{record.style,jdbcType=VARCHAR},
+      personal_declaration = #{record.personalDeclaration,jdbcType=VARCHAR},
+      good_reputation = #{record.goodReputation,jdbcType=INTEGER},
+      comprehensive = #{record.comprehensive,jdbcType=DECIMAL},
+      chosen_count = #{record.chosenCount,jdbcType=INTEGER},
+      comment_count = #{record.commentCount,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      standby = #{record.standby,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.WeddingTalent" >
+    update wedding_talent
+    <set >
+      <if test="hotelid != null" >
+        hotelId = #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="headImg != null" >
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        occupation = #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null" >
+        experience = #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="personalDeclaration != null" >
+        personal_declaration = #{personalDeclaration,jdbcType=VARCHAR},
+      </if>
+      <if test="goodReputation != null" >
+        good_reputation = #{goodReputation,jdbcType=INTEGER},
+      </if>
+      <if test="comprehensive != null" >
+        comprehensive = #{comprehensive,jdbcType=DECIMAL},
+      </if>
+      <if test="chosenCount != null" >
+        chosen_count = #{chosenCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standby != null" >
+        standby = #{standby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wedding_talent_id = #{weddingTalentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.WeddingTalent" >
+    update wedding_talent
+    set hotelId = #{hotelid,jdbcType=BIGINT},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR},
+      experience = #{experience,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      style = #{style,jdbcType=VARCHAR},
+      personal_declaration = #{personalDeclaration,jdbcType=VARCHAR},
+      good_reputation = #{goodReputation,jdbcType=INTEGER},
+      comprehensive = #{comprehensive,jdbcType=DECIMAL},
+      chosen_count = #{chosenCount,jdbcType=INTEGER},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      standby = #{standby,jdbcType=VARCHAR}
+    where wedding_talent_id = #{weddingTalentId,jdbcType=BIGINT}
+  </update>
+  
+  <!--Chen Xinneng add  -->
+  <resultMap id="TalentGroupByOccuMap" type="com.yepao.pojo.TalentGroupByOccu" >
+    <id column="occupation" property="occupation" jdbcType="VARCHAR" />
+    <collection property="talentList" ofType="com.yepao.pojo.WeddingTalent">
+		<id column="wedding_talent_id" property="weddingTalentId" jdbcType="BIGINT" />
+	    <result column="hotelId" property="hotelid" jdbcType="BIGINT" />
+	    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="occupation" property="occupation" jdbcType="VARCHAR" />
+	    <result column="experience" property="experience" jdbcType="VARCHAR" />
+	    <result column="tel" property="tel" jdbcType="VARCHAR" />
+	    <result column="price" property="price" jdbcType="DECIMAL" />
+	    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+	    <result column="style" property="style" jdbcType="VARCHAR" />
+	    <result column="personal_declaration" property="personalDeclaration" jdbcType="VARCHAR" />
+	    <result column="good_reputation" property="goodReputation" jdbcType="INTEGER" />
+	    <result column="comprehensive" property="comprehensive" jdbcType="DECIMAL" />
+	    <result column="chosen_count" property="chosenCount" jdbcType="INTEGER" />
+	    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+	    <result column="standby" property="standby" jdbcType="VARCHAR" />
+	 </collection>  
+  </resultMap>
+  
+   <select id="selectTalentGroupByOccu" resultMap="TalentGroupByOccuMap">
+		select t1.occupation as occupation, t1.wedding_talent_id,t1.hotelId,t1.head_img,t1.name,t1.occupation,t1.experience,
+		t1.tel,t1.price,t1.introduction,t1.style,t1.personal_declaration,t1.good_reputation,t1.comprehensive,t1.chosen_count,
+		t1.comment_count,t1.created,t1.updated,t1.standby 
+   		from 
+   			(select * FROM wedding_talent WHERE hotelId = #{hotelid,jdbcType=BIGINT} order by occupation asc)t1 
+   		JOIN (SELECT occupation,COUNT(*) COUNT FROM wedding_talent WHERE hotelId = #{hotelid,jdbcType=BIGINT} GROUP BY occupation)t2 
+   		WHERE t1.occupation=t2.occupation;
+   </select>
+</mapper>
