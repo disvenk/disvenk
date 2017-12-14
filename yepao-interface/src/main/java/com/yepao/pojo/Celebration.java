@@ -206,4 +206,33 @@ public class Celebration {
     	}
     	return null;
     }
+    
+    /*****************/
+    private String stage;
+    private String comboName;
+    private BigDecimal actualPrice;
+
+	public BigDecimal getActualPrice() {
+		return actualPrice;
+	}
+
+	public void setActualPrice(BigDecimal actualPrice) {
+		this.actualPrice = actualPrice;
+	}
+
+	public String getStage() {
+		return stage;
+	}
+
+	public void setStage(String stage) {
+		this.stage = stage;
+	}
+
+	public String getComboName() {
+		return comboName;
+	}
+
+	public void setComboName(String comboName) {
+		this.comboName = comboName;
+	}
 }

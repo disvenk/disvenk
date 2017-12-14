@@ -8,6 +8,8 @@ public class Orders {
 
     private String vaidateCode;
 
+    private String twoBarCode;
+
     private Long hotelId;
 
     private String weipayid;
@@ -68,6 +70,14 @@ public class Orders {
 
     public void setVaidateCode(String vaidateCode) {
         this.vaidateCode = vaidateCode == null ? null : vaidateCode.trim();
+    }
+
+    public String getTwoBarCode() {
+        return twoBarCode;
+    }
+
+    public void setTwoBarCode(String twoBarCode) {
+        this.twoBarCode = twoBarCode == null ? null : twoBarCode.trim();
     }
 
     public Long getHotelId() {

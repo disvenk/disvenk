@@ -93,4 +93,15 @@ public class Combo {
     public void setStandby(String standby) {
         this.standby = standby == null ? null : standby.trim();
     }
+    
+    /****************/
+    private Integer countTable;
+
+	public Integer getCountTable() {
+		return countTable;
+	}
+
+	public void setCountTable(Integer countTable) {
+		this.countTable = countTable;
+	}
 }

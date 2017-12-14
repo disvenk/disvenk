@@ -1,6 +1,7 @@
 package com.yepao.service.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import com.yepao.pojo.ComboCommentExample;
 import com.yepao.pojo.HallComment;
 import com.yepao.pojo.HallCommentExample;
 import com.yepao.pojo.Hotel;
+import com.yepao.pojo.HotelExample;
+import com.yepao.pojo.HotelExample.Criteria;
 import com.yepao.pojo.Orders;
 import com.yepao.pojo.SyntheComment;
 import com.yepao.pojo.TalentComment;
@@ -52,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
 	public List<HallComment> getHallComment(Long hallId) {
 		HallCommentExample hallComExample = new HallCommentExample();
 		com.yepao.pojo.HallCommentExample.Criteria hallComCriteria = hallComExample.createCriteria();
-		hallComCriteria.andIdEqualTo(hallId);
+		hallComCriteria.andHallIdEqualTo(hallId);
 		hallComExample.setOrderByClause("`created` DESC");
 		List<HallComment> hallComList = hallComMapper.selectByExample(hallComExample);
 		return hallComList;
@@ -61,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
 	public List<ComboComment> getComboComment(Long comboId) {
 		ComboCommentExample comboComExample = new ComboCommentExample();
 		com.yepao.pojo.ComboCommentExample.Criteria comboComCriteria = comboComExample.createCriteria();
-		comboComCriteria.andIdEqualTo(comboId);
+		comboComCriteria.andComboIdEqualTo(comboId);
 		comboComExample.setOrderByClause("`created` DESC");
 		List<ComboComment> comboComList = comboComMapper.selectByExample(comboComExample);
 		return comboComList;
@@ -70,7 +73,7 @@ public class CommentServiceImpl implements CommentService {
 	public List<CelebrationComment> getCelebrationComment(Long celebrationId) {
 		CelebrationCommentExample celeComExample = new CelebrationCommentExample();
 		com.yepao.pojo.CelebrationCommentExample.Criteria celeComCriteria = celeComExample.createCriteria();
-		celeComCriteria.andIdEqualTo(celebrationId);
+		celeComCriteria.andCelebrationIdEqualTo(celebrationId);
 		celeComExample.setOrderByClause("`created` DESC");
 		List<CelebrationComment> celeComList = celeComMapper.selectByExample(celeComExample);
 		return celeComList;
@@ -87,21 +90,27 @@ public class CommentServiceImpl implements CommentService {
 
 	public boolean submitComment(HallComment hallCom, ComboComment comboCom, CelebrationComment celeCom,
 			SyntheComment syntheCom, List<TalentComment> talentComList, Long orderId) {
-		hallComMapper.insert(hallCom);
-		comboComMapper.insert(comboCom);
-		celeComMapper.insert(celeCom);
-		syntheComMapper.insert(syntheCom);
+		if(hallCom!=null)
+			hallComMapper.insert(hallCom);
+		if(comboCom!=null)
+			comboComMapper.insert(comboCom);
+		if(celeCom!=null)
+			celeComMapper.insert(celeCom);
+		if(syntheCom!=null)
+			syntheComMapper.insert(syntheCom);
 		Orders order = ordersMapper.selectByPrimaryKey(orderId);
 		Long hotelId = order.getHotelId();
 		//更新酒店总评分
 		BigDecimal avgCount = syntheComMapper.getAvgComment();
 		updateHotelReputation(hotelId, avgCount);
-		for(TalentComment t:talentComList) {
-			talentComMapper.insert(t);
-			updateTalentReputation(t); 			
+		if(!talentComList.isEmpty()) {
+			for(TalentComment t:talentComList) {
+				talentComMapper.insert(t);
+				updateTalentReputation(t); 			
+			}
 		}
 		if(order != null) {
-			order.setStatus(CommonConstants.FINISHED);
+			order.setStatus(CommonConstants.COMMENTED);
 			ordersMapper.updateByPrimaryKey(order);
 		}
 		return false;
@@ -113,15 +122,27 @@ public class CommentServiceImpl implements CommentService {
 	 * @param avgCount 本次评价分数
 	 */
 	private void updateHotelReputation(Long hotelId,BigDecimal avgCount) {
-		Hotel hotel = hotelMapper.selectByPrimaryKey(hotelId);
+		HotelExample example = new HotelExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andHotelIdEqualTo(hotelId);
+		List<Hotel> list = hotelMapper.selectByExample(example);
+		Hotel hotel = list.get(0);
 		Integer count = hotel.getCommentCount();
 		BigDecimal level = hotel.getReputationLevel();
-		BigDecimal newLevel = ((level.multiply(new BigDecimal(count)).add(avgCount)).divide(new BigDecimal(count+1))).setScale(1, BigDecimal.ROUND_HALF_UP);
+		BigDecimal newLevel = (
+								(
+									level.multiply(new BigDecimal(count.toString()))
+										.add(avgCount)
+														).divide(
+																new BigDecimal(count.toString()).add(new BigDecimal("1")),2, RoundingMode.HALF_UP
+																
+																));//.setScale(1, BigDecimal.ROUND_HALF_UP);
 		Integer goodReputation = hotel.getGoodReputation();
 		if(avgCount.compareTo(new BigDecimal(4.0))>0)
 			goodReputation = Math.round((Math.round(count*goodReputation/100)+1)/(count+1)*100);
 		else
 			goodReputation = Math.round((Math.round(count*goodReputation/100))/(count+1)*100);
+		hotel.setGoodReputation(goodReputation);
 		hotel.setReputationLevel(newLevel);
 		hotel.setCommentCount(++count);
 		hotelMapper.updateByPrimaryKey(hotel);
@@ -140,7 +161,8 @@ public class CommentServiceImpl implements CommentService {
 			goodReputation = Math.round((Math.round(count*goodReputation/100)+1)/(count+1)*100);
 		else
 			goodReputation = Math.round((Math.round(count*goodReputation/100))/(count+1)*100);
-		BigDecimal newLevel = ((level.multiply(new BigDecimal(count)).add(new BigDecimal(score))).divide(new BigDecimal(count+1))).setScale(1, BigDecimal.ROUND_HALF_UP);
+		BigDecimal newLevel = ((level.multiply(new BigDecimal(count.toString())).add(new BigDecimal(score.toString()))).divide(new BigDecimal(count.toString()).add(new BigDecimal("1")),2,RoundingMode.HALF_UP));
+		
 		talent.setGoodReputation(goodReputation);
 		talent.setComprehensive(newLevel);
 		talent.setCommentCount(++count);

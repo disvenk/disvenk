@@ -5,9 +5,13 @@ import java.util.Date;
 public class TalentComment {
     private Long id;
 
+    private String headimg;
+
     private String nickName;
 
-    private Long customerId;
+    private String customerId;
+
+    private String talentName;
 
     private Long talentId;
 
@@ -27,6 +31,14 @@ public class TalentComment {
         this.id = id;
     }
 
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg == null ? null : headimg.trim();
+    }
+
     public String getNickName() {
         return nickName;
     }
@@ -35,12 +47,20 @@ public class TalentComment {
         this.nickName = nickName == null ? null : nickName.trim();
     }
 
-    public Long getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId == null ? null : customerId.trim();
+    }
+
+    public String getTalentName() {
+        return talentName;
+    }
+
+    public void setTalentName(String talentName) {
+        this.talentName = talentName == null ? null : talentName.trim();
     }
 
     public Long getTalentId() {

@@ -34,6 +34,8 @@
 				/js/** = anon
 				/images/** = anon
 				/services/** = anon 
+				/cutImg/** = anon
+				/talentMedia/** = anon
 				<!-- /pages/base/courier.html* = perms[courier:list] --><!--配置了perms之后，只要访问这个路径就会走授权管理  -->
 				<!-- /pages/base/area.html* = roles[base] -->
 				/** = authc
@@ -46,6 +48,7 @@
 		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- realm必须注入给安全管理器 -->
 		<property name="realm" ref="yePaoRealm" />
+		<property name="sessionManager" ref="sessionManager" />
 		<!-- 将shiro的缓存管理器注入到安全管理器中 -->
 		<!-- <property name="cacheManager" ref="shiroCacheManager" /> -->
 	</bean>
@@ -54,6 +57,7 @@
 	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 	    <!-- 设置超时时间 -->
 	    <property name="globalSessionTimeout" value="18000000"/>
+	    <!-- <property name="deleteInvalidSessions" value="true"/> -->
 	</bean>
 	
 	 <!-- 配置Realm -->

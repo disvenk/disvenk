@@ -6,7 +6,14 @@ public class CelebrationAsistant {
 	private String ComboName;
 	private boolean isStage;
 	private List itemName;
+	private boolean luxury;
 	
+	public boolean isLuxury() {
+		return luxury;
+	}
+	public void setLuxury(boolean luxury) {
+		this.luxury = luxury;
+	}
 	public String getComboName() {
 		return ComboName;
 	}

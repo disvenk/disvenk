@@ -257,7 +257,7 @@
 						<tr>
 							<td>菜品价格</td>
 							<td>
-								<input type="text" data-options="validType:'length[0,8]'" name="price" class="easyui-validatebox easyui-numberbox" required="true" />
+								<input type="text" data-options="validType:'length[0,8]'" name="price" class="easyui-validatebox easyui-numberbox" precision="2" required="true" />
 							</td>
 						</tr>
 						<tr>

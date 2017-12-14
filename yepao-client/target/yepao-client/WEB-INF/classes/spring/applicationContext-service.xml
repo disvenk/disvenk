@@ -11,4 +11,5 @@
 
 	<context:component-scan base-package="com.yepao.service,com.yepeo.quatz"></context:component-scan>
 	
+	<bean class="com.yepao.utils.MyApplicationContextUtil"></bean>
 </beans>

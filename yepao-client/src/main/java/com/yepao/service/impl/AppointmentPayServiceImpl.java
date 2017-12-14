@@ -1,5 +1,8 @@
 package com.yepao.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +31,25 @@ public class AppointmentPayServiceImpl implements AppointmentPayService {
 
 	//增加
 	@Override
-	public void addAppointmentPay(Long hotelId, Long hallId) {
-		// TODO Auto-generated method stub
+	public void addAppointmentPay(Long out_trade_no,Long hotelId, Long hallId,String hallName,
+			String customerName,String tel,String reservedDate) {
+		AppointmentPayed apPayed = new AppointmentPayed();
+		apPayed.setHotelId(hotelId);
+		apPayed.setHallId(hallId);
+		apPayed.setHallName(hallName);
+		apPayed.setCustomer(customerName);
+		SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date parse = sFormat.parse(reservedDate);
+		apPayed.setTime(parse);
+		apPayed.setTel(tel);
+		apPayed.setStatus("有效");
+		apPayed.setCreated(new Date());
+		appointmentPayedMapper.insert(apPayed);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

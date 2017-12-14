@@ -1,15 +1,18 @@
 package com.yepao.weixin.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.other.pojo.TalentComment1;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.yepao.pojo.CelebrationComment;
 import com.yepao.pojo.ComboComment;
 import com.yepao.pojo.HallComment;
@@ -77,47 +80,86 @@ public class WxCommentController {
 	 */
 	@RequestMapping("/submitComment")
 	@ResponseBody
-	public String commentSubmit(HttpServletRequest request,List<TalentComment> talentComList){
-		String orderIdString = request.getParameter("orderId");
-		Long orderId = Long.valueOf(orderIdString);
-		String customerIdString = request.getParameter("openId");
-		Long customerId = Long.valueOf(customerIdString);
-		String nickName = request.getParameter("nickName");
+	public String commentSubmit(Long orderId,String headImg,String openId,String nickName,String hallComment,String comboComment,
+								String celebrationComment,BigDecimal syntheCommentLevel,String talentComment){
 		
-		String hallComString = request.getParameter("hallComment");
-		String comboComString = request.getParameter("comboComment");
-		String celeComString = request.getParameter("celebrationComment");
-		String syntheComString = request.getParameter("syntheComment");
-		//String talentComString = request.getParameter("talentComment");
-		
-		HallComment hallCom = JsonUtils.jsonToPojo(hallComString, HallComment.class);
-		ComboComment comboCom = JsonUtils.jsonToPojo(comboComString, ComboComment.class);
-		CelebrationComment celeCom = JsonUtils.jsonToPojo(celeComString, CelebrationComment.class);
-		SyntheComment syntheCom = JsonUtils.jsonToPojo(syntheComString, SyntheComment.class);//综合评价
-		
-		hallCom.setCustomerId(customerId);
-		hallCom.setNickName(nickName);
-		hallCom.setCreated(new Date());
-		
-		comboCom.setCustomerId(customerId);
-		comboCom.setNickName(nickName);
-		comboCom.setCreated(new Date());
-		
-		celeCom.setCustomerId(customerId);
-		celeCom.setNickName(nickName);
-		celeCom.setCreated(new Date());
-		
-		syntheCom.setCustomerId(customerId);
-		syntheCom.setNickName(nickName);
-		syntheCom.setCreatedDate(new Date());
-		
-		for(TalentComment t:talentComList) {
-			t.setCustomerId(customerId);
-			t.setNickName(nickName);
-			t.setCreated(new Date());
+		HallComment hallCom = new HallComment();
+		ComboComment comboCom = new ComboComment();
+		CelebrationComment celeCombo = new CelebrationComment();
+		TalentComment1 talentCombo = new TalentComment1();
+		if(hallComment != null) {
+			LinkedHashMap<String, Object> hallJson = (LinkedHashMap<String, Object>) JsonUtils.jsonToPojo(hallComment, Object.class);
+			String commentContent = (String) hallJson.get("commentContent");
+			Integer compLevel = Integer.parseInt(hallJson.get("compLevel").toString());
+			Long hallId = Long.parseLong(hallJson.get("hallId").toString());
+			hallCom.setHallId(hallId);
+			hallCom.setHeadimg(headImg);
+			hallCom.setCompLevel(compLevel);
+			hallCom.setCommentContent(commentContent);
+			hallCom.setCustomerId(openId);
+			hallCom.setNickName(nickName);
+			hallCom.setCreated(new Date());
+		}
+		if(comboComment != null) {
+			LinkedHashMap<String, Object> comboJson = (LinkedHashMap<String, Object>) JsonUtils.jsonToPojo(comboComment, Object.class);
+			String commentContent = (String) comboJson.get("commentContent");
+			Integer compLevel = Integer.parseInt(comboJson.get("compLevel").toString());
+			Long comboId = Long.parseLong(comboJson.get("comboId").toString());
+			comboCom.setComboId(comboId);
+			comboCom.setHeadimg(headImg);
+			comboCom.setCommentContent(commentContent);
+			comboCom.setCompLevel(compLevel);
+			comboCom.setCustomerId(openId);
+			comboCom.setNickName(nickName);
+			comboCom.setCreated(new Date());
+		}
+		if(celebrationComment != null) {
+			LinkedHashMap<String, Object> celeJson = (LinkedHashMap<String, Object>) JsonUtils.jsonToPojo(celebrationComment, Object.class);
+			String commentContent = (String) celeJson.get("commentContent");
+			Integer compLevel = Integer.parseInt(celeJson.get("compLevel").toString());
+			Long celebrationId = Long.parseLong(celeJson.get("celebrationId").toString());
+			celeCombo.setCelebrationId(celebrationId);
+			celeCombo.setHeadimg(headImg);
+			celeCombo.setCommentContent(commentContent);
+			celeCombo.setCompLevel(compLevel);
+			celeCombo.setCustomerId(openId);
+			celeCombo.setNickName(nickName);
+			celeCombo.setCreated(new Date());
 		}
 		
-		boolean result = commentService.submitComment(hallCom,comboCom,celeCom,syntheCom,talentComList,orderId);
+		SyntheComment syntheCom = new SyntheComment();
+		syntheCom.setCustomerId(openId);
+		syntheCom.setNickName(nickName);
+		syntheCom.setCreatedDate(new Date());
+		syntheCom.setCompLevel(syntheCommentLevel);
+		
+		List<TalentComment> talentComList = new ArrayList<TalentComment>();
+		if(talentComment != null) {
+			LinkedHashMap<String, Object> talentJson = (LinkedHashMap<String, Object>) JsonUtils.jsonToPojo(talentComment, Object.class);
+			String talentIdString = (String) talentJson.get("talentId");
+			String commentContentString = (String) talentJson.get("commentContent");
+			String compLevelString = (String) talentJson.get("compLevel");
+			//String imgString = (String)talentCommentObj.get("img");
+			
+			String[] talentIdStrings = talentIdString.split(",");
+			String[] compLevelStrings = compLevelString.split(",");
+			//String[] imgStrings = imgString.split(",");
+			
+			for(int i=0;i<talentIdStrings.length;i++) {
+				TalentComment t = new TalentComment();
+				t.setCustomerId(openId);
+				t.setHeadimg(headImg);
+				t.setNickName(nickName);
+				t.setCreated(new Date());
+				t.setTalentId(Long.valueOf(talentIdStrings[i]));
+				t.setCompLevel(Integer.valueOf(compLevelStrings[i]));
+				//t.setImg(imgStrings[i]);
+				t.setCommentContent(commentContentString);
+				talentComList.add(t);
+			}
+		}
+		
+		boolean result = commentService.submitComment(hallCom,comboCom,celeCombo,syntheCom,talentComList,orderId);
 		if(result)
 			return CommonConstants.SUCCESS;
 		else
@@ -125,5 +167,4 @@ public class WxCommentController {
 	}
 	
 	
-
 }

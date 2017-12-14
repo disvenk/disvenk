@@ -2,6 +2,9 @@ package com.yepao.controller;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -45,12 +48,27 @@ public class TalentController {
 	//查询人才
 	@RequestMapping("/talent_pageQuery")
 	@ResponseBody
-	public List<WeddingTalent> getWeddingTalent(String name,Long hotelId){
-		try {
-			name = new String(name.getBytes("iso-8859-1"),"utf-8");
+	public List<WeddingTalent> getWeddingTalent(String name,Long hotelId,HttpServletRequest request){
+	System.out.println("解码之前"+name);
+		/*try {
+			 if (request.getHeader("User-Agent").toLowerCase()  
+		                .indexOf("firefox") > 0) {  
+				 name = URLDecoder.decode(name,"UTF-8"); // firefox浏览器  
+		        }else if (request.getHeader("User-Agent").toUpperCase()  
+		                .indexOf("CHROME") > 0) {  
+		        	name = URLDecoder.decode(name,"UTF-8");;// 谷歌  
+		        } else {  
+		        	name = URLDecoder.decode(name, "UTF-8");// IE浏览器
+		        }  
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		}
+		}*/
+	try {
+		name = new String(name.getBytes("iso8859-1"),"utf-8");
+	} catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 		System.out.println(name);
 		List<WeddingTalent> list = talentService.getWeddingTalents(name,hotelId);
 		return list;
@@ -76,6 +94,10 @@ public class TalentController {
 				           wTalent.setStyle(style);	
 		            }
 		          
+		            wTalent.setChosenCount(0);
+		            wTalent.setCommentCount(0);
+		            wTalent.setGoodReputation(0);
+		            wTalent.setComprehensive(new BigDecimal("0"));
 		            wTalent.setCreated(new Date());
 		            wTalent.setUpdated(new Date());
 		            talentService.saveTalent(wTalent);
@@ -107,6 +129,10 @@ public class TalentController {
 			            wTalent.setTel(wTalentA.getTel());
 			            wTalent.setPrice(wTalentA.getPrice());
 			            wTalent.setIntroduction(wTalentA.getIntroduction());
+			            wTalent.setChosenCount(wTalentB.getChosenCount());
+			            wTalent.setCommentCount(wTalentB.getCommentCount());
+			            wTalent.setComprehensive(wTalentB.getComprehensive());
+			            wTalent.setGoodReputation(wTalentB.getGoodReputation());
 			            if(styles == null){
 			            	 wTalent.setStyle(wTalentA.getStyle());
 			            }else{
@@ -114,9 +140,7 @@ public class TalentController {
 					           wTalent.setStyle(style);
 			            }
 			           
-			            wTalent.setGoodReputation(wTalentA.getGoodReputation());
-			            wTalent.setComprehensive(wTalentA.getComprehensive());
-			            wTalent.setChosenCount(wTalentA.getChosenCount());
+			         
 			            wTalent.setCreated(new Date(Long.parseLong(wTalentA.getCreated())));
 			            wTalent.setUpdated(new Date());
 			            wTalent.setStandby(wTalentA.getStandby());
@@ -129,7 +153,7 @@ public class TalentController {
 				//先删除原来的图片
 		        WeddingTalent wTalentB =  talentService.getWeddingTalent(wTalentA.getWeddingTalentId());
 		        String img = wTalentB.getHeadImg();
-		        String delName = img.substring(20);
+		        String delName = img.substring(23);
 		        FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
 		        Integer result = fastDFSClient.delete_file(delName);
 				 
@@ -156,9 +180,10 @@ public class TalentController {
 		            wTalent.setPrice(wTalentA.getPrice());
 		            wTalent.setIntroduction(wTalentA.getIntroduction());
 		            wTalent.setStyle(wTalentA.getStyle());
-		            wTalent.setGoodReputation(wTalentA.getGoodReputation());
-		            wTalent.setComprehensive(wTalentA.getComprehensive());
-		            wTalent.setChosenCount(wTalentA.getChosenCount());
+		            wTalent.setChosenCount(wTalentB.getChosenCount());
+		            wTalent.setCommentCount(wTalentB.getCommentCount());
+		            wTalent.setComprehensive(wTalentB.getComprehensive());
+		            wTalent.setGoodReputation(wTalentB.getGoodReputation());
 		            wTalent.setCreated(new Date(Long.parseLong(wTalentA.getCreated())));
 		            wTalent.setUpdated(new Date());
 		            wTalent.setStandby(wTalentA.getStandby());
@@ -191,18 +216,18 @@ public class TalentController {
 		        //查询出picture和media表里的所有关于该人才的图片和视频然后一个一个的删除
 		        List<Picture> picList = mediaFileService.getPicByTid(tid);
 		        for (Picture picture : picList) {
-		        	fastDFSClient.delete_file(picture.getSrc().substring(20));
+		        	fastDFSClient.delete_file(picture.getSrc().substring(23));
 					mediaFileService.deletePic(picture.getId());
 				}
 		        List<Media> mediaList = mediaFileService.getMediaByTid(tid);
 		        for (Media media : mediaList) {
-					fastDFSClient.delete_file(media.getImgsrc().substring(20));
-					fastDFSClient.delete_file(media.getVediosrc().substring(20));
+					fastDFSClient.delete_file(media.getImgsrc().substring(23));
+					fastDFSClient.delete_file(media.getVediosrc().substring(23));
 					mediaFileService.deleteMedia(media.getId());
 				}
 		        
 		        //删除头像
-				String delName =  img.substring(20);
+				String delName =  img.substring(23);
 				System.out.println("要删的"+delName);
 				fastDFSClient.delete_file(delName);
 				 talentService.deleteTalent(id);
@@ -220,7 +245,7 @@ public class TalentController {
 			for (String string : strArr) {
 				Integer id = Integer.parseInt(string);
 				Picture pic = mediaFileService.getPic(id);
-				String delPicName = pic.getSrc().substring(20);
+				String delPicName = pic.getSrc().substring(23);
 				fastDFSClient.delete_file(delPicName);
 				 
 				mediaFileService.deletePic(id);
@@ -237,10 +262,10 @@ public class TalentController {
 			for (String string : strArr) {
 				Integer id = Integer.parseInt(string);
 				Media media = mediaFileService.getMedia(id);
-				String delPicName = media.getVediosrc().substring(20);
+				String delPicName = media.getVediosrc().substring(23);
 				fastDFSClient.delete_file(delPicName);
 				
-				String firstImg = media.getImgsrc().substring(20);
+				String firstImg = media.getImgsrc().substring(23);
 				fastDFSClient.delete_file(firstImg);
 				 
 				mediaFileService.deleteMedia(id);

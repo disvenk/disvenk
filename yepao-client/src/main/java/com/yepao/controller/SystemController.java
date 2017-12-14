@@ -61,7 +61,7 @@ public class SystemController {
 					Cookie cookie1 = new Cookie("userId", hotel2.getHotelId().toString());
 					//用于欢迎登陆
 					Cookie nameCookie = new Cookie("userName", hotel2.getHotelId().toString());
-					nameCookie.setMaxAge(1800);
+					nameCookie.setMaxAge(3600*24);
 					cookie1.setMaxAge(1800);
 					response.addCookie(cookie1);
 					response.addCookie(nameCookie);

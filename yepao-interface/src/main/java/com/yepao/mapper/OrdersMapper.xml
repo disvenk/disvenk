@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yepao.pojo.Orders" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="vaidate_code" property="vaidateCode" jdbcType="VARCHAR" />
+    <result column="two_bar_code" property="twoBarCode" jdbcType="VARCHAR" />
     <result column="hotel_id" property="hotelId" jdbcType="BIGINT" />
     <result column="weiPayId" property="weipayid" jdbcType="VARCHAR" />
     <result column="prePay_id" property="prepayId" jdbcType="VARCHAR" />
@@ -87,9 +88,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, vaidate_code, hotel_id, weiPayId, prePay_id, customer_name, tel, gender, customer_id, 
-    reserved_date, hall, combo, celebration, description, talent, prePay, obligation, 
-    count, weddingDate, status, checked, created, closed, prepayed, payed
+    id, vaidate_code, two_bar_code, hotel_id, weiPayId, prePay_id, customer_name, tel, 
+    gender, customer_id, reserved_date, hall, combo, celebration, description, talent, 
+    prePay, obligation, count, weddingDate, status, checked, created, closed, prepayed, 
+    payed
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.OrdersExample" >
     select
@@ -122,24 +124,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.Orders" >
-    insert into orders (id, vaidate_code, hotel_id, 
-      weiPayId, prePay_id, customer_name, 
-      tel, gender, customer_id, 
-      reserved_date, hall, combo, 
-      celebration, description, talent, 
-      prePay, obligation, count, 
-      weddingDate, status, checked, 
-      created, closed, prepayed, 
-      payed)
-    values (#{id,jdbcType=BIGINT}, #{vaidateCode,jdbcType=VARCHAR}, #{hotelId,jdbcType=BIGINT}, 
-      #{weipayid,jdbcType=VARCHAR}, #{prepayId,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{customerId,jdbcType=VARCHAR}, 
-      #{reservedDate,jdbcType=DATE}, #{hall,jdbcType=VARCHAR}, #{combo,jdbcType=VARCHAR}, 
-      #{celebration,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{talent,jdbcType=VARCHAR}, 
-      #{prepay,jdbcType=DECIMAL}, #{obligation,jdbcType=DECIMAL}, #{count,jdbcType=DECIMAL}, 
-      #{weddingdate,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, #{checked,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{closed,jdbcType=TIMESTAMP}, #{prepayed,jdbcType=TIMESTAMP}, 
-      #{payed,jdbcType=TIMESTAMP})
+    insert into orders (id, vaidate_code, two_bar_code, 
+      hotel_id, weiPayId, prePay_id, 
+      customer_name, tel, gender, 
+      customer_id, reserved_date, hall, 
+      combo, celebration, description, 
+      talent, prePay, obligation, 
+      count, weddingDate, status, 
+      checked, created, closed, 
+      prepayed, payed)
+    values (#{id,jdbcType=BIGINT}, #{vaidateCode,jdbcType=VARCHAR}, #{twoBarCode,jdbcType=VARCHAR}, 
+      #{hotelId,jdbcType=BIGINT}, #{weipayid,jdbcType=VARCHAR}, #{prepayId,jdbcType=VARCHAR}, 
+      #{customerName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{customerId,jdbcType=VARCHAR}, #{reservedDate,jdbcType=DATE}, #{hall,jdbcType=VARCHAR}, 
+      #{combo,jdbcType=VARCHAR}, #{celebration,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{talent,jdbcType=VARCHAR}, #{prepay,jdbcType=DECIMAL}, #{obligation,jdbcType=DECIMAL}, 
+      #{count,jdbcType=DECIMAL}, #{weddingdate,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, 
+      #{checked,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{closed,jdbcType=TIMESTAMP}, 
+      #{prepayed,jdbcType=TIMESTAMP}, #{payed,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.Orders" >
     insert into orders
@@ -149,6 +151,9 @@
       </if>
       <if test="vaidateCode != null" >
         vaidate_code,
+      </if>
+      <if test="twoBarCode != null" >
+        two_bar_code,
       </if>
       <if test="hotelId != null" >
         hotel_id,
@@ -226,6 +231,9 @@
       </if>
       <if test="vaidateCode != null" >
         #{vaidateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twoBarCode != null" >
+        #{twoBarCode,jdbcType=VARCHAR},
       </if>
       <if test="hotelId != null" >
         #{hotelId,jdbcType=BIGINT},
@@ -313,6 +321,9 @@
       <if test="record.vaidateCode != null" >
         vaidate_code = #{record.vaidateCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.twoBarCode != null" >
+        two_bar_code = #{record.twoBarCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.hotelId != null" >
         hotel_id = #{record.hotelId,jdbcType=BIGINT},
       </if>
@@ -391,6 +402,7 @@
     update orders
     set id = #{record.id,jdbcType=BIGINT},
       vaidate_code = #{record.vaidateCode,jdbcType=VARCHAR},
+      two_bar_code = #{record.twoBarCode,jdbcType=VARCHAR},
       hotel_id = #{record.hotelId,jdbcType=BIGINT},
       weiPayId = #{record.weipayid,jdbcType=VARCHAR},
       prePay_id = #{record.prepayId,jdbcType=VARCHAR},
@@ -423,6 +435,9 @@
     <set >
       <if test="vaidateCode != null" >
         vaidate_code = #{vaidateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twoBarCode != null" >
+        two_bar_code = #{twoBarCode,jdbcType=VARCHAR},
       </if>
       <if test="hotelId != null" >
         hotel_id = #{hotelId,jdbcType=BIGINT},
@@ -499,6 +514,7 @@
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.Orders" >
     update orders
     set vaidate_code = #{vaidateCode,jdbcType=VARCHAR},
+      two_bar_code = #{twoBarCode,jdbcType=VARCHAR},
       hotel_id = #{hotelId,jdbcType=BIGINT},
       weiPayId = #{weipayid,jdbcType=VARCHAR},
       prePay_id = #{prepayId,jdbcType=VARCHAR},

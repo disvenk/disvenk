@@ -32,7 +32,7 @@ public class WxOrderController {
 	@RequestMapping("/histOrderList")
 	@ResponseBody
 	public List<Orders1> getHistOrderList(String openId){
-		List<Orders1> list = orderService.getOrderList(openId,CommonConstants.FINISHED);
+		List<Orders1> list = orderService.getOrderList(openId,CommonConstants.COMMENTED);
 		return list;
 	}
 	
@@ -43,7 +43,7 @@ public class WxOrderController {
 	@RequestMapping("/reservedOrderList")
 	@ResponseBody
 	public List<Orders1> getReservedOrderList(String openId){
-		List<Orders1> list = orderService.getOrderList(openId,CommonConstants.RESERVED);
+		List<Orders1> list = orderService.getOrderList(openId,CommonConstants.PRE_PAY);
 		return list;
 	}
 
@@ -54,7 +54,7 @@ public class WxOrderController {
 	@RequestMapping("/allpaidOrderList")
 	@ResponseBody
 	public List<Orders1> getAllpaidOrderList(String openId){
-		List<Orders1> list = orderService.getOrderList(openId,CommonConstants.ALLPAID);
+		List<Orders1> list = orderService.getOrderList(openId,CommonConstants.PAY);
 		return list;
 	}
 

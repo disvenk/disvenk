@@ -3,7 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta charset="utf-8">
 		<title>主持人信息设置</title>
 		<!-- 导入jquery核心类库 -->
 		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
@@ -325,7 +326,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "/talent_pageQuery?name=主持人&hotelId="+$.cookie("yonghuming"),
+					url : "/talent_pageQuery?name="+encodeURI("主持人")+"&hotelId="+$.cookie("yonghuming"),
 					idField : 'weddingTalentId',//这里的字段一定与表格里的id字段对应
 					columns : columns
 				});

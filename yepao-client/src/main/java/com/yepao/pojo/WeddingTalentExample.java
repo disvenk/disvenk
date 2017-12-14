@@ -776,6 +776,76 @@ public class WeddingTalentExample {
             return (Criteria) this;
         }
 
+        public Criteria andPersonalDeclarationIsNull() {
+            addCriterion("personal_declaration is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationIsNotNull() {
+            addCriterion("personal_declaration is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationEqualTo(String value) {
+            addCriterion("personal_declaration =", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationNotEqualTo(String value) {
+            addCriterion("personal_declaration <>", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationGreaterThan(String value) {
+            addCriterion("personal_declaration >", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_declaration >=", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationLessThan(String value) {
+            addCriterion("personal_declaration <", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationLessThanOrEqualTo(String value) {
+            addCriterion("personal_declaration <=", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationLike(String value) {
+            addCriterion("personal_declaration like", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationNotLike(String value) {
+            addCriterion("personal_declaration not like", value, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationIn(List<String> values) {
+            addCriterion("personal_declaration in", values, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationNotIn(List<String> values) {
+            addCriterion("personal_declaration not in", values, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationBetween(String value1, String value2) {
+            addCriterion("personal_declaration between", value1, value2, "personalDeclaration");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalDeclarationNotBetween(String value1, String value2) {
+            addCriterion("personal_declaration not between", value1, value2, "personalDeclaration");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodReputationIsNull() {
             addCriterion("good_reputation is null");
             return (Criteria) this;
@@ -786,62 +856,52 @@ public class WeddingTalentExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationEqualTo(String value) {
+        public Criteria andGoodReputationEqualTo(Integer value) {
             addCriterion("good_reputation =", value, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationNotEqualTo(String value) {
+        public Criteria andGoodReputationNotEqualTo(Integer value) {
             addCriterion("good_reputation <>", value, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationGreaterThan(String value) {
+        public Criteria andGoodReputationGreaterThan(Integer value) {
             addCriterion("good_reputation >", value, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationGreaterThanOrEqualTo(String value) {
+        public Criteria andGoodReputationGreaterThanOrEqualTo(Integer value) {
             addCriterion("good_reputation >=", value, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationLessThan(String value) {
+        public Criteria andGoodReputationLessThan(Integer value) {
             addCriterion("good_reputation <", value, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationLessThanOrEqualTo(String value) {
+        public Criteria andGoodReputationLessThanOrEqualTo(Integer value) {
             addCriterion("good_reputation <=", value, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationLike(String value) {
-            addCriterion("good_reputation like", value, "goodReputation");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodReputationNotLike(String value) {
-            addCriterion("good_reputation not like", value, "goodReputation");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodReputationIn(List<String> values) {
+        public Criteria andGoodReputationIn(List<Integer> values) {
             addCriterion("good_reputation in", values, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationNotIn(List<String> values) {
+        public Criteria andGoodReputationNotIn(List<Integer> values) {
             addCriterion("good_reputation not in", values, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationBetween(String value1, String value2) {
+        public Criteria andGoodReputationBetween(Integer value1, Integer value2) {
             addCriterion("good_reputation between", value1, value2, "goodReputation");
             return (Criteria) this;
         }
 
-        public Criteria andGoodReputationNotBetween(String value1, String value2) {
+        public Criteria andGoodReputationNotBetween(Integer value1, Integer value2) {
             addCriterion("good_reputation not between", value1, value2, "goodReputation");
             return (Criteria) this;
         }
@@ -856,52 +916,52 @@ public class WeddingTalentExample {
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveEqualTo(Integer value) {
+        public Criteria andComprehensiveEqualTo(BigDecimal value) {
             addCriterion("comprehensive =", value, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveNotEqualTo(Integer value) {
+        public Criteria andComprehensiveNotEqualTo(BigDecimal value) {
             addCriterion("comprehensive <>", value, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveGreaterThan(Integer value) {
+        public Criteria andComprehensiveGreaterThan(BigDecimal value) {
             addCriterion("comprehensive >", value, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveGreaterThanOrEqualTo(Integer value) {
+        public Criteria andComprehensiveGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("comprehensive >=", value, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveLessThan(Integer value) {
+        public Criteria andComprehensiveLessThan(BigDecimal value) {
             addCriterion("comprehensive <", value, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveLessThanOrEqualTo(Integer value) {
+        public Criteria andComprehensiveLessThanOrEqualTo(BigDecimal value) {
             addCriterion("comprehensive <=", value, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveIn(List<Integer> values) {
+        public Criteria andComprehensiveIn(List<BigDecimal> values) {
             addCriterion("comprehensive in", values, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveNotIn(List<Integer> values) {
+        public Criteria andComprehensiveNotIn(List<BigDecimal> values) {
             addCriterion("comprehensive not in", values, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveBetween(Integer value1, Integer value2) {
+        public Criteria andComprehensiveBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("comprehensive between", value1, value2, "comprehensive");
             return (Criteria) this;
         }
 
-        public Criteria andComprehensiveNotBetween(Integer value1, Integer value2) {
+        public Criteria andComprehensiveNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("comprehensive not between", value1, value2, "comprehensive");
             return (Criteria) this;
         }
@@ -963,6 +1023,66 @@ public class WeddingTalentExample {
 
         public Criteria andChosenCountNotBetween(Integer value1, Integer value2) {
             addCriterion("chosen_count not between", value1, value2, "chosenCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountIsNull() {
+            addCriterion("comment_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountIsNotNull() {
+            addCriterion("comment_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountEqualTo(Integer value) {
+            addCriterion("comment_count =", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountNotEqualTo(Integer value) {
+            addCriterion("comment_count <>", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountGreaterThan(Integer value) {
+            addCriterion("comment_count >", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("comment_count >=", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountLessThan(Integer value) {
+            addCriterion("comment_count <", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountLessThanOrEqualTo(Integer value) {
+            addCriterion("comment_count <=", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountIn(List<Integer> values) {
+            addCriterion("comment_count in", values, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountNotIn(List<Integer> values) {
+            addCriterion("comment_count not in", values, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountBetween(Integer value1, Integer value2) {
+            addCriterion("comment_count between", value1, value2, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("comment_count not between", value1, value2, "commentCount");
             return (Criteria) this;
         }
 

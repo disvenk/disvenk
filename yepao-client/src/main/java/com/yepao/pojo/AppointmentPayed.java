@@ -5,6 +5,8 @@ import java.util.Date;
 public class AppointmentPayed {
     private Long id;
 
+    private Long orderId;
+
     private Long hotelId;
 
     private Long hallId;
@@ -27,6 +29,14 @@ public class AppointmentPayed {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Long getHotelId() {

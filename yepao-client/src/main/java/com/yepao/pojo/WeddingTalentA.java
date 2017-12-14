@@ -4,163 +4,183 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class WeddingTalentA {
-	 private Long weddingTalentId;
-	 
-	 private Long hotelid;
+    private Long weddingTalentId;
 
-	    private String headImg;
+    private Long hotelid;
 
-	    private String name;
+    private String headImg;
 
-	    private String occupation;
+    private String name;
 
-	    private String experience;
+    private String occupation;
 
-	    private String tel;
+    private String experience;
 
-	    private BigDecimal price;
+    private String tel;
 
-	    private String introduction;
+    private BigDecimal price;
 
-	    private String style;
+    private String introduction;
 
-	    private String goodReputation;
+    private String style;
 
-	    private Integer comprehensive;
+    private String personalDeclaration;
 
-	    private Integer chosenCount;
+    private Integer goodReputation;
 
-	    private String created;
+    private BigDecimal comprehensive;
 
-	    private Date updated;
+    private Integer chosenCount;
 
-	    private String standby;
+    private Integer commentCount;
 
-	    public Long getWeddingTalentId() {
-	        return weddingTalentId;
-	    }
+    private String created;
 
-	    public void setWeddingTalentId(Long weddingTalentId) {
-	        this.weddingTalentId = weddingTalentId;
-	    }
+    private Date updated;
 
-	    public Long getHotelid() {
-	        return hotelid;
-	    }
+    private String standby;
 
-	    public void setHotelid(Long hotelid) {
-	        this.hotelid = hotelid;
-	    }
-	    
-	    public String getHeadImg() {
-	        return headImg;
-	    }
+    public Long getWeddingTalentId() {
+        return weddingTalentId;
+    }
 
-	    public void setHeadImg(String headImg) {
-	        this.headImg = headImg == null ? null : headImg.trim();
-	    }
+    public void setWeddingTalentId(Long weddingTalentId) {
+        this.weddingTalentId = weddingTalentId;
+    }
 
-	    public String getName() {
-	        return name;
-	    }
+    public Long getHotelid() {
+        return hotelid;
+    }
 
-	    public void setName(String name) {
-	        this.name = name == null ? null : name.trim();
-	    }
+    public void setHotelid(Long hotelid) {
+        this.hotelid = hotelid;
+    }
 
-	    public String getOccupation() {
-	        return occupation;
-	    }
+    public String getHeadImg() {
+        return headImg;
+    }
 
-	    public void setOccupation(String occupation) {
-	        this.occupation = occupation == null ? null : occupation.trim();
-	    }
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg == null ? null : headImg.trim();
+    }
 
-	    public String getExperience() {
-	        return experience;
-	    }
+    public String getName() {
+        return name;
+    }
 
-	    public void setExperience(String experience) {
-	        this.experience = experience;
-	    }
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
 
-	    public String getTel() {
-	        return tel;
-	    }
+    public String getOccupation() {
+        return occupation;
+    }
 
-	    public void setTel(String tel) {
-	        this.tel = tel == null ? null : tel.trim();
-	    }
+    public void setOccupation(String occupation) {
+        this.occupation = occupation == null ? null : occupation.trim();
+    }
 
-	    public BigDecimal getPrice() {
-	        return price;
-	    }
+    public String getExperience() {
+        return experience;
+    }
 
-	    public void setPrice(BigDecimal price) {
-	        this.price = price;
-	    }
+    public void setExperience(String experience) {
+        this.experience = experience == null ? null : experience.trim();
+    }
 
-	    public String getIntroduction() {
-	        return introduction;
-	    }
+    public String getTel() {
+        return tel;
+    }
 
-	    public void setIntroduction(String introduction) {
-	        this.introduction = introduction == null ? null : introduction.trim();
-	    }
+    public void setTel(String tel) {
+        this.tel = tel == null ? null : tel.trim();
+    }
 
-	    public String getStyle() {
-	        return style;
-	    }
+    public BigDecimal getPrice() {
+        return price;
+    }
 
-	    public void setStyle(String style) {
-	        this.style = style == null ? null : style.trim();
-	    }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
-	    public String getGoodReputation() {
-	        return goodReputation;
-	    }
+    public String getIntroduction() {
+        return introduction;
+    }
 
-	    public void setGoodReputation(String goodReputation) {
-	        this.goodReputation = goodReputation == null ? null : goodReputation.trim();
-	    }
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction == null ? null : introduction.trim();
+    }
 
-	    public Integer getComprehensive() {
-	        return comprehensive;
-	    }
+    public String getStyle() {
+        return style;
+    }
 
-	    public void setComprehensive(Integer comprehensive) {
-	        this.comprehensive = comprehensive;
-	    }
+    public void setStyle(String style) {
+        this.style = style == null ? null : style.trim();
+    }
 
-	    public Integer getChosenCount() {
-	        return chosenCount;
-	    }
+    public String getPersonalDeclaration() {
+        return personalDeclaration;
+    }
 
-	    public void setChosenCount(Integer chosenCount) {
-	        this.chosenCount = chosenCount;
-	    }
+    public void setPersonalDeclaration(String personalDeclaration) {
+        this.personalDeclaration = personalDeclaration == null ? null : personalDeclaration.trim();
+    }
 
-	    public String getCreated() {
-	        return created;
-	    }
+    public Integer getGoodReputation() {
+        return goodReputation;
+    }
 
-	    public void setCreated(String created) {
-	        this.created = created;
-	    }
+    public void setGoodReputation(Integer goodReputation) {
+        this.goodReputation = goodReputation;
+    }
 
-	    public Date getUpdated() {
-	        return updated;
-	    }
+    public BigDecimal getComprehensive() {
+        return comprehensive;
+    }
 
-	    public void setUpdated(Date updated) {
-	        this.updated = updated;
-	    }
+    public void setComprehensive(BigDecimal comprehensive) {
+        this.comprehensive = comprehensive;
+    }
 
-	    public String getStandby() {
-	        return standby;
-	    }
+    public Integer getChosenCount() {
+        return chosenCount;
+    }
 
-	    public void setStandby(String standby) {
-	        this.standby = standby == null ? null : standby.trim();
-	    }
+    public void setChosenCount(Integer chosenCount) {
+        this.chosenCount = chosenCount;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public String getStandby() {
+        return standby;
+    }
+
+    public void setStandby(String standby) {
+        this.standby = standby == null ? null : standby.trim();
+    }
 }

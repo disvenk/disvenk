@@ -1,6 +1,7 @@
 package com.yepao.controller;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -65,6 +66,9 @@ public class HotelController {
 	            hotel.setImg(url);
 	            hotel.setInsertDate(new Date());
 	            hotel.setUpdateDate(new Date());
+	            hotel.setReputationLevel(new BigDecimal("0"));
+	            hotel.setCommentCount(0);
+	            hotel.setGoodReputation(0);
 	            hotelService.saveHotel(hotel);
 			}else {
 				String url = null;

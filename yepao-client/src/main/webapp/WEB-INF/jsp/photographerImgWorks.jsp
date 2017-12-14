@@ -118,7 +118,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "/image_pageQuery?name=摄影师&id="+$.cookie("checkPhotographerId"),
+					url : "/image_pageQuery?name="+encodeURI("摄影师")+"&id="+$.cookie("checkPhotographerId"),
 					idField : 'id',//这里的字段一定与表格里的id字段对应
 					columns : columns
 				});

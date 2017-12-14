@@ -27,4 +27,6 @@ public interface AppointmentPayedMapper {
     int updateByPrimaryKeySelective(AppointmentPayed record);
 
     int updateByPrimaryKey(AppointmentPayed record);
+    
+    int updateStatus(Long orderId);
 }

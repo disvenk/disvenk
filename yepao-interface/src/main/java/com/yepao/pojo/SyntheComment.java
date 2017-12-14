@@ -8,7 +8,7 @@ public class SyntheComment {
 
     private String nickName;
 
-    private Long customerId;
+    private String customerId;
 
     private Long orderId;
 
@@ -32,12 +32,12 @@ public class SyntheComment {
         this.nickName = nickName == null ? null : nickName.trim();
     }
 
-    public Long getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId == null ? null : customerId.trim();
     }
 
     public Long getOrderId() {

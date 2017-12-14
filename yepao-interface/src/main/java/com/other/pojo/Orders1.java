@@ -4,42 +4,49 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.yepao.pojo.BanquetHall;
+import com.yepao.pojo.Celebration;
+import com.yepao.pojo.Combo;
 import com.yepao.pojo.WeddingTalent;
 
 public class Orders1 {
     private Long id;
 
     private String vaidateCode;
+    
+    private String twoBarCode;
 
-    private Date reservedDate;
+    public String getTwoBarCode() {
+		return twoBarCode;
+	}
 
-    private List<OrderAsistant> hall;
+	public void setTwoBarCode(String twoBarCode) {
+		this.twoBarCode = twoBarCode;
+	}
 
-    private List<OrderAsistant> combo;
+	private Date reservedDate;
 
-    private List<CelebrationAsistant> celebration;
+    private List<BanquetHall> hall;
+
+    private List<Combo> combo;
+
+    private List<Celebration> celebration;
 
     private List<WeddingTalent> talent;
 
-    private BigDecimal prepay;
-
     private BigDecimal obligation;
-
+    
     private BigDecimal count;
 
-    private Date weddingdate;
+    public BigDecimal getCount() {
+		return count;
+	}
 
-    private String status;
+	public void setCount(BigDecimal count) {
+		this.count = count;
+	}
 
-    private String checked;
-
-    private Date created;
-
-    private Date closed;
-
-    private Date prepayed;
-
-    private Date payed;
+	private Date created;
 
     public Long getId() {
         return id;
@@ -65,27 +72,27 @@ public class Orders1 {
         this.reservedDate = reservedDate;
     }
 
-    public List<OrderAsistant> getHall() {
+    public List<BanquetHall> getHall() {
         return hall;
     }
 
-    public void setHall(List<OrderAsistant> hall) {
+    public void setHall(List<BanquetHall> hall) {
         this.hall = hall ;
     }
 
-    public List<OrderAsistant> getCombo() {
+    public List<Combo> getCombo() {
         return combo;
     }
 
-    public void setCombo(List<OrderAsistant> combo) {
+    public void setCombo(List<Combo> combo) {
         this.combo = combo;
     }
 
-    public List<CelebrationAsistant> getCelebration() {
+    public List<Celebration> getCelebration() {
         return celebration;
     }
 
-    public void setCelebration(List<CelebrationAsistant> celebration) {
+    public void setCelebration(List<Celebration> celebration) {
         this.celebration = celebration;
     }
 
@@ -97,52 +104,12 @@ public class Orders1 {
         this.talent = talent;
     }
 
-    public BigDecimal getPrepay() {
-        return prepay;
-    }
-
-    public void setPrepay(BigDecimal prepay) {
-        this.prepay = prepay;
-    }
-
     public BigDecimal getObligation() {
         return obligation;
     }
 
     public void setObligation(BigDecimal obligation) {
         this.obligation = obligation;
-    }
-
-    public BigDecimal getCount() {
-        return count;
-    }
-
-    public void setCount(BigDecimal count) {
-        this.count = count;
-    }
-
-    public Date getWeddingdate() {
-        return weddingdate;
-    }
-
-    public void setWeddingdate(Date weddingdate) {
-        this.weddingdate = weddingdate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getChecked() {
-        return checked;
-    }
-
-    public void setChecked(String checked) {
-        this.checked = checked == null ? null : checked.trim();
     }
 
     public Date getCreated() {
@@ -153,27 +120,4 @@ public class Orders1 {
         this.created = created;
     }
 
-    public Date getClosed() {
-        return closed;
-    }
-
-    public void setClosed(Date closed) {
-        this.closed = closed;
-    }
-
-    public Date getPrepayed() {
-        return prepayed;
-    }
-
-    public void setPrepayed(Date prepayed) {
-        this.prepayed = prepayed;
-    }
-
-    public Date getPayed() {
-        return payed;
-    }
-
-    public void setPayed(Date payed) {
-        this.payed = payed;
-    }
 }

@@ -48,6 +48,7 @@
 				/picture/** = anon
 				/media/** = anon
 				/getOpenId* = anon
+				/appointment/** = anon
 				<!-- /pages/base/courier.html* = perms[courier:list] --><!--配置了perms之后，只要访问这个路径就会走授权管理  -->
 				<!-- /pages/base/area.html* = roles[base] -->
 				/** = authc

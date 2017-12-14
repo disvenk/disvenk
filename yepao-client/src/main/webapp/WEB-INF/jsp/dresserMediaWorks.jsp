@@ -118,7 +118,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "/media_pageQuery?name=化妆师&id="+$.cookie("checkDresserId"),
+					url : "/media_pageQuery?name="+encodeURI("化妆师")+"&id="+$.cookie("checkDresserId"),
 					idField : 'id',//这里的字段一定与表格里的id字段对应
 					columns : columns
 				});

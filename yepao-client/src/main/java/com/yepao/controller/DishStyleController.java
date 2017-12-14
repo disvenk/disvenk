@@ -87,7 +87,7 @@ public class DishStyleController {
 			
 			//如果需要更改图片
 			Dishstyle dishstyleB = dishStyleService.getDishStyle(dishstyleA.getId());
-	        String img = dishstyleB.getImg().substring(20);
+	        String img = dishstyleB.getImg().substring(23);
 	        FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
 	        fastDFSClient.delete_file(img);
 	     
@@ -124,7 +124,7 @@ public class DishStyleController {
 			Long id = Long.parseLong(string);
 			//删除图片
 	        Dishstyle dishstyle = dishStyleService.getDishStyle(id);
-	        String img = dishstyle.getImg().substring(20);
+	        String img = dishstyle.getImg().substring(23);
 	        
 	     fastDFSClient.delete_file(img);
 		dishStyleService.deleteDishStyle(id);

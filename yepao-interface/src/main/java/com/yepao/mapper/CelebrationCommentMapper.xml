@@ -3,7 +3,8 @@
 <mapper namespace="com.yepao.mapper.CelebrationCommentMapper" >
   <resultMap id="BaseResultMap" type="com.yepao.pojo.CelebrationComment" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="headImg" property="headimg" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
     <result column="celebration_id" property="celebrationId" jdbcType="BIGINT" />
     <result column="comment_content" property="commentContent" jdbcType="VARCHAR" />
@@ -70,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, customer_id, nick_name, celebration_id, comment_content, comp_level, img, created
+    id, customer_id, headImg, nick_name, celebration_id, comment_content, comp_level, 
+    img, created
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.CelebrationCommentExample" >
     select
@@ -103,12 +105,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.CelebrationComment" >
-    insert into celebration_comment (id, customer_id, nick_name, 
-      celebration_id, comment_content, comp_level, 
-      img, created)
-    values (#{id,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, 
-      #{celebrationId,jdbcType=BIGINT}, #{commentContent,jdbcType=VARCHAR}, #{compLevel,jdbcType=INTEGER}, 
-      #{img,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP})
+    insert into celebration_comment (id, customer_id, headImg, 
+      nick_name, celebration_id, comment_content, 
+      comp_level, img, created
+      )
+    values (#{id,jdbcType=BIGINT}, #{customerId,jdbcType=VARCHAR}, #{headimg,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{celebrationId,jdbcType=BIGINT}, #{commentContent,jdbcType=VARCHAR}, 
+      #{compLevel,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.CelebrationComment" >
     insert into celebration_comment
@@ -118,6 +122,9 @@
       </if>
       <if test="customerId != null" >
         customer_id,
+      </if>
+      <if test="headimg != null" >
+        headImg,
       </if>
       <if test="nickName != null" >
         nick_name,
@@ -143,7 +150,10 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="customerId != null" >
-        #{customerId,jdbcType=BIGINT},
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="headimg != null" >
+        #{headimg,jdbcType=VARCHAR},
       </if>
       <if test="nickName != null" >
         #{nickName,jdbcType=VARCHAR},
@@ -178,7 +188,10 @@
         id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.customerId != null" >
-        customer_id = #{record.customerId,jdbcType=BIGINT},
+        customer_id = #{record.customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headimg != null" >
+        headImg = #{record.headimg,jdbcType=VARCHAR},
       </if>
       <if test="record.nickName != null" >
         nick_name = #{record.nickName,jdbcType=VARCHAR},
@@ -206,7 +219,8 @@
   <update id="updateByExample" parameterType="map" >
     update celebration_comment
     set id = #{record.id,jdbcType=BIGINT},
-      customer_id = #{record.customerId,jdbcType=BIGINT},
+      customer_id = #{record.customerId,jdbcType=VARCHAR},
+      headImg = #{record.headimg,jdbcType=VARCHAR},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
       celebration_id = #{record.celebrationId,jdbcType=BIGINT},
       comment_content = #{record.commentContent,jdbcType=VARCHAR},
@@ -221,7 +235,10 @@
     update celebration_comment
     <set >
       <if test="customerId != null" >
-        customer_id = #{customerId,jdbcType=BIGINT},
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="headimg != null" >
+        headImg = #{headimg,jdbcType=VARCHAR},
       </if>
       <if test="nickName != null" >
         nick_name = #{nickName,jdbcType=VARCHAR},
@@ -246,7 +263,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.CelebrationComment" >
     update celebration_comment
-    set customer_id = #{customerId,jdbcType=BIGINT},
+    set customer_id = #{customerId,jdbcType=VARCHAR},
+      headImg = #{headimg,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       celebration_id = #{celebrationId,jdbcType=BIGINT},
       comment_content = #{commentContent,jdbcType=VARCHAR},

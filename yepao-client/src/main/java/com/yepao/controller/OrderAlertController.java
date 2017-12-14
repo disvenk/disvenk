@@ -33,4 +33,12 @@ public class OrderAlertController {
 		YePaoResult result = orderAlertService.editorChecked(ids);
 		return result;
 	}
+	
+	//查询离线消息
+	@RequestMapping("/checkOrderAlert")
+	@ResponseBody
+	public YePaoResult checkOrderAlert(Long hotelId){
+		YePaoResult result = orderAlertService.getOrderAlert(hotelId);
+		return result;
+	}
 }

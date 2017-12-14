@@ -104,7 +104,7 @@ public class CelebrationController {
 					FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
 					String[] image = celebration2.getImg().split(",");
 					for (String string : image) {
-						String path=string.substring(20);
+						String path=string.substring(23);
 						fastDFSClient.delete_file(path);
 					}
 					for (MultipartFile multipartFile : uploadFile) {
@@ -174,14 +174,14 @@ public class CelebrationController {
 	        //查询出picture和media表里的所有关于该人才的图片和视频然后一个一个的删除
 	        List<CelebrationPicture> picList = mediaFileService.getPicByCid(cid);
 	        for (CelebrationPicture picture : picList) {
-	        	fastDFSClient.delete_file(picture.getSrc().substring(20));
+	        	fastDFSClient.delete_file(picture.getSrc().substring(22));
 				mediaFileService.deleteCelebrationPic(picture.getId());
 			}
 	        
 	        //删除大图
 			String[] delName =  img.split(",");
 			for (String string2 : delName) {
-				fastDFSClient.delete_file(string2.substring(20));
+				fastDFSClient.delete_file(string2.substring(23));
 			}
 			
 			 celebrationService.delete(id);
@@ -198,7 +198,7 @@ public class CelebrationController {
 		for (String string : strArr) {
 			Long id = Long.parseLong(string);
 			CelebrationPicture celebrationpicture = mediaFileService.getCelebrationPic(id);
-			String delPicName = celebrationpicture.getSrc().substring(20);
+			String delPicName = celebrationpicture.getSrc().substring(23);
 			fastDFSClient.delete_file(delPicName);
 			 
 			mediaFileService.deleteCelebrationPic(id);

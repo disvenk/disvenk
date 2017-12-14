@@ -3,8 +3,9 @@
 <mapper namespace="com.yepao.mapper.ComboCommentMapper" >
   <resultMap id="BaseResultMap" type="com.yepao.pojo.ComboComment" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="headImg" property="headimg" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
     <result column="combo_id" property="comboId" jdbcType="BIGINT" />
     <result column="comment_content" property="commentContent" jdbcType="VARCHAR" />
     <result column="comp_level" property="compLevel" jdbcType="INTEGER" />
@@ -70,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, nick_name, customer_id, combo_id, comment_content, comp_level, img, created
+    id, headImg, nick_name, customer_id, combo_id, comment_content, comp_level, img, 
+    created
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.ComboCommentExample" >
     select
@@ -103,18 +105,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.ComboComment" >
-    insert into combo_comment (id, nick_name, customer_id, 
-      combo_id, comment_content, comp_level, 
-      img, created)
-    values (#{id,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{customerId,jdbcType=BIGINT}, 
-      #{comboId,jdbcType=BIGINT}, #{commentContent,jdbcType=VARCHAR}, #{compLevel,jdbcType=INTEGER}, 
-      #{img,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP})
+    insert into combo_comment (id, headImg, nick_name, 
+      customer_id, combo_id, comment_content, 
+      comp_level, img, created
+      )
+    values (#{id,jdbcType=BIGINT}, #{headimg,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{customerId,jdbcType=VARCHAR}, #{comboId,jdbcType=BIGINT}, #{commentContent,jdbcType=VARCHAR}, 
+      #{compLevel,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.ComboComment" >
     insert into combo_comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="headimg != null" >
+        headImg,
       </if>
       <if test="nickName != null" >
         nick_name,
@@ -142,11 +149,14 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="headimg != null" >
+        #{headimg,jdbcType=VARCHAR},
+      </if>
       <if test="nickName != null" >
         #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="customerId != null" >
-        #{customerId,jdbcType=BIGINT},
+        #{customerId,jdbcType=VARCHAR},
       </if>
       <if test="comboId != null" >
         #{comboId,jdbcType=BIGINT},
@@ -177,11 +187,14 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.headimg != null" >
+        headImg = #{record.headimg,jdbcType=VARCHAR},
+      </if>
       <if test="record.nickName != null" >
         nick_name = #{record.nickName,jdbcType=VARCHAR},
       </if>
       <if test="record.customerId != null" >
-        customer_id = #{record.customerId,jdbcType=BIGINT},
+        customer_id = #{record.customerId,jdbcType=VARCHAR},
       </if>
       <if test="record.comboId != null" >
         combo_id = #{record.comboId,jdbcType=BIGINT},
@@ -206,8 +219,9 @@
   <update id="updateByExample" parameterType="map" >
     update combo_comment
     set id = #{record.id,jdbcType=BIGINT},
+      headImg = #{record.headimg,jdbcType=VARCHAR},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
-      customer_id = #{record.customerId,jdbcType=BIGINT},
+      customer_id = #{record.customerId,jdbcType=VARCHAR},
       combo_id = #{record.comboId,jdbcType=BIGINT},
       comment_content = #{record.commentContent,jdbcType=VARCHAR},
       comp_level = #{record.compLevel,jdbcType=INTEGER},
@@ -220,11 +234,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.ComboComment" >
     update combo_comment
     <set >
+      <if test="headimg != null" >
+        headImg = #{headimg,jdbcType=VARCHAR},
+      </if>
       <if test="nickName != null" >
         nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="customerId != null" >
-        customer_id = #{customerId,jdbcType=BIGINT},
+        customer_id = #{customerId,jdbcType=VARCHAR},
       </if>
       <if test="comboId != null" >
         combo_id = #{comboId,jdbcType=BIGINT},
@@ -246,8 +263,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.ComboComment" >
     update combo_comment
-    set nick_name = #{nickName,jdbcType=VARCHAR},
-      customer_id = #{customerId,jdbcType=BIGINT},
+    set headImg = #{headimg,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
       combo_id = #{comboId,jdbcType=BIGINT},
       comment_content = #{commentContent,jdbcType=VARCHAR},
       comp_level = #{compLevel,jdbcType=INTEGER},

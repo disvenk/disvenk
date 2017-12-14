@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="/js/jquery.uploadify.js"></script>
 	<script type="text/javascript" src="/js/lang.js"></script>
 	<script type="text/javascript" src="/js/common.js"></script>
+	<script type="text/javascript" src="/js/swfobject.js"></script>
 	<script>
 	function returnList(){
 		$.cookie("hostId", null,{path:'/'});

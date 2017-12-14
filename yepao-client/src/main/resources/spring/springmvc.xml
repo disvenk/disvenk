@@ -27,10 +27,8 @@
 	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
 	<mvc:resources location="/WEB-INF/images/" mapping="/images/**"/>
-	<mvc:resources location="/WEB-INF/upload/" mapping="/upload/**"/>
-	<mvc:resources location="/WEB-INF/talentImg/" mapping="/talentImg/**"/>
-	<mvc:resources location="/WEB-INF/talentVideo/" mapping="/talentVideo/**"/>
-	<mvc:resources location="/WEB-INF/hallImg/" mapping="/hallImg/**"/>
+	<mvc:resources location="/WEB-INF/talentMedia/" mapping="/talentMedia/**"/>
+	<mvc:resources location="/WEB-INF/cutImg/" mapping="/cutImg/**"/>
 	
 	
 	<!-- 定义文件上传解析器 -->

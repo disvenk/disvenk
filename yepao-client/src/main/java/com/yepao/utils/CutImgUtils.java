@@ -14,11 +14,15 @@ public class CutImgUtils {
      	// 创建一个List集合来保存从视频中截取图片的命令
  		List<String> cutpic = new ArrayList<String>();
  		String serialName = String.valueOf(System.currentTimeMillis());
- 		 String path = request.getSession().getServletContext().getRealPath("/WEB-INF/ffmpeg/ffmpeg.exe");
- 		String cutPath = request.getSession().getServletContext().getRealPath("/WEB-INF/cutImg/"+serialName+".jpg");
+ 		//File file = new File("C:\\Users\\Administrator\\Desktop\\新建文件夹 (1)\\ffmpeg-20170130-cba4f0e-win64-static\\bin\\ffmpeg.exe");
+ 		File file = new File("/usr/local/ffmpeg/ffmpeg-20170130-cba4f0e-win64-static/bin/ffmpeg.exe");
+ 		String path = file.getAbsolutePath();
+ 		//String path = request.getSession().getServletContext().getRealPath("/WEB-INF/ffmpeg/ffmpeg.exe");
+ 		//String cutPath = request.getSession().getServletContext().getRealPath("/WEB-INF/cutImg/"+serialName+".jpg");
  		//System.out.println(cutPath);
  		//String upPath = request.getSession().getServletContext().getRealPath("/WEB-INF/hallImg/爱剪辑-我的视频 - 副本 (3).mp4");
- 		
+ 		File file2 = new File("/home/cutImg");
+ 		String cutPath = file2.getAbsolutePath();
  		cutpic.add(path);
  		cutpic.add("-i");
  		//String file = upPath+"/"+"爱剪辑-我的视频 - 副本 (3).mp4";

@@ -25,7 +25,7 @@
 		var ws = null;
 			$(function() {
 				
-				var userName="${userName eq null?-1:userName}";
+				 var userName="${userName eq null?-1:userName}";
 				if(userName==-1){
 					location.href="${pageContext.request.contextPath}";
 				}
@@ -49,7 +49,7 @@
 			    };
 			    ws.onclose = function (event) {
 			    	 ws.close();
-			    };
+			    }; 
 				
 				
 				var userName2=unescape($.cookie("userName"));
@@ -136,7 +136,7 @@
 					+ "/pages/base/home"
 					+ '" scrolling="auto" style="width:100%;height:100%;border:0;" ></iframe></div>';
 				
-				$('#tabs').tabs('add', {
+			 	$('#tabs').tabs('add', {
 					title : "消息中心",
 					content : contents,
 					closable : false,
@@ -148,6 +148,14 @@
 						}
 					}] 
 				});
+			 	
+			 	//查询离线消息
+				$.post("/checkOrderAlert",{hotelId:'${cookie.yonghuming.value}'},function(data){
+					if(data.status==200){
+						pop();
+						$("iframe[src='"+"/pages/base/home"+"']").get(0).contentWindow.location.reload(true);
+					}
+				})
 			});
 			
 			
@@ -251,14 +259,14 @@
 				};
 			
 				
-				function pop(message){
+				 function pop(message){
 					speckText();
 				    layer.alert("您有新的订单，请及时处理");
 				    //提示消息后加载订单
 				    $("iframe[src='"+"/pages/base/home"+"']").get(0).contentWindow.location.reload(true);
-				}
+				} 
 
-				function speckText(){
+			  	function speckText(){
 
 				var url ="/js/notify.mp3";
 
@@ -266,9 +274,9 @@
 
 				 n.src = url;
 
-				 n.play();
+				 n.play(); 
 
-				}
+				} 
 		</script>
 	</head>
 
@@ -363,7 +371,7 @@
 			<div class="menu-sep"></div>
 			<div data-options="iconCls:'icon-cancel',name:'CloseAll'">关闭全部窗口</div>
 		</div>
+		
 
 	</body>
-
 </html>

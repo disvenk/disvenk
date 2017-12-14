@@ -1,7 +1,13 @@
 package com.pay.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +23,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +32,7 @@ import org.springframework.web.socket.TextMessage;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.zxing.WriterException;
 import com.other.pojo.CelebrationAsistant;
 import com.other.pojo.OrderAsistant;
 import com.websocket.controller.PointWebSocketHandler;
@@ -33,22 +41,29 @@ import com.yepao.pojo.Celebration;
 import com.yepao.pojo.Combo;
 import com.yepao.pojo.Orders;
 import com.yepao.pojo.WeddingTalent;
+import com.yepao.service.AppointmentPayService;
 import com.yepao.service.CelebrationService;
 import com.yepao.service.ComboService;
 import com.yepao.service.HallService;
 import com.yepao.service.OrderService;
 import com.yepao.service.TalentService;
 import com.yepao.utils.CommonUtil;
+import com.yepao.utils.FastDFSClient;
 import com.yepao.utils.HttpResult;
 import com.yepao.utils.HttpUtil;
 import com.yepao.utils.JsonUtils;
 import com.yepao.utils.RandomUtils;
 import com.yepao.utils.TimeUtils;
+import com.yepao.utils.TwoBarCodesUtil;
+
+import sun.font.StrikeCache;
 
 
 @Controller
 public class UnPayToPrePayController {
 
+	@Value("${IMAGE_SERVER_URL}")
+	private String IMAGE_SERVER_URL;
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -59,12 +74,14 @@ public class UnPayToPrePayController {
 	private TalentService talentService;
 	@Autowired
 	private CelebrationService celebrationService;
+	@Autowired
+	private AppointmentPayService appointmentPayService;
 	
     private static Logger log = Logger.getLogger(UnPayToPrePayController.class);
 
     @ResponseBody
     @RequestMapping("/prepay")
-    public String prePay(Orders orders, String reservedDates,String comboStyle,Boolean isStage,String count,String prePay,String talent,Long hall,Integer hallTable,Long combo,Long celebration,String code, ModelMap model, HttpServletRequest request) {
+    public String prePay(Orders orders, BigDecimal celePrice,String reservedDates,String comboStyle,Boolean isStage,String count,String prePay,String talent,Long hall,Integer hallTable,Long combo,Long celebration, ModelMap model, HttpServletRequest request) {
 /*
         String content = null;
         Map map = new HashMap();
@@ -120,15 +137,50 @@ public class UnPayToPrePayController {
             		}
             		//将字符串转换为数字并输出
             		String num=str.toString();
+            		String url =null;
+            		try {
+						String returnPath = TwoBarCodesUtil.encode(num);
+						// String realPath = request.getSession().getServletContext().getRealPath(returnPath);
+						 File file = new File(returnPath);
+						 
+						 byte[] buffer = null;  
+					        try {    
+					            FileInputStream fis = new FileInputStream(file);  
+					            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);  
+					            byte[] b = new byte[1000];  
+					            int n;  
+					            while ((n = fis.read(b)) != -1) {  
+					                bos.write(b, 0, n);  
+					            }  
+					            fis.close();  
+					            bos.close();  
+					            buffer = bos.toByteArray(); 
+					            String extName = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+					            FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
+								//3、执行上传处理并返回一个路径
+								String path = fastDFSClient.uploadFile(buffer, extName);
+								//4、拼接返回的url和ip地址，拼装成完整的url
+								 url = IMAGE_SERVER_URL + path;
+					        } catch (Exception e) {  
+					            e.printStackTrace();  
+					        } 
+					} catch (WriterException | IOException e1) {
+						
+						e1.printStackTrace();
+					}
                     
+            		
+            		orders.setTwoBarCode(url);
                     orders.setVaidateCode(num);
                     orders.setPrepayId("112233");
                    // orders.setCustomerId(openId);
                     
+                    String hallName = null;
                     if(hall!=null && hallTable!=null){
                     	  List<OrderAsistant> hallList1 = new ArrayList<OrderAsistant>();
                           List<BanquetHall> hallList2 = new ArrayList<BanquetHall>();
                           BanquetHall banquetHall = hallService.getBanquetHall(hall);
+                          hallName=banquetHall.getName();
                           banquetHall.setImg(banquetHall.getImg().split(",")[0]);
                           OrderAsistant orderAsistant1 = new OrderAsistant();
                           orderAsistant1.setNum(hallTable);
@@ -158,6 +210,7 @@ public class UnPayToPrePayController {
                           for (String string : talentIds) {
       						Long talentId = Long.parseLong(string);
       						WeddingTalent weddingTalent = talentService.getWeddingTalent(talentId);
+      						weddingTalent.setChosenCount(weddingTalent.getChosenCount()+1);
       						weddingTalent.setIntroduction(null);
       						talentList.add(weddingTalent);
       					}
@@ -179,6 +232,18 @@ public class UnPayToPrePayController {
                         CelebrationAsistant celebrationAsistant = new CelebrationAsistant();
                         celebrationAsistant.setComboName(comboStyle);
                         celebrationAsistant.setStage(isStage);
+                    
+                     //   BigDecimal b4 = new BigDecimal(celePirce);
+                       BigDecimal preprice = celebration2.getPreprice();
+                       BigDecimal price = celebration2.getPrice();
+                       if(celePrice.compareTo(preprice)==0){
+                    	   celebrationAsistant.setLuxury(false);
+                       }else if(celePrice.compareTo(price)==0){
+                    	   celebrationAsistant.setLuxury(true);
+                       }
+                        
+                        
+                       
                         celebrationAsistant.setItemName(celebrationList);
                         celebrationAsistantList.add(celebrationAsistant);
                         String celebrationJson = JsonUtils.objectToJson(celebrationAsistantList);
@@ -197,7 +262,15 @@ public class UnPayToPrePayController {
                     }
                     
                   
-                    orders.setStatus(ConstantStatus.UN_PAY);//状态
+                    SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+						Date parse = sFormat.parse(reservedDates);
+						orders.setReservedDate(parse);
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+                    
+                    orders.setStatus(ConstantStatus.PRE_PAY);//状态
                     orders.setChecked(ConstantStatus.UN_CHECKED);//是否查看
                    Date date = new Date();
                     orders.setCreated(date);//订单创建时间
@@ -240,6 +313,8 @@ public class UnPayToPrePayController {
         
 
         return content;*/
+           Long hotelId = orders.getHotelId(); 
+          appointmentPayService.addAppointmentPay(out_trade_no,hotelId, hall, hallName, orders.getCustomerName(), orders.getTel(), reservedDates);
          new PointWebSocketHandler().sendMessageToUser(orders.getHotelId(), new TextMessage(""));
         return content;
     }

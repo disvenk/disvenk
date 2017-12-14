@@ -118,7 +118,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "/image_pageQuery?name=主持人&id="+$.cookie("checkHostId"),
+					url : "/image_pageQuery?name="+encodeURI("主持人")+"&id="+$.cookie("checkHostId"),
 					idField : 'id',//这里的字段一定与表格里的id字段对应
 					columns : columns
 				});

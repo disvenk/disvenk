@@ -122,4 +122,12 @@ public class BanquetHall {
     public void setStandby(String standby) {
         this.standby = standby == null ? null : standby.trim();
     }
+    
+    public String getImage(){
+    	if(img!=null){
+    		return img.split(",")[0];
+    	}
+    	return null;
+    }
+    
 }

@@ -24,11 +24,15 @@ public class WeddingTalent {
 
     private String style;
 
-    private String goodReputation;
+    private String personalDeclaration;
 
-    private Integer comprehensive;
+    private Integer goodReputation;
+
+    private BigDecimal comprehensive;
 
     private Integer chosenCount;
+
+    private Integer commentCount;
 
     private Date created;
 
@@ -116,19 +120,27 @@ public class WeddingTalent {
         this.style = style == null ? null : style.trim();
     }
 
-    public String getGoodReputation() {
+    public String getPersonalDeclaration() {
+        return personalDeclaration;
+    }
+
+    public void setPersonalDeclaration(String personalDeclaration) {
+        this.personalDeclaration = personalDeclaration == null ? null : personalDeclaration.trim();
+    }
+
+    public Integer getGoodReputation() {
         return goodReputation;
     }
 
-    public void setGoodReputation(String goodReputation) {
-        this.goodReputation = goodReputation == null ? null : goodReputation.trim();
+    public void setGoodReputation(Integer goodReputation) {
+        this.goodReputation = goodReputation;
     }
 
-    public Integer getComprehensive() {
+    public BigDecimal getComprehensive() {
         return comprehensive;
     }
 
-    public void setComprehensive(Integer comprehensive) {
+    public void setComprehensive(BigDecimal comprehensive) {
         this.comprehensive = comprehensive;
     }
 
@@ -138,6 +150,14 @@ public class WeddingTalent {
 
     public void setChosenCount(Integer chosenCount) {
         this.chosenCount = chosenCount;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
     public Date getCreated() {

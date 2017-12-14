@@ -1,12 +1,11 @@
 package com.yepao.mapper;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.yepao.pojo.SyntheComment;
 import com.yepao.pojo.SyntheCommentExample;
+
+import java.math.BigDecimal;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface SyntheCommentMapper {
     int countByExample(SyntheCommentExample example);
@@ -31,5 +30,5 @@ public interface SyntheCommentMapper {
 
     int updateByPrimaryKey(SyntheComment record);
     
-    BigDecimal getAvgComment();
+    BigDecimal getAvgComment(); 
 }

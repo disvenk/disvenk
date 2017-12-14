@@ -41,4 +41,6 @@ public class WxComboController {
 		Map<String, Object> comboDetailMap= comboService.getComboDetail(comboId);
 		return comboDetailMap;
 	}
+	
+	
 }

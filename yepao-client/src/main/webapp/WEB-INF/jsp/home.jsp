@@ -37,19 +37,19 @@
 					title : '预约看场提醒',
 					height : 255,
 					collapsible : false,
-					href:'/pages/base/optionAlert'
+					href:'/pages/base/appointmentAlert'
 				}, {
 					id : 'p4',
 					title : '系统BUG反馈',
 					height : 255,
 					collapsible : false,
 					href:'/pages/base/bug'
-				}];
+				} ];
 				 $('#layout_portal_portal').portal({
 					border : false,
 					fit : true
 				 });
-				var state = state = 'p1,p2:p3,p4';/*冒号代表列，逗号代表行*/
+				var state = state = 'p1,p2:p3,p4';//冒号代表列，逗号代表行
 		
 				addPortalPanels(state);
 				$('#layout_portal_portal').portal('resize');

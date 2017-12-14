@@ -44,7 +44,7 @@ public class HallController {
 				BanquetHall banquetHall = hallService.getBanquetHall(id);
 				String[] images = banquetHall.getImg().split(",");
 				for (String string2 : images) {
-					fastDFSClient.delete_file(string2.substring(20));
+					fastDFSClient.delete_file(string2.substring(23));
 				}
 				hallService.deleteHall(id);
 			}

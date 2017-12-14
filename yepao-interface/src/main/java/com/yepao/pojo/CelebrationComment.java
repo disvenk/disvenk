@@ -5,7 +5,9 @@ import java.util.Date;
 public class CelebrationComment {
     private Long id;
 
-    private Long customerId;
+    private String customerId;
+
+    private String headimg;
 
     private String nickName;
 
@@ -27,12 +29,20 @@ public class CelebrationComment {
         this.id = id;
     }
 
-    public Long getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId == null ? null : customerId.trim();
+    }
+
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg == null ? null : headimg.trim();
     }
 
     public String getNickName() {

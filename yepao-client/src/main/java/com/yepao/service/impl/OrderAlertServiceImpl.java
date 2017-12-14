@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mchange.v2.async.StrandedTaskReporting;
+import com.yepao.mapper.OrderAlertMapper;
 import com.yepao.mapper.OrdersMapper;
+import com.yepao.pojo.OrderAlert;
+import com.yepao.pojo.OrderAlertExample;
 import com.yepao.pojo.Orders;
 import com.yepao.pojo.OrdersExample;
 import com.yepao.pojo.OrdersExample.Criteria;
@@ -18,6 +21,8 @@ public class OrderAlertServiceImpl implements OrderAlertService{
 
 	@Autowired
 	private OrdersMapper ordersMapper;
+	@Autowired
+	private OrderAlertMapper orderAlertMapper;
 	
 	//已付全款未查看的订单
 	public List<Orders> getUnCheck() {
@@ -43,6 +48,31 @@ public class OrderAlertServiceImpl implements OrderAlertService{
 			ordersMapper.updateByExampleSelective(orders, example);
 		}
 		return YePaoResult.ok();
+	}
+
+	//存储离线消息
+	@Override
+	public void saveOrderAlert(Long hotelId) {
+		OrderAlert orderAlert = new OrderAlert();
+		orderAlert.setHotelid(hotelId);
+		orderAlert.setStatus("new");
+		orderAlertMapper.insert(orderAlert);
+		
+	}
+
+	//登录时查询离线消息
+	@Override
+	public YePaoResult getOrderAlert(Long hotelId) {
+		OrderAlertExample example = new OrderAlertExample();
+		com.yepao.pojo.OrderAlertExample.Criteria createCriteria = example.createCriteria();
+		createCriteria.andHotelidEqualTo(hotelId);
+		createCriteria.andStatusEqualTo("new");
+		List<OrderAlert> list = orderAlertMapper.selectByExample(example);
+		if(list!=null && list.size()!=0){
+			orderAlertMapper.updateLine(hotelId);
+			return YePaoResult.ok();
+		}
+		return YePaoResult.build(400, "没有离线消息");
 	}
 
 }

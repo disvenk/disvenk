@@ -3,6 +3,7 @@
 <mapper namespace="com.yepao.mapper.AppointmentPayedMapper" >
   <resultMap id="BaseResultMap" type="com.yepao.pojo.AppointmentPayed" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
     <result column="hotel_id" property="hotelId" jdbcType="BIGINT" />
     <result column="hall_id" property="hallId" jdbcType="BIGINT" />
     <result column="hall_name" property="hallName" jdbcType="VARCHAR" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, hotel_id, hall_id, hall_name, customer, tel, time, status, created
+    id, order_id, hotel_id, hall_id, hall_name, customer, tel, time, status, created
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.AppointmentPayedExample" >
     select
@@ -104,13 +105,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yepao.pojo.AppointmentPayed" >
-    insert into appointment_payed (id, hotel_id, hall_id, 
-      hall_name, customer, tel, 
-      time, status, created
+    insert into appointment_payed (id, order_id, hotel_id, 
+      hall_id, hall_name, customer, 
+      tel, time, status, created
       )
-    values (#{id,jdbcType=BIGINT}, #{hotelId,jdbcType=BIGINT}, #{hallId,jdbcType=BIGINT}, 
-      #{hallName,jdbcType=VARCHAR}, #{customer,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
-      #{time,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{hotelId,jdbcType=BIGINT}, 
+      #{hallId,jdbcType=BIGINT}, #{hallName,jdbcType=VARCHAR}, #{customer,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yepao.pojo.AppointmentPayed" >
@@ -118,6 +119,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
       </if>
       <if test="hotelId != null" >
         hotel_id,
@@ -147,6 +151,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
       </if>
       <if test="hotelId != null" >
         #{hotelId,jdbcType=BIGINT},
@@ -186,6 +193,9 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
       <if test="record.hotelId != null" >
         hotel_id = #{record.hotelId,jdbcType=BIGINT},
       </if>
@@ -218,6 +228,7 @@
   <update id="updateByExample" parameterType="map" >
     update appointment_payed
     set id = #{record.id,jdbcType=BIGINT},
+      order_id = #{record.orderId,jdbcType=BIGINT},
       hotel_id = #{record.hotelId,jdbcType=BIGINT},
       hall_id = #{record.hallId,jdbcType=BIGINT},
       hall_name = #{record.hallName,jdbcType=VARCHAR},
@@ -233,6 +244,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.AppointmentPayed" >
     update appointment_payed
     <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
       <if test="hotelId != null" >
         hotel_id = #{hotelId,jdbcType=BIGINT},
       </if>
@@ -262,7 +276,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.AppointmentPayed" >
     update appointment_payed
-    set hotel_id = #{hotelId,jdbcType=BIGINT},
+    set order_id = #{orderId,jdbcType=BIGINT},
+      hotel_id = #{hotelId,jdbcType=BIGINT},
       hall_id = #{hallId,jdbcType=BIGINT},
       hall_name = #{hallName,jdbcType=VARCHAR},
       customer = #{customer,jdbcType=VARCHAR},
@@ -271,5 +286,9 @@
       status = #{status,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateStatus" parameterType="java.lang.Long">
+  	update appointment_payed set status='失效' where order_id=#{order_id,jdbcType=BIGINT}
   </update>
 </mapper>

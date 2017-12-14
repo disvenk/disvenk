@@ -325,7 +325,7 @@
 					pageList: [30,50,100],
 					pagination : true,
 					toolbar : toolbar,
-					url : "/talent_pageQuery?name=策划师&hotelId="+$.cookie("yonghuming"),
+					url : "/talent_pageQuery?name="+encodeURI("策划师")+"&hotelId="+$.cookie("yonghuming"),
 					idField : 'weddingTalentId',//这里的字段一定与表格里的id字段对应
 					columns : columns
 					

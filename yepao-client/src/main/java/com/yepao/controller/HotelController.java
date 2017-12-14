@@ -58,7 +58,7 @@ public class HotelController {
 	        try {
 	        	 FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
 	        	 if(img!=null)
-	        	 fastDFSClient.delete_file(img.substring(20));
+	        	 fastDFSClient.delete_file(img.substring(23));
 			 
 			 //更换新的图片
 	        	 String originalFilename = uploadFile.getOriginalFilename();

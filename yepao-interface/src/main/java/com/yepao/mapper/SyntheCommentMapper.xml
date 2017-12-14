@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yepao.pojo.SyntheComment" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
     <result column="comp_level" property="compLevel" jdbcType="DECIMAL" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
@@ -104,7 +104,7 @@
     insert into synthe_comment (id, nick_name, customer_id, 
       order_id, comp_level, created_date
       )
-    values (#{id,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{customerId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, 
       #{orderId,jdbcType=BIGINT}, #{compLevel,jdbcType=DECIMAL}, #{createdDate,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -138,7 +138,7 @@
         #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="customerId != null" >
-        #{customerId,jdbcType=BIGINT},
+        #{customerId,jdbcType=VARCHAR},
       </if>
       <if test="orderId != null" >
         #{orderId,jdbcType=BIGINT},
@@ -167,7 +167,7 @@
         nick_name = #{record.nickName,jdbcType=VARCHAR},
       </if>
       <if test="record.customerId != null" >
-        customer_id = #{record.customerId,jdbcType=BIGINT},
+        customer_id = #{record.customerId,jdbcType=VARCHAR},
       </if>
       <if test="record.orderId != null" >
         order_id = #{record.orderId,jdbcType=BIGINT},
@@ -187,7 +187,7 @@
     update synthe_comment
     set id = #{record.id,jdbcType=BIGINT},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
-      customer_id = #{record.customerId,jdbcType=BIGINT},
+      customer_id = #{record.customerId,jdbcType=VARCHAR},
       order_id = #{record.orderId,jdbcType=BIGINT},
       comp_level = #{record.compLevel,jdbcType=DECIMAL},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP}
@@ -202,7 +202,7 @@
         nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="customerId != null" >
-        customer_id = #{customerId,jdbcType=BIGINT},
+        customer_id = #{customerId,jdbcType=VARCHAR},
       </if>
       <if test="orderId != null" >
         order_id = #{orderId,jdbcType=BIGINT},
@@ -219,14 +219,15 @@
   <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.SyntheComment" >
     update synthe_comment
     set nick_name = #{nickName,jdbcType=VARCHAR},
-      customer_id = #{customerId,jdbcType=BIGINT},
+      customer_id = #{customerId,jdbcType=VARCHAR},
       order_id = #{orderId,jdbcType=BIGINT},
       comp_level = #{compLevel,jdbcType=DECIMAL},
       created_date = #{createdDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
   <!-- 获得平均分  -->
   <select id="getAvgComment" resultType="BigDecimal"  >
-    select convert(decimal(2,1),avg(comp_level)) from synthe_comment
+    select convert(avg(comp_level),decimal(2,1)) from synthe_comment
   </select>
 </mapper>

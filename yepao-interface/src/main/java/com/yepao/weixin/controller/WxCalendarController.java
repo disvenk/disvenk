@@ -20,12 +20,12 @@ public class WxCalendarController {
 	@RequestMapping("/reservedCal")
 	@ResponseBody
 	public List<ChineseCalendar> getReservedCalList(String year,String month,Long hallId){
-		try {
+		/*try {
 			year = new String(year.getBytes("iso-8859-1"),"utf-8");
 			month = new String(month.getBytes("iso-8859-1"),"utf-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		}
+		}*/
 		List<ChineseCalendar> list = calendarService.getReservedCalList(year,month,hallId);
 		return list;
 	}

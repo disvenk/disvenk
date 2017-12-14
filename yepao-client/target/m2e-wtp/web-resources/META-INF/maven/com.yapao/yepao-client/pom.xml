@@ -296,7 +296,7 @@
 
 	
 	<build>
-	<finalName>yepao-client</finalName>
+	<finalName>ROOT</finalName>
 <!-- 	<resources>
             <resource>
                 <directory>src/main/java</directory>
@@ -315,7 +315,7 @@
 				<configuration>
 					<port>9002</port>
 					<path>/</path>
-					<url>http://47.104.19.44:9001/manager/text</url>
+					<url>http://localhost:8080/manager/text</url>
 					<username>tomcat</username>
 					<password>tomcat</password>
 				</configuration>

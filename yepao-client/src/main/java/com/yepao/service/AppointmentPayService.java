@@ -6,5 +6,6 @@ import com.yepao.pojo.AppointmentPayed;
 
 public interface AppointmentPayService {
   public List<AppointmentPayed> getAppointmentPay(Long hotelId);
-  public void addAppointmentPay(Long hotelId,Long hallId);
+  public void addAppointmentPay(Long out_trade_no,Long hotelId, Long hallId,String hallName,
+			String customerName,String tel,String reservedDate);
 }

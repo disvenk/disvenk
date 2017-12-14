@@ -263,6 +263,76 @@ public class OrdersExample {
             return (Criteria) this;
         }
 
+        public Criteria andTwoBarCodeIsNull() {
+            addCriterion("two_bar_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeIsNotNull() {
+            addCriterion("two_bar_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeEqualTo(String value) {
+            addCriterion("two_bar_code =", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeNotEqualTo(String value) {
+            addCriterion("two_bar_code <>", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeGreaterThan(String value) {
+            addCriterion("two_bar_code >", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("two_bar_code >=", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeLessThan(String value) {
+            addCriterion("two_bar_code <", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeLessThanOrEqualTo(String value) {
+            addCriterion("two_bar_code <=", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeLike(String value) {
+            addCriterion("two_bar_code like", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeNotLike(String value) {
+            addCriterion("two_bar_code not like", value, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeIn(List<String> values) {
+            addCriterion("two_bar_code in", values, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeNotIn(List<String> values) {
+            addCriterion("two_bar_code not in", values, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeBetween(String value1, String value2) {
+            addCriterion("two_bar_code between", value1, value2, "twoBarCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTwoBarCodeNotBetween(String value1, String value2) {
+            addCriterion("two_bar_code not between", value1, value2, "twoBarCode");
+            return (Criteria) this;
+        }
+
         public Criteria andHotelIdIsNull() {
             addCriterion("hotel_id is null");
             return (Criteria) this;

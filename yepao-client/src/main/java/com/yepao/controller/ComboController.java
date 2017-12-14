@@ -90,7 +90,7 @@ public class ComboController {
 			
 			//如果需要更改图片
 			Combo comboB = comboService.getCombo(comboA.getId());
-	        String img = comboB.getImg().substring(20);
+	        String img = comboB.getImg().substring(23);
 	        FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
 	        fastDFSClient.delete_file(img);
 	     
@@ -128,7 +128,7 @@ public class ComboController {
 			Long id = Long.parseLong(string);
 			//删除图片
 	        Combo combo = comboService.getCombo(id);
-	        String img = combo.getImg().substring(20);
+	        String img = combo.getImg().substring(23);
 	        
 	     fastDFSClient.delete_file(img);
 	     comboService.deleteCombo(id);

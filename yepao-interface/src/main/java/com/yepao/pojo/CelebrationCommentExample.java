@@ -175,53 +175,133 @@ public class CelebrationCommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdEqualTo(Long value) {
+        public Criteria andCustomerIdEqualTo(String value) {
             addCriterion("customer_id =", value, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdNotEqualTo(Long value) {
+        public Criteria andCustomerIdNotEqualTo(String value) {
             addCriterion("customer_id <>", value, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdGreaterThan(Long value) {
+        public Criteria andCustomerIdGreaterThan(String value) {
             addCriterion("customer_id >", value, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andCustomerIdGreaterThanOrEqualTo(String value) {
             addCriterion("customer_id >=", value, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdLessThan(Long value) {
+        public Criteria andCustomerIdLessThan(String value) {
             addCriterion("customer_id <", value, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdLessThanOrEqualTo(Long value) {
+        public Criteria andCustomerIdLessThanOrEqualTo(String value) {
             addCriterion("customer_id <=", value, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdIn(List<Long> values) {
+        public Criteria andCustomerIdLike(String value) {
+            addCriterion("customer_id like", value, "customerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerIdNotLike(String value) {
+            addCriterion("customer_id not like", value, "customerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerIdIn(List<String> values) {
             addCriterion("customer_id in", values, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdNotIn(List<Long> values) {
+        public Criteria andCustomerIdNotIn(List<String> values) {
             addCriterion("customer_id not in", values, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdBetween(Long value1, Long value2) {
+        public Criteria andCustomerIdBetween(String value1, String value2) {
             addCriterion("customer_id between", value1, value2, "customerId");
             return (Criteria) this;
         }
 
-        public Criteria andCustomerIdNotBetween(Long value1, Long value2) {
+        public Criteria andCustomerIdNotBetween(String value1, String value2) {
             addCriterion("customer_id not between", value1, value2, "customerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgIsNull() {
+            addCriterion("headImg is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgIsNotNull() {
+            addCriterion("headImg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgEqualTo(String value) {
+            addCriterion("headImg =", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgNotEqualTo(String value) {
+            addCriterion("headImg <>", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgGreaterThan(String value) {
+            addCriterion("headImg >", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgGreaterThanOrEqualTo(String value) {
+            addCriterion("headImg >=", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgLessThan(String value) {
+            addCriterion("headImg <", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgLessThanOrEqualTo(String value) {
+            addCriterion("headImg <=", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgLike(String value) {
+            addCriterion("headImg like", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgNotLike(String value) {
+            addCriterion("headImg not like", value, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgIn(List<String> values) {
+            addCriterion("headImg in", values, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgNotIn(List<String> values) {
+            addCriterion("headImg not in", values, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgBetween(String value1, String value2) {
+            addCriterion("headImg between", value1, value2, "headimg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadimgNotBetween(String value1, String value2) {
+            addCriterion("headImg not between", value1, value2, "headimg");
             return (Criteria) this;
         }
 

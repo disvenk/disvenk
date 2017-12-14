@@ -1,13 +1,18 @@
 package com.yepao.controller;
 
+import java.io.File;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,13 +43,20 @@ public class MediaController {
 		try {
 			//1、取文件的全名和扩展名
 			String originalFilename = uploadFile.getOriginalFilename();
-			String extName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+		/*	String extName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 			//2、创建一个FastDFS的客户端
 			FastDFSClient fastDFSClient = new FastDFSClient("classpath:resource/client.conf");
 			//3、执行上传处理并返回一个路径
 			String path = fastDFSClient.uploadFile(uploadFile.getBytes(), extName);
 			//4、拼接返回的url和ip地址，拼装成完整的url
-			String url = IMAGE_SERVER_URL + path;
+			String url = IMAGE_SERVER_URL + path;*/
+			String ranName = UUID.randomUUID().toString();
+			String exName = originalFilename.substring(originalFilename.lastIndexOf("."));
+			String newName = ranName+exName;
+			//String path = request.getSession().getServletContext().getRealPath("/WEB-INF/talentMedia");
+			File file = new File("/home/talentMedia/"+newName);
+			uploadFile.transferTo(file);
+			String url = file.getAbsolutePath();
 			Cookie[] cookies = request.getCookies();
 			for (Cookie cookie : cookies) {
 				System.out.println(cookie.getName());
