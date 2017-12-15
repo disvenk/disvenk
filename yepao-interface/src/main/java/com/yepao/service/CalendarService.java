@@ -6,4 +6,5 @@ import com.yepao.pojo.ChineseCalendar;
 
 public interface CalendarService {
 	public List<ChineseCalendar> getReservedCalList(String year,String month,Long hallId);
+	public boolean isReservedFlag(String dateString,Long hallId);
 }

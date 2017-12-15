@@ -92,7 +92,27 @@ public class CalendarServiceImpl implements CalendarService {
 		}  
 	}
 	
-	
+	//判断日子是否被预定,true 为预定，false 为未被预定
+	public boolean isReservedFlag(String dateString,Long hallId) {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		Date date;
+		try {
+			date = sdf.parse(dateString);
+			AppointmentPayedExample example = new AppointmentPayedExample();
+			com.yepao.pojo.AppointmentPayedExample.Criteria criteria = example.createCriteria();
+			criteria.andTimeEqualTo(date);
+			criteria.andStatusEqualTo(STATUS);
+			criteria.andHallIdEqualTo(hallId);
+			List<AppointmentPayed> list = appointmentPayedMapper.selectByExample(example);
+			if(list.isEmpty())
+				return false;
+			else
+				return true;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}  
+	}
 	
 	
 

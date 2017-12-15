@@ -30,4 +30,10 @@ public class WxCalendarController {
 		return list;
 	}
 	
+	@RequestMapping("reservedCal2")
+	@ResponseBody
+	public Boolean getReservedCal2(String dateString,Long hallId){
+		boolean reservedFlag = calendarService.isReservedFlag(dateString, hallId);
+		return reservedFlag;
+	}
 }
