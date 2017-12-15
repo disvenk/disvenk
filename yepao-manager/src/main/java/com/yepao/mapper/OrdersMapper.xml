@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yepao.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.yepao.pojo.Orders" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hotel_id" property="hotelId" jdbcType="BIGINT" />
+    <result column="weiPayId" property="weipayid" jdbcType="VARCHAR" />
+    <result column="prePay_id" property="prepayId" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="reserved_date" property="reservedDate" jdbcType="DATE" />
+    <result column="hall" property="hall" jdbcType="VARCHAR" />
+    <result column="combo" property="combo" jdbcType="VARCHAR" />
+    <result column="celebration" property="celebration" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="talent" property="talent" jdbcType="VARCHAR" />
+    <result column="prePay" property="prepay" jdbcType="DECIMAL" />
+    <result column="obligation" property="obligation" jdbcType="DECIMAL" />
+    <result column="count" property="count" jdbcType="DECIMAL" />
+    <result column="weddingDate" property="weddingdate" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="checked" property="checked" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="closed" property="closed" jdbcType="TIMESTAMP" />
+    <result column="prepayed" property="prepayed" jdbcType="TIMESTAMP" />
+    <result column="payed" property="payed" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hotel_id, weiPayId, prePay_id, customer_name, tel, gender, customer_id, reserved_date, 
+    hall, combo, celebration, description, talent, prePay, obligation, count, weddingDate, 
+    status, checked, created, closed, prepayed, payed
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yepao.pojo.OrdersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from orders
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yepao.pojo.OrdersExample" >
+    delete from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yepao.pojo.Orders" >
+    insert into orders (id, hotel_id, weiPayId, 
+      prePay_id, customer_name, tel, 
+      gender, customer_id, reserved_date, 
+      hall, combo, celebration, 
+      description, talent, prePay, 
+      obligation, count, weddingDate, 
+      status, checked, created, 
+      closed, prepayed, payed
+      )
+    values (#{id,jdbcType=BIGINT}, #{hotelId,jdbcType=BIGINT}, #{weipayid,jdbcType=VARCHAR}, 
+      #{prepayId,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=CHAR}, #{customerId,jdbcType=VARCHAR}, #{reservedDate,jdbcType=DATE}, 
+      #{hall,jdbcType=VARCHAR}, #{combo,jdbcType=VARCHAR}, #{celebration,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{talent,jdbcType=VARCHAR}, #{prepay,jdbcType=DECIMAL}, 
+      #{obligation,jdbcType=DECIMAL}, #{count,jdbcType=DECIMAL}, #{weddingdate,jdbcType=DATE}, 
+      #{status,jdbcType=VARCHAR}, #{checked,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{closed,jdbcType=TIMESTAMP}, #{prepayed,jdbcType=TIMESTAMP}, #{payed,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yepao.pojo.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="weipayid != null" >
+        weiPayId,
+      </if>
+      <if test="prepayId != null" >
+        prePay_id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="reservedDate != null" >
+        reserved_date,
+      </if>
+      <if test="hall != null" >
+        hall,
+      </if>
+      <if test="combo != null" >
+        combo,
+      </if>
+      <if test="celebration != null" >
+        celebration,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="talent != null" >
+        talent,
+      </if>
+      <if test="prepay != null" >
+        prePay,
+      </if>
+      <if test="obligation != null" >
+        obligation,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="weddingdate != null" >
+        weddingDate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="checked != null" >
+        checked,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="closed != null" >
+        closed,
+      </if>
+      <if test="prepayed != null" >
+        prepayed,
+      </if>
+      <if test="payed != null" >
+        payed,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="weipayid != null" >
+        #{weipayid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedDate != null" >
+        #{reservedDate,jdbcType=DATE},
+      </if>
+      <if test="hall != null" >
+        #{hall,jdbcType=VARCHAR},
+      </if>
+      <if test="combo != null" >
+        #{combo,jdbcType=VARCHAR},
+      </if>
+      <if test="celebration != null" >
+        #{celebration,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="talent != null" >
+        #{talent,jdbcType=VARCHAR},
+      </if>
+      <if test="prepay != null" >
+        #{prepay,jdbcType=DECIMAL},
+      </if>
+      <if test="obligation != null" >
+        #{obligation,jdbcType=DECIMAL},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=DECIMAL},
+      </if>
+      <if test="weddingdate != null" >
+        #{weddingdate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="checked != null" >
+        #{checked,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closed != null" >
+        #{closed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prepayed != null" >
+        #{prepayed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payed != null" >
+        #{payed,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yepao.pojo.OrdersExample" resultType="java.lang.Integer" >
+    select count(*) from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.hotelId != null" >
+        hotel_id = #{record.hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weipayid != null" >
+        weiPayId = #{record.weipayid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prepayId != null" >
+        prePay_id = #{record.prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerName != null" >
+        customer_name = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.customerId != null" >
+        customer_id = #{record.customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reservedDate != null" >
+        reserved_date = #{record.reservedDate,jdbcType=DATE},
+      </if>
+      <if test="record.hall != null" >
+        hall = #{record.hall,jdbcType=VARCHAR},
+      </if>
+      <if test="record.combo != null" >
+        combo = #{record.combo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.celebration != null" >
+        celebration = #{record.celebration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.talent != null" >
+        talent = #{record.talent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prepay != null" >
+        prePay = #{record.prepay,jdbcType=DECIMAL},
+      </if>
+      <if test="record.obligation != null" >
+        obligation = #{record.obligation,jdbcType=DECIMAL},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=DECIMAL},
+      </if>
+      <if test="record.weddingdate != null" >
+        weddingDate = #{record.weddingdate,jdbcType=DATE},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checked != null" >
+        checked = #{record.checked,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.closed != null" >
+        closed = #{record.closed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.prepayed != null" >
+        prepayed = #{record.prepayed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payed != null" >
+        payed = #{record.payed,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders
+    set id = #{record.id,jdbcType=BIGINT},
+      hotel_id = #{record.hotelId,jdbcType=BIGINT},
+      weiPayId = #{record.weipayid,jdbcType=VARCHAR},
+      prePay_id = #{record.prepayId,jdbcType=VARCHAR},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=CHAR},
+      customer_id = #{record.customerId,jdbcType=VARCHAR},
+      reserved_date = #{record.reservedDate,jdbcType=DATE},
+      hall = #{record.hall,jdbcType=VARCHAR},
+      combo = #{record.combo,jdbcType=VARCHAR},
+      celebration = #{record.celebration,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      talent = #{record.talent,jdbcType=VARCHAR},
+      prePay = #{record.prepay,jdbcType=DECIMAL},
+      obligation = #{record.obligation,jdbcType=DECIMAL},
+      count = #{record.count,jdbcType=DECIMAL},
+      weddingDate = #{record.weddingdate,jdbcType=DATE},
+      status = #{record.status,jdbcType=VARCHAR},
+      checked = #{record.checked,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      closed = #{record.closed,jdbcType=TIMESTAMP},
+      prepayed = #{record.prepayed,jdbcType=TIMESTAMP},
+      payed = #{record.payed,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yepao.pojo.Orders" >
+    update orders
+    <set >
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="weipayid != null" >
+        weiPayId = #{weipayid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        prePay_id = #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedDate != null" >
+        reserved_date = #{reservedDate,jdbcType=DATE},
+      </if>
+      <if test="hall != null" >
+        hall = #{hall,jdbcType=VARCHAR},
+      </if>
+      <if test="combo != null" >
+        combo = #{combo,jdbcType=VARCHAR},
+      </if>
+      <if test="celebration != null" >
+        celebration = #{celebration,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="talent != null" >
+        talent = #{talent,jdbcType=VARCHAR},
+      </if>
+      <if test="prepay != null" >
+        prePay = #{prepay,jdbcType=DECIMAL},
+      </if>
+      <if test="obligation != null" >
+        obligation = #{obligation,jdbcType=DECIMAL},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=DECIMAL},
+      </if>
+      <if test="weddingdate != null" >
+        weddingDate = #{weddingdate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="checked != null" >
+        checked = #{checked,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closed != null" >
+        closed = #{closed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prepayed != null" >
+        prepayed = #{prepayed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payed != null" >
+        payed = #{payed,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yepao.pojo.Orders" >
+    update orders
+    set hotel_id = #{hotelId,jdbcType=BIGINT},
+      weiPayId = #{weipayid,jdbcType=VARCHAR},
+      prePay_id = #{prepayId,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      reserved_date = #{reservedDate,jdbcType=DATE},
+      hall = #{hall,jdbcType=VARCHAR},
+      combo = #{combo,jdbcType=VARCHAR},
+      celebration = #{celebration,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      talent = #{talent,jdbcType=VARCHAR},
+      prePay = #{prepay,jdbcType=DECIMAL},
+      obligation = #{obligation,jdbcType=DECIMAL},
+      count = #{count,jdbcType=DECIMAL},
+      weddingDate = #{weddingdate,jdbcType=DATE},
+      status = #{status,jdbcType=VARCHAR},
+      checked = #{checked,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      closed = #{closed,jdbcType=TIMESTAMP},
+      prepayed = #{prepayed,jdbcType=TIMESTAMP},
+      payed = #{payed,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
