@@ -59,7 +59,7 @@ public class CalendarServiceImpl implements CalendarService {
 		if(ALL_BAD.equals(ji))
 			chineseCalendar.setGoodFlag(false);
 		else {
-			if(yi.indexOf(GOOD_MARRIAGE)>0)
+			if(yi.indexOf(GOOD_MARRIAGE)>=0)
 				chineseCalendar.setGoodFlag(true);
 			else
 				chineseCalendar.setGoodFlag(false);

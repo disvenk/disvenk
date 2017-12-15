@@ -31,6 +31,7 @@ public class WxAppointmentController {
 			app.setHallId(hallId);
 			app.setCustomer(customer);
 			app.setTime(date);
+			app.setTel(tel);
 			//app.setTimepoint(timepoint);
 			app.setCreated(new Date());
 			String result = appointmentService.submitAppointment(app);
