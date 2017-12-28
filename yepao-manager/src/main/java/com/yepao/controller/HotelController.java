@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.socket.TextMessage;
 
-import com.websocket.controller.PointWebSocketHandler;
 import com.yepao.pojo.Hotel;
 import com.yepao.pojo.HotelA;
 import com.yepao.service.HotelService;
