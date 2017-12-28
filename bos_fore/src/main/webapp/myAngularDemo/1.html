@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>双向数据绑定</title>
+		<script type="text/javascript" src="../js/angular.min.js"></script>
+	</head>
+	<!--ng-app是angular编程入口，是模块作用域-->
+	<body ng-app>
+		<div>
+			<!--ng-model模型作用，输入框的值会自动的绑定模型中到属性为name上-->
+			<input type="text" name="name" ng-model="name" />
+		</div>
+		<div>
+			<!--{{}}等价于ng-bind,用于数据的显示-->
+			hello,{{name}}
+		</div>
+	</body>
+</html>

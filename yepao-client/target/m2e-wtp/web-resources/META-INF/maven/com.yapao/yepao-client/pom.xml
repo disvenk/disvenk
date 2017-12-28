@@ -50,6 +50,12 @@
 				<artifactId>commons-io</artifactId>
 				<version>${commons-io.version}</version>
 			</dependency>
+		<!-- https://mvnrepository.com/artifact/me.hao0/alipay-api -->
+<dependency>
+    <groupId>me.hao0</groupId>
+    <artifactId>alipay-api</artifactId>
+    <version>1.3.0</version>
+</dependency>
 		
 			<!-- quarz定时任务使用jar -->
 		<dependency>

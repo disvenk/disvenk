@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<!-- 
+		address 发布服务地址 
+		servicesBeans 服务实现类 
+	 -->
+	 <!-- 服务器根目录地址+web.xml配置+applicationContext.xml address配置
++类@Path+方法@Path -->
+<!-- xmlns:jaxrs=http://cxf.apache.org/jaxrs
+xsi:schemaLocation="http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd" -->
+
+	<jaxrs:server id="userService" address="/userService" ><!--无需手动书写服务发布类，在此配置服务发布就可以了address写了路径，在服务接口总的类是哪个的path就不用写了-->
+		<jaxrs:serviceBeans>
+			<bean class="cn.itcast.cxf.service.UserServiceImpl" />
+		</jaxrs:serviceBeans>
+		<!--下面是两个日志的拦截器，用来显示数据的传输过程-->
+		<jaxrs:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+		</jaxrs:inInterceptors>
+		<jaxrs:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+		</jaxrs:outInterceptors>
+	</jaxrs:server>
+	
+</beans>

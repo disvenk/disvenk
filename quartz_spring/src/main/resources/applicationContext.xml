@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd ">
+ 	
+ 	<!-- 开启注解扫描 -->
+ 	<context:component-scan base-package="cn.itcast.quartz.service" />
+ 	
+ 	<!-- 配置job工作对象 -->
+ 	<bean id="helloJob" 
+ 		class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+ 		<!-- job类的引入，但这里并不是注入，因为仅仅只是要用到它才会写在这里的 -->
+ 		<property name="jobClass" value="cn.itcast.quartz.job.HelloJob" />
+ 	</bean>
+ 	
+ 	<!-- trigger -->
+ 	<bean id="simpleTrigger" 
+ 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+ 		<!-- 引入工作对象 -->
+ 		<property name="jobDetail" ref="helloJob" />
+ 		<!-- 3秒后第一次执行 -->
+ 		<property name="startDelay" value="3000" />
+ 		<!-- 5秒后重复执行 -->
+ 		<property name="repeatInterval" value="5000" />
+ 	</bean>
+ 	
+ 	<!-- scheduler  -->
+ 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+ 		<!-- 使用这个让非spring管理的jobbean具有注入功能 -->
+ 		<property name="jobFactory" ref="jobFactory" />
+ 		<!-- 触发器集合，触发器可以有多个 -->
+ 		<property name="triggers">
+ 			<list>
+ 				<ref bean="simpleTrigger"/>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	
+</beans>

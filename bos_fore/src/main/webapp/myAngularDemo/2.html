@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>angular基于模块化的MVC</title>
+		<script type="text/javascript" src="../js/angular.min.js"></script>
+	</head>
+	<!--ng-app是angular编程入口，是模块作用域-->
+	<body>
+		<!--ng-app,定义了一个 模块-->
+		<div ng-app="myapp" ng-controller="myctrl">
+			<div><!--模型区域，name就是模型-->
+				<!--ng-model模型作用，输入框的值会自动的绑定模型中到属性为name上-->
+				<input type="text" name="name" ng-model="name" />
+			</div>
+			<div><!--视图区域-->
+				<!--{{}}等价于ng-bind,用于数据的显示-->
+				hello,{{name}}
+			</div>
+		</div>
+		<script>
+			//初始化myAPP模块,第一个参数是模块的名称，这是一个固定的方法
+			var myapp=angular.module("myapp",[]);
+			
+			//定义模块的控制器
+			//$scope是一个作用域的对象，这个表示这个作用域是由$scope来管理的，好比给一个班级配一个班主任
+			myapp.controller("myctrl",["$scope",function($scope){
+				$scope.name="代绍文";//模型和视图都显示为该指，因为视图改变了，模型就跟着改变了
+			}])
+		</script>
+	</body>
+</html>
